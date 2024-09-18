@@ -33,7 +33,6 @@ jobs:
       if: success()
       run: |
         # Create a new directory for deployment
-        mkdir -p gh-pages
 
         # Copy build artifacts to the new directory
         cp -R target/* gh-pages/
