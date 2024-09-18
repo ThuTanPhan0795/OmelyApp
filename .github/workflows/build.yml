@@ -31,6 +31,11 @@ jobs:
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
+    - name: Debug SSH Setup
+      run: |
+        ssh -i ~/.ssh/id_rsa -T git@github.com
+        ssh-add -l
+
     - name: Deploy to GitHub Pages
       if: success()
       run: |
