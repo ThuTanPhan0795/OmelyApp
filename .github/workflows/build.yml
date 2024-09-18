@@ -19,9 +19,6 @@ jobs:
         java-version: 17
         distribution: 'temurin'
 
-    - name: Build with Maven
-      run: mvn clean package
-
     - name: Set up SSH key
       run: |
         mkdir -p ~/.ssh
@@ -31,32 +28,17 @@ jobs:
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Debug SSH Setup
-      run: |
-        ssh -i ~/.ssh/id_rsa -T git@github.com
-        ssh-add -l
+    - name: Build with Maven
+      run: mvn clean package
 
     - name: Deploy to GitHub Pages
-      if: success()
       run: |
-        # Install GitHub Pages deploy action
-        npm install -g gh-pages
-        
-        # Create a new directory for deployment
         mkdir -p gh-pages
-
-        # Copy build artifacts to the new directory
         cp -R target/* gh-pages/
-
-        # Change to the deployment directory
         cd gh-pages
-
-        # Initialize a new git repository
         git init
         git config user.name "ThuTanPhan0795"
         git config user.email "tanthu95bdkn@gmail.com"
-
-        # Add remote and push to GitHub
         git remote add origin git@github.com:ThuTanPhan0795/OmelyApp.git
         git checkout -b gh-pages
         git add .
