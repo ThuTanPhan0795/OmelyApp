@@ -33,16 +33,16 @@ jobs:
 
     - name: Deploy to GitHub Pages
       run: |
-        # Create a new directory for deployment
+        # Create a directory for deployment
         mkdir -p gh-pages
 
-        # Copy build artifacts to the new directory
+        # Copy the build artifacts to the deployment directory
         cp -R target/* gh-pages/
 
-        # Change to the deployment directory
+        # Go to the deployment directory
         cd gh-pages
 
-        # Initialize a new git repository
+        # Initialize a new Git repository
         git init
         git config user.name "ThuTanPhan0795"
         git config user.email "tanthu95bdkn@gmail.com"
