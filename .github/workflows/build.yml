@@ -22,30 +22,21 @@ jobs:
     - name: Build with Maven
       run: mvn clean package
 
-    - name: Set up SSH key
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan github.com >> ~/.ssh/known_hosts
+    - name: Create gh-pages directory
+      run: mkdir -p gh-pages
+
+    - name: Check if target directory exists
+      run: if [ -d "target" ]; then echo "Target directory exists."; else echo "Target directory does not exist."; exit 1; fi
+
+    - name: Copy build artifacts to the gh-pages directory
+      run: cp -R target/* gh-pages/
 
     - name: Deploy to GitHub Pages
-      if: success()
       run: |
-        # Create a new directory for deployment
-
-        # Copy build artifacts to the new directory
-        cp -R target/* gh-pages/
-
-        # Change to the deployment directory
         cd gh-pages
-
-        # Initialize a new git repository
         git init
         git config user.name "ThuTanPhan0795"
         git config user.email "tanthu95bdkn@gmail.com"
-
-        # Add remote and push to GitHub Pages
         git remote add origin git@github.com:ThuTanPhan0795/OmelyApp.git
         git checkout -b gh-pages
         git add .
