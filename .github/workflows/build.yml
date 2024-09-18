@@ -39,7 +39,7 @@ jobs:
 
         # Initialize a new git repository
         git init
-        git config user.name "Thu Phan"
+        git config user.name "ThuTanPhan0795"
         git config user.email "tanthu95bdkn@gmail.com"
 
         # Add remote and push to GitHub Pages
