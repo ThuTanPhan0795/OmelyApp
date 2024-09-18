@@ -56,7 +56,7 @@ jobs:
         git config user.name "ThuTanPhan0795"
         git config user.email "tanthu95bdkn@gmail.com"
 
-        # Add remote and push to GitHub Pages
+        # Add remote and push to GitHub
         git remote add origin git@github.com:ThuTanPhan0795/OmelyApp.git
         git checkout -b gh-pages
         git add .
