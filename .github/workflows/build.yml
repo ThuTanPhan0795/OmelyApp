@@ -1,0 +1,51 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: 17
+
+    - name: Build with Maven
+      run: mvn clean package
+
+    - name: Deploy to GitHub Pages
+      if: success()
+      run: |
+        # Install GitHub Pages deploy action
+        npm install -g gh-pages
+        
+        # Create a new directory for deployment
+        mkdir -p gh-pages
+
+        # Copy build artifacts to the new directory
+        cp -R target/* gh-pages/
+
+        # Change to the deployment directory
+        cd gh-pages
+
+        # Initialize a new git repository
+        git init
+        git config user.name "ThuTanPhan0795"
+        git config user.email "tanthu95bdkn@gmail.com"
+
+        # Add remote and push to GitHub Pages
+        git remote add origin https://github.com/ThuTanPhan0795/omelyapp.git
+        git checkout -b gh-pages
+        git add .
+        git commit -m "Deploy to GitHub Pages"
+        git push -f origin gh-pages
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
