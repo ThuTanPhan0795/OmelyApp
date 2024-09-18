@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="fragments/header :: header-css">
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css"> <!-- Your custom styles -->
+</head>
+
+<body>
+
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Sidebar for Categories -->
+            <nav class="col-md-3 mb-4">
+                <h3 class="font-weight-bold">Categories</h3>
+                <ul class="list-group">
+                    <li class="list-group-item" th:each="cat: ${categories}">
+                        <a th:href="@{/searchByCategory(categoryId=${cat.id})}" th:text="${cat.categoryName}"></a>
+                    </li>
+                    <li class="list-group-item">
+                        <a th:href="@{/home}">All Products</a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Main Content for Products -->
+            <div class="col-md-9">
+                <div class="row">
+                    <!-- Product Items -->
+                    <div class="col-md-4 mb-4" th:each="product : ${products}">
+                        <div class="card shadow-sm border-light rounded">
+                            <img class="card-img-top" th:src="${product.imageUrl}" alt="Product Image">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${product.name}"></h5>
+                                <p class="card-text" th:text="${product.description}"></p>
+                                <p class="card-text font-weight-bold" th:text="${product.price}"></p>
+                    
+                                <!-- Show Add to Cart only for authenticated users who are not admins -->
+                                <a th:href="@{'/cart/add/' + ${product.id}}"
+                                   class="btn btn-primary"
+                                   sec:authorize="isAuthenticated() and !hasRole('ADMIN')">
+                                   Add to Cart
+                                </a>
+                    
+                                <!-- Show message or login button if not authenticated -->
+                                <a th:href="@{/login}" class="btn btn-secondary" sec:authorize="!isAuthenticated()">
+                                    Login to Add
+                                </a>
+
+                                <!-- Show Edit and Delete buttons only for admins -->
+                                <div sec:authorize="hasRole('ADMIN')">
+                                    <a th:href="@{/product/edit/{id}(id=${product.id})}" class="btn btn-warning">Edit</a>
+                                    <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pagination Controls -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{/home(page=${currentPage - 1})}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                            th:classappend="${i == currentPage ? 'active' : ''}">
+                            <a class="page-link" th:href="@{/home(page=${i})}" th:text="${i + 1}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${currentPage == totalPages - 1 ? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{/home(page=${currentPage + 1})}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <!-- Include Bootstrap and Font Awesome JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Font Awesome for icons -->
+</body>
+</html>

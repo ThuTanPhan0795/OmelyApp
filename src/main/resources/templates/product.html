@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header-css"></head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+    <div class="row" style="margin-top:20px">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            
+            <!-- Form with dynamic action based on method -->
+            <form autocomplete="off" th:object="${productForm}" class="form" method="POST" 
+                  th:action="${method == 'new'} ? @{/product/new} : @{/product/edit/{productId}(productId=${productForm.id})}">
+                
+                <fieldset>
+                    <!-- Heading based on create or update -->
+                    <h1 th:text="${method == 'new'} ? #{admin.create.product} : #{admin.update.product}"></h1>
+
+                    <!-- Product Name Field -->
+                    <div class="form-group">
+                        <label th:text="#{product.name}"></label>
+                        <input type="text" th:field="*{name}" class="form-control input-lg" title="name" autofocus="true" />
+                        <div class="alert alert-danger error-alert" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                    </div>
+
+                    <!-- Product Category Field -->
+                    <div class="form-group">
+                        <label th:text="#{product.category}"></label>
+                        <select class="form-control input-lg" th:field="*{category.id}" name="category.id">
+                            <option value="0">Select</option>
+                            <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.categoryName}"></option>
+                        </select>
+                        <div class="alert alert-danger error-alert" th:if="${#fields.hasErrors('category.id')}" th:errors="*{category.id}"></div>
+                    </div>
+
+                    <!-- Product Description Field -->
+                    <div class="form-group">
+                        <label th:text="#{product.desc}"></label>
+                        <input type="text" th:field="*{description}" class="form-control input-lg" title="description" />
+                        <div class="alert alert-danger error-alert" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                    </div>
+
+                    <!-- Product Image URL Field -->
+                    <div class="form-group">
+                        <label th:text="#{product.image_url}"></label>
+                        <input type="url" th:field="*{imageUrl}" class="form-control input-lg" title="imageUrl" />
+                        <div class="alert alert-danger error-alert" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></div>
+                    </div>
+
+                    <!-- Product Price Field -->
+                    <div class="form-group">
+                        <label th:text="#{product.price}"></label>
+                        <input type="number" step="0.01" th:field="*{price}" class="form-control input-lg" title="price" />
+                        <div class="alert alert-danger error-alert" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+                    </div>
+
+                    <!-- Submit Button for Create or Update -->
+                    <input class="btn btn-outline-dark" type="submit" value="Save" />
+                    
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+
+</html>

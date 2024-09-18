@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header-css">
+    <!-- Add Bootstrap CSS link if not included in header-css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container my-5">
+    <div th:if="${!products.isEmpty()}">
+        <h2 th:text="#{cart.title}"></h2>
+        <form id="cart-form" th:action="@{/cart/updateQuantity}" method="post">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="product : ${products}">
+                                    <td>
+                                        <h5 th:text="${product.product.name}"></h5>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="quantity" 
+                                               th:value="${product.quantity}" 
+                                               min="1" 
+                                               th:data-id="${product.product.id}" 
+                                               class="form-control quantity-input" />
+                                    </td>
+                                    <td th:text="${product.product.price}"></td>
+                                    <td>
+                                        <a th:href="@{'/cart/remove/' + ${product.product.id}}" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Remove
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a th:href="@{'/cart/clear'}" class="btn btn-warning">
+                        <i class="fas fa-broom"></i> Clear Cart
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div th:if="${products.isEmpty()}">
+        <h2 th:text="#{cart.empty}"></h2>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <h3 th:text="#{cart.total} + ' ' + ${totalPrice}"></h3>
+            <a th:href="@{'/cart/checkout'}" class="btn btn-success btn-lg">
+                <i class="fas fa-check"></i> Checkout
+            </a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- Add Bootstrap JS and dependencies if not included in header-css -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('change', function() {
+                const productId = this.dataset.id;
+                const quantity = this.value;
+                fetch('/cart/updateQuantity', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        productId: productId,
+                        quantity: quantity
+                    })
+                })
+                .then(response => response.text())
+                .then(result => {
+                    console.log(result);
+                    // Refresh total price or cart view if needed
+                    location.reload(); // Reload the page to reflect the updates
+                })
+                .catch(error => console.error('Error updating quantity:', error));
+            });
+        });
+    });
+</script>
+</body>
+
+</html>
