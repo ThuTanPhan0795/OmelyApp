@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the jar file from the target directory into the container
-COPY target/omelyapp.jar app.jar
+COPY target/shop-0.0.1-SNAPSHOT.jar app.jar
 
 
 # Command to run the application
