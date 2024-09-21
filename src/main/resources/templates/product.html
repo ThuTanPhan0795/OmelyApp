@@ -7,10 +7,9 @@
 
 <div th:replace="fragments/header :: header"></div>
 
-<div class="container">
-    <div class="row" style="margin-top:20px">
-        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-            
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12 col-sm-10 col-md-8 mx-auto">
             <!-- Form with dynamic action based on method -->
             <form autocomplete="off" th:object="${productForm}" class="form" method="POST" 
                   th:action="${method == 'new'} ? @{/product/new} : @{/product/edit/{productId}(productId=${productForm.id})}">
@@ -58,7 +57,7 @@
                     </div>
 
                     <!-- Submit Button for Create or Update -->
-                    <input class="btn btn-outline-dark" type="submit" value="Save" />
+                    <input class="btn btn-outline-dark btn-block" type="submit" value="Save" />
                     
                 </fieldset>
             </form>

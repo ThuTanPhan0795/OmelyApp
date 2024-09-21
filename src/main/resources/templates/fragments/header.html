@@ -10,7 +10,7 @@
     <title th:text="#{header.app.title}">Header</title>
     <style>
         .navbar-brand img {
-            max-height: 50px; /* Adjust based on desired logo height */
+            max-height: 50px;
             height: auto;
             width: auto;
         }
@@ -18,23 +18,30 @@
             display: flex;
             align-items: center;
         }
-        .navbar-brand span {
-            font-size: 1.5rem; /* Adjust font size of brand name */
-            margin-left: 10px; /* Space between logo and text */
-        }
         .navbar-nav .nav-item {
-            margin: 0 10px; /* Space between nav items */
+            margin: 0 5px; /* Adjust for smaller screens */
         }
         .form-inline input,
         .form-inline button {
-            margin-right: 5px; /* Space between search input and button */
+            margin-right: 5px; 
         }
         .user-info {
             display: flex;
             align-items: center;
         }
-        .user-info .nav-link {
-            margin-right: 15px;
+        @media (max-width: 576px) {
+            .navbar-nav .nav-item {
+                margin: 0; /* Remove margin for mobile */
+            }
+            .form-inline {
+                flex-direction: column; /* Stack the form elements */
+                align-items: flex-start; /* Align items to the start */
+            }
+            .form-inline input,
+            .form-inline button {
+                width: 100%; /* Full width for better usability */
+                margin: 5px 0; /* Add vertical spacing */
+            }
         }
     </style>
 </head>

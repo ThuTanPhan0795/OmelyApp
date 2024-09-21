@@ -13,18 +13,19 @@
     <div th:fragment="footer">
         <div class="container">
             <footer class="py-4">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span >© 2024 Shop House</span>
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                    <span>© 2024 Shop House</span>
                     <span>
                         <a th:href="@{/about}" th:text="#{about.name}">About Us</a>
                     </span>
-                    <label>
-                        <select class="custom-select" id="select-lang">
+                    <form class="form-inline my-2 my-lg-0">
+                        <label class="mr-2" for="select-lang">Language:</label>
+                        <select class="custom-select" id="select-lang" aria-label="Select language">
                             <option value="en" th:selected="${#locale.getLanguage() == 'en'}" th:text="#{footer.language.en}">English</option>
                             <option value="pl" th:selected="${#locale.getLanguage() == 'pl'}" th:text="#{footer.language.pl}">Polish</option>
                             <option value="den" th:selected="${#locale.getLanguage() == 'den'}" th:text="#{footer.language.den}" disabled>Denmark</option>
                         </select>
-                    </label>
+                    </form>
                 </div>
             </footer>
         </div>
