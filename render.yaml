@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: OmelyApp
+    env: docker
+    dockerfilePath: ./Dockerfile
+    region: oregon
+    buildCommand: ""
+    startCommand: ""
+    env:
+      DATABASE_URL: your_database_url_here
