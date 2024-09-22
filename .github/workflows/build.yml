@@ -26,10 +26,6 @@ jobs:
       run: |
         # Check if a JAR file exists
         if ls target/*.jar 1> /dev/null 2>&1; then
-          # Move JAR to the target folder
-          mkdir -p target
-          mv target/*.jar target/
-
           # Configure Git
           git config --global user.name "ThuTanPhan0795"
           git config --global user.email "tanthu95bdkn@gmail.com"
