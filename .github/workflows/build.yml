@@ -35,8 +35,10 @@ jobs:
             git remote add origin git@github.com:ThuTanPhan0795/OmelyApp.git
           fi
 
-          # Stage the JAR file
-          git add target/*.jar
+          # Force add the JAR file, bypassing .gitignore
+          git add -f target/*.jar
+
+          # Commit the changes
           git commit -m "Add built JAR file to /target folder"
           
           # Push changes to the master branch
