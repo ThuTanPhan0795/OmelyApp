@@ -1,0 +1,14 @@
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/controller/LoginControllerMvcTests.java
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/repository/ProductRepositoryTests.java
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/ApplicationTests.java
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/controller/CartControllerMvcTests.java
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/controller/HomeControllerMvcTests.java
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/controller/ControllersTests.java
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/repository/UserRepositoryTests.java
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/model/ProductEntityTests.java
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/model/UserEntityTests.java
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/service/ProductServiceTests.java
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/creator/ProductCreator.java
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/service/ShoppingCartServiceTests.java
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/service/UserServiceTests.java
+/home/runner/work/OmelyApp/OmelyApp/src/test/java/com/syqu/shop/creator/UserCreator.java

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <footer class="bg-dark text-light text-center text-lg-start">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="text-uppercase" th:text="#{site.name}"></h5>
+                    <p th:text="#{footer.about_us}">About us content goes here...</p>
+                </div>
+
+                <div class="col-lg-2 col-md-3 mb-4">
+                    <h5 class="text-uppercase">Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a th:href="@{/home}" class="text-light" th:text="#{home}">Home</a></li>
+                        <li><a th:href="@{/contact}" class="text-light" th:text="#{contact}">Contact</a></li>
+                        <li><a th:href="@{/add-product}" class="text-light" th:text="#{product.add}">Add Product</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 mb-4">
+                    <h5 class="text-uppercase">Follow Us</h5>
+                    <a href="#" class="text-light mr-3"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-light mr-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-light mr-3"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center p-3 bg-secondary">
+            <p th:text="#{footer.copyright}">© 2024 Your Company</p>
+        </div>
+    </footer>
+</body>
+</html>
