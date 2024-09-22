@@ -52,6 +52,32 @@ nav {
 .navbar-brand:hover, .info-slide:active {
     transform: scale(1.5);
 }
+.navbar-nav .nav-link {
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ff5722; /* Accent color on hover */
+}
+
+.footer a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #ff5722;
+}
+
+footer i {
+    font-size: 1.5em;
+    transition: transform 0.3s ease;
+}
+
+footer i:hover {
+    transform: scale(1.2); /* Slight enlarge on hover */
+}
 
 .card-deck {
     padding-left: 20px;
