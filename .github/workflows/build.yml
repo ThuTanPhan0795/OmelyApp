@@ -30,9 +30,10 @@ jobs:
           git config --global user.name "ThuTanPhan0795"
           git config --global user.email "tanthu95bdkn@gmail.com"
 
-          # Initialize a new Git repository
-          git init
-          git remote add origin git@github.com:ThuTanPhan0795/OmelyApp.git
+          # Check if the remote origin already exists, if not, add it
+          if ! git remote | grep -q origin; then
+            git remote add origin git@github.com:ThuTanPhan0795/OmelyApp.git
+          fi
 
           # Stage the JAR file
           git add target/*.jar
