@@ -1,4 +1,4 @@
-name: Build and Deploy to GitHub Pages
+name: Build and Push JAR to Master
 
 on:
   push:
@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up JDK 17
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         java-version: 17
         distribution: 'temurin'
@@ -31,27 +31,19 @@ jobs:
     - name: Build with Maven
       run: mvn clean package
 
-    - name: Deploy to GitHub Pages
+    - name: Push JAR to master branch
       run: |
-        # Create a directory for deployment
-        mkdir -p gh-pages
-
-        # Copy the build artifacts to the deployment directory
-        cp -R target/* gh-pages/
-
-        # Go to the deployment directory
-        cd gh-pages
-
-        # Initialize a new Git repository
-        git init
-        git config user.name "ThuTanPhan0795"
-        git config user.email "tanthu95bdkn@gmail.com"
-
-        # Add remote and push to GitHub Pages
-        git remote add origin git@github.com:ThuTanPhan0795/OmelyApp.git
-        git checkout -b gh-pages
-        git add .
-        git commit -m "Deploy to GitHub Pages"
-        git push -f origin gh-pages
+        # Check if a JAR file exists
+        if ls target/*.jar 1> /dev/null 2>&1; then
+          # Move JAR to the root of the repo (or desired location)
+          mv target/*.jar ./
+          
+          # Stage the JAR file
+          git add *.jar
+          git commit -m "Add built JAR file"
+          git push origin master
+        else
+          echo "No JAR file found to push."
+        fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
