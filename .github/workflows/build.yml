@@ -37,7 +37,11 @@ jobs:
         if ls target/*.jar 1> /dev/null 2>&1; then
           # Move JAR to the root of the repo (or desired location)
           mv target/*.jar ./
-          
+
+          # Configure Git
+          git config --global user.name "ThuTanPhan0795"
+          git config --global user.email "tanthu95bdkn@gmail.com"
+
           # Stage the JAR file
           git add *.jar
           git commit -m "Add built JAR file"
