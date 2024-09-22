@@ -1,26 +1,51 @@
-- name: Push JAR to master branch
-  run: |
-    # Check if a JAR file exists
-    if ls target/*.jar 1> /dev/null 2>&1; then
-      # Move JAR to the root of the repo (or desired location)
-      mv target/*.jar ./
+name: Build and Push JAR to Master
 
-      # Configure Git
-      git config --global user.name "ThuTanPhan0795"
-      git config --global user.email "tanthu95bdkn@gmail.com"
+on:
+  push:
+    branches:
+      - master
 
-      # Initialize a new Git repository
-      git init
-      git remote add origin git@github.com:ThuTanPhan0795/OmelyApp.git
-      
-      # Stage the JAR file
-      git add *.jar
-      git commit -m "Add built JAR file"
-      
-      # Push changes to the master branch
-      git push -f origin master
-    else
-      echo "No JAR file found to push."
-    fi
-  env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: 17
+        distribution: 'temurin'
+
+    - name: Build with Maven
+      run: mvn clean package
+
+    - name: Push JAR to master branch
+      run: |
+        # Check if a JAR file exists
+        if ls target/*.jar 1> /dev/null 2>&1; then
+          # Move JAR to the target folder
+          mkdir -p target
+          mv target/*.jar target/
+
+          # Configure Git
+          git config --global user.name "ThuTanPhan0795"
+          git config --global user.email "tanthu95bdkn@gmail.com"
+
+          # Initialize a new Git repository
+          git init
+          git remote add origin git@github.com:ThuTanPhan0795/OmelyApp.git
+
+          # Stage the JAR file
+          git add target/*.jar
+          git commit -m "Add built JAR file to /target folder"
+          
+          # Push changes to the master branch
+          git push -f origin master
+        else
+          echo "No JAR file found to push."
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
