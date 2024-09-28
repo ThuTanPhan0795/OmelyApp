@@ -22,22 +22,17 @@ jobs:
     - name: Build with Maven
       run: mvn clean package
 
-   - name: List files in target directory for debugging
+    - name: Copy JAR to master/target folder
       run: |
-        echo "Listing files in target directory:"
-        ls -la target/
-
-    - name: Replace JAR in the target folder of the master branch
-      run: |
-        # Create the target directory in the repository if it doesn't exist
+        # Create the target directory in the master repository if it doesn't exist
         mkdir -p target
 
-        # Remove the existing JAR file if it exists in the target directory
-        rm -f target/shop-0.0.1-SNAPSHOT.jar
+        # # Remove the existing JAR file if it exists in master branch
+        # rm -f target/shop-0.0.1-SNAPSHOT.jar
 
-        # Copy the new JAR file from the Maven build output to the target directory
+        # Copy the JAR file to the target master directory
         cp target/shop-0.0.1-SNAPSHOT.jar target/
-        
+
     - name: Commit and Push JAR to master branch
       run: |
         # Configure Git
