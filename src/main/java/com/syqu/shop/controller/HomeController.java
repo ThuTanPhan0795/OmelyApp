@@ -24,7 +24,7 @@ public class HomeController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping(value = {"/", "/index", "/home"})
+    @GetMapping(value = {"/","/home"})
     public String home(@RequestParam(defaultValue = "0") int page, Model model) {
         Pageable pageable = PageRequest.of(page, 12); // 3 products per page
         Page<Product> productsPage = productService.findAll(pageable);
@@ -34,6 +34,10 @@ public class HomeController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productsPage.getTotalPages());
         return "home";
+    }
+    @GetMapping(value = {"/", "/index"})
+    public String index(@RequestParam(defaultValue = "0") int page, Model model) {
+        return "index";
     }
 
     @RequestMapping("/searchByCategory")
