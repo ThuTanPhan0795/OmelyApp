@@ -12,20 +12,7 @@
     <div th:replace="fragments/header :: header"></div>
 
     <div class="container mt-4">
-        <div class="row">
-            <!-- Sidebar for Categories -->
-            <nav class="col-md-3 mb-4">
-                <h3 class="font-weight-bold">Categories</h3>
-                <ul class="list-group">
-                    <li class="list-group-item" th:each="cat: ${categories}">
-                        <a th:href="@{/searchByCategory(categoryId=${cat.id})}" th:text="${cat.categoryName}"></a>
-                    </li>
-                    <li class="list-group-item">
-                        <a th:href="@{/home}">All Products</a>
-                    </li>
-                </ul>
-            </nav>
-            
+        <div class="row">              
             <!-- Main Content for Products -->
             <div class="col-md-9">
                 <div class="row">
