@@ -51,7 +51,7 @@ jobs:
         # Force add the JAR file, ignoring .gitignore rules
         git add -f target/shop-0.0.1-SNAPSHOT.jar
 
-        # Commit the change
+        # Commit the change to the master branch
         git commit -m "Replace JAR file in target directory"
 
         # Push the changes to the master branch
