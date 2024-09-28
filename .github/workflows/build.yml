@@ -25,7 +25,7 @@ jobs:
     - name: Copy JAR to master/target folder
       run: |
         # Create the target directory in the repository if it doesn't exist
-        mkdir - target
+        mkdir -p target
 
         # Remove the existing JAR file if it exists
         rm -f target/shop-0.0.1-SNAPSHOT.jar
