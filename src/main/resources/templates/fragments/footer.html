@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-    <footer class="bg-dark text-light text-center text-lg-start">
-        <div class="container p-4">
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <h5 class="text-uppercase" th:text="#{site.name}"></h5>
-                    <p th:text="#{footer.about_us}">About us content goes here...</p>
+    <div th:fragment="footer">
+        <div class="container">
+            <footer class="py-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span >© 2024 Shop House</span>
+                    <span>
+                        <a th:href="@{/about}">About Us</a>
+                    </span>
+                    <span>
+                        <a th:href="@{/contact}" th:text="#{about.name}">Contact</a>
+                    </span>
+                    <label>
+                        <select class="custom-select" id="select-lang">
+                            <option value="en" th:selected="${#locale.getLanguage() == 'en'}">English</option>
+                            <option value="pl" th:selected="${#locale.getLanguage() == 'pl'}">Polish</option>
+                            <option value="den" th:selected="${#locale.getLanguage() == 'den'}">Denmark</option>
+                        </select>
+                    </label>
                 </div>
 
                 <div class="col-lg-2 col-md-3 mb-4">

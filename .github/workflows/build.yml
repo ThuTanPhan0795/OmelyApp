@@ -22,29 +22,51 @@ jobs:
     - name: Build with Maven
       run: mvn clean package
 
-    - name: Push JAR to master branch
+    # - name: Deploy to GitHub Pages
+    #   run: |
+    #     # Create a directory for deployment
+    #     mkdir -p gh-pages
+
+    #     # Copy the build artifacts to the deployment directory
+    #     cp -R target/* gh-pages/
+
+    #     # Go to the deployment directory
+    #     cd gh-pages
+
+    #     # Initialize a new Git repository
+    #     git init
+    #     git config user.name "ThuTanPhan0795"
+    #     git config user.email "tanthu95bdkn@gmail.com"
+
+    #     # Add remote and push to GitHub Pages
+    #     git remote add origin git@github.com:ThuTanPhan0795/OmelyApp.git
+    #     git checkout -b gh-pages
+    #     git add .
+    #     git commit -m "Deploy to GitHub Pages"
+    #     git push -f origin gh-pages
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Copy JAR to master/target folder
       run: |
-        # Check if a JAR file exists
-        if ls target/*.jar 1> /dev/null 2>&1; then
-          # Configure Git
-          git config --global user.name "ThuTanPhan0795"
-          git config --global user.email "tanthu95bdkn@gmail.com"
+        # Create the target directory in the repository if it doesn't exist
+        mkdir -p master/target
 
-          # Check if the remote origin already exists, if not, add it
-          if ! git remote | grep -q origin; then
-            git remote add origin git@github.com:ThuTanPhan0795/OmelyApp.git
-          fi
+        # Copy the JAR file to the master/target directory
+        cp target/shop-0.0.1-SNAPSHOT.jar master/target/
 
-          # Force add the JAR file, bypassing .gitignore
-          git add -f target/*.jar
+    - name: Commit and Push JAR to master branch
+      run: |
+        # Configure Git
+        git config user.name "ThuTanPhan0795"
+        git config user.email "tanthu95bdkn@gmail.com"
 
-          # Commit the changes
-          git commit -m "Add built JAR file to /target folder"
-          
-          # Push changes to the master branch
-          git push -f origin master
-        else
-          echo "No JAR file found to push."
-        fi
+        # Add the JAR file to Git
+        git add master/target/shop-0.0.1-SNAPSHOT.jar
+
+        # Commit the change
+        git commit -m "Add JAR file to master/target"
+
+        # Push the changes to the master branch
+        git push origin master
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
