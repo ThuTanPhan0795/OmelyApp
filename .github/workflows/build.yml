@@ -47,21 +47,21 @@ jobs:
     #   env:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Commit and Push JAR to master branch
-  run: |
-    # Configure Git
-    git config user.name "ThuTanPhan0795"
-    git config user.email "tanthu95bdkn@gmail.com"
+      run: |
+        # Configure Git
+        git config user.name "ThuTanPhan0795"
+        git config user.email "tanthu95bdkn@gmail.com"
 
-    # Pull the latest changes from the remote master branch to avoid non-fast-forward issues
-    git pull origin master --rebase
+        # Pull the latest changes from the remote master branch to avoid non-fast-forward issues
+        git pull origin master --rebase
 
-    # Force add the JAR file, ignoring .gitignore rules
-    git add -f master/target/shop-0.0.1-SNAPSHOT.jar
+        # Force add the JAR file, ignoring .gitignore rules
+        git add -f master/target/shop-0.0.1-SNAPSHOT.jar
 
-    # Commit the change
-    git commit -m "Add JAR file to master/target"
+        # Commit the change
+        git commit -m "Add JAR file to master/target"
 
-    # Push the changes to the master branch
-    git push origin master
-  env:
-    SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        # Push the changes to the master branch
+        git push origin master
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
