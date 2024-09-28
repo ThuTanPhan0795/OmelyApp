@@ -46,14 +46,28 @@ jobs:
     #     git push -f origin gh-pages
     #   env:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Copy JAR to master/target folder
+      run: |
+        # Create the target directory in the repository if it doesn't exist
+        mkdir -p master/target
+
+        # Copy the JAR file to the master/target directory
+        cp target/shop-0.0.1-SNAPSHOT.jar master/target/
+
     - name: Commit and Push JAR to master branch
       run: |
         # Configure Git
         git config user.name "ThuTanPhan0795"
         git config user.email "tanthu95bdkn@gmail.com"
 
+        # Stash any unstaged changes to prevent conflicts
+        git stash
+
         # Pull the latest changes from the remote master branch to avoid non-fast-forward issues
         git pull origin master --rebase
+
+        # Pop (apply) the stashed changes
+        git stash pop || true  # Prevent errors if there's nothing to stash
 
         # Force add the JAR file, ignoring .gitignore rules
         git add -f master/target/shop-0.0.1-SNAPSHOT.jar
