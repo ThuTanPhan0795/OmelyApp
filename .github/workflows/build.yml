@@ -25,10 +25,13 @@ jobs:
     - name: Copy JAR to master/target folder
       run: |
         # Create the target directory in the repository if it doesn't exist
-        mkdir -p master/target
+        mkdir - target
 
-        # Copy the JAR file to the master/target directory
-        cp target/shop-0.0.1-SNAPSHOT.jar master/target/
+        # Remove the existing JAR file if it exists
+        rm -f target/shop-0.0.1-SNAPSHOT.jar
+
+        # Copy the JAR file to the target directory
+        cp target/shop-0.0.1-SNAPSHOT.jar target/
 
     - name: Commit and Push JAR to master branch
       run: |
@@ -46,7 +49,7 @@ jobs:
         git stash pop || true  # Prevent errors if there's nothing to stash
 
         # Force add the JAR file, ignoring .gitignore rules
-        git add -f master/target/shop-0.0.1-SNAPSHOT.jar
+        git add -f target/shop-0.0.1-SNAPSHOT.jar
 
         # Commit the change
         git commit -m "Add JAR file to master/target"
