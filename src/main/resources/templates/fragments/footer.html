@@ -1,5 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <title th:text="#{footer.title}">Footer</title>
+</head>
+
 <body>
     <div th:fragment="footer">
         <div class="container">
@@ -7,41 +16,23 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <span >© 2024 Shop House</span>
                     <span>
-                        <a th:href="@{/about}">About Us</a>
-                    </span>
-                    <span>
-                        <a th:href="@{/contact}" th:text="#{about.name}">Contact</a>
+                        <a th:href="@{/about}" th:text="#{about.name}">About Us</a>
                     </span>
                     <label>
                         <select class="custom-select" id="select-lang">
-                            <option value="en" th:selected="${#locale.getLanguage() == 'en'}">English</option>
-                            <option value="pl" th:selected="${#locale.getLanguage() == 'pl'}">Polish</option>
-                            <option value="den" th:selected="${#locale.getLanguage() == 'den'}">Denmark</option>
+                            <option value="en" th:selected="${#locale.getLanguage() == 'en'}" th:text="#{footer.language.en}">English</option>
+                            <option value="pl" th:selected="${#locale.getLanguage() == 'pl'}" th:text="#{footer.language.pl}">Polish</option>
+                            <option value="den" th:selected="${#locale.getLanguage() == 'den'}" th:text="#{footer.language.den}" disabled>Denmark</option>
                         </select>
                     </label>
                 </div>
-
-                <div class="col-lg-2 col-md-3 mb-4">
-                    <h5 class="text-uppercase">Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a th:href="@{/home}" class="text-light" th:text="#{home}">Home</a></li>
-                        <li><a th:href="@{/contact}" class="text-light" th:text="#{contact}">Contact</a></li>
-                        <li><a th:href="@{/add-product}" class="text-light" th:text="#{product.add}">Add Product</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-2 col-md-3 mb-4">
-                    <h5 class="text-uppercase">Follow Us</h5>
-                    <a href="#" class="text-light mr-3"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="text-light mr-3"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-light mr-3"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
+            </footer>
         </div>
+    </div>
 
-        <div class="text-center p-3 bg-secondary">
-            <p th:text="#{footer.copyright}">© 2024 Your Company</p>
-        </div>
-    </footer>
+    <script type="text/javascript" th:src="@{webjars/jquery/3.3.1-1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{webjars/bootstrap/4.1.0/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/lang.js}"></script>
 </body>
+
 </html>

@@ -25,10 +25,6 @@
         .navbar-nav .nav-item {
             margin: 0 10px; /* Space between nav items */
         }
-        .form-inline {
-            flex-grow: 1; /* Make the form take available space */
-            justify-content: center; /* Center the search form */
-        }
         .form-inline input,
         .form-inline button {
             margin-right: 5px; /* Space between search input and button */
@@ -47,12 +43,23 @@
     <header th:fragment="header">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <a class="navbar-brand" href="/home">
-                <img src="/images/ShopHouseBG.png" alt="Logo">
+                <img src="/images/ShopHouseBG.png">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                </ul>
                 <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/searchByProductName}" method="get">
                     <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-light my-2 my-sm-0" type="submit" th:text="#{header.search}">Search</button>
@@ -61,19 +68,33 @@
                     <li class="nav-item" sec:authorize="isAuthenticated() and hasRole('ADMIN')">
                         <a class="nav-link" th:href="@{/product/new}">Add Product</a>
                     </li>
-                    <li class="nav-item" th:if="${#authentication.authenticated}">
-                        <a class="nav-link" th:href="@{/logout}" th:text="#{logout}">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <span class="navbar-text" th:text="${#authentication.principal.username}">Username</span>
                     </li>
-                    <li class="nav-item" th:if="${!#authentication.authenticated}">
-                        <a class="nav-link" th:href="@{/login}" th:text="#{login}">
-                            <i class="fas fa-sign-in-alt"></i> Login
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/logout}" th:text="#{user.log_out}">Log Out</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" th:href="@{/login}" th:text="#{user.log_in}">Log In</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" th:href="@{/register}" th:text="#{register.button}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/cart}">
+                            <img src="/images/cart.png" alt="Cart" width="30">
+                            <span class="badge badge-light" th:text="${cartItemCount}">0</span> <!-- Cart item count -->
                         </a>
                     </li>
                 </ul>
             </div>
         </nav>
     </header>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

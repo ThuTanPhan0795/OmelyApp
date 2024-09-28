@@ -11,7 +11,8 @@ public class CartItem {
 
     private String username;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL) // Use cautiously
+    @JoinColumn(name = "product_id", nullable = false) // Specify the foreign key column name
     private Product product;
 
     private int quantity;
