@@ -46,7 +46,7 @@ jobs:
     #     git push -f origin gh-pages
     #   env:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Copy JAR to master/target folder
+   - name: Copy JAR to master/target folder
       run: |
         # Create the target directory in the repository if it doesn't exist
         mkdir -p master/target
@@ -57,8 +57,8 @@ jobs:
     - name: Commit and Push JAR to master branch
       run: |
         # Configure Git
-        git config user.name "ThuTanPhan0795"
-        git config user.email "tanthu95bdkn@gmail.com"
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
 
         # Stash any unstaged changes to prevent conflicts
         git stash
@@ -75,7 +75,7 @@ jobs:
         # Commit the change
         git commit -m "Add JAR file to master/target"
 
-        # Push the changes to the master branch
-        git push origin master
+        # Push the changes to the master branch using GITHUB_TOKEN
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ThuTanPhan0795/OmelyApp.git master
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
