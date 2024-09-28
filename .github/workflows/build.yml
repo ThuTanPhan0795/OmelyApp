@@ -22,13 +22,13 @@ jobs:
     - name: Build with Maven
       run: mvn clean package
 
-    - name: Copy JAR to master/target folder
+    - name: Copy JAR to target folder of master
       run: |
         # Create the target directory in the repository if it doesn't exist
-        mkdir -p master/target
+        mkdir -p target
 
-        # Copy the JAR file to the master/target directory
-        cp target/shop-0.0.1-SNAPSHOT.jar master/target/
+        # Copy the JAR file to the target directory of master
+        cp target/shop-0.0.1-SNAPSHOT.jar target/
 
     - name: Commit and Push JAR to master branch
       run: |
@@ -46,10 +46,10 @@ jobs:
         git stash pop || true  # Prevent errors if there's nothing to stash
 
         # Force add the JAR file, ignoring .gitignore rules
-        git add -f master/target/shop-0.0.1-SNAPSHOT.jar
+        git add -f target/shop-0.0.1-SNAPSHOT.jar
 
         # Commit the change
-        git commit -m "Add JAR file to master/target"
+        git commit -m "Add JAR file to target"
 
         # Push the changes to the master branch
         git push origin master
