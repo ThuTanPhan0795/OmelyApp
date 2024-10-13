@@ -25,25 +25,25 @@ public class RegisterController {
         this.userValidator = userValidator;
     }
 
-    @GetMapping("/register")
-    public String registration(Model model) {
-        model.addAttribute("userForm", new User());
+    // @GetMapping("/register")
+    // public String registration(Model model) {
+    //     model.addAttribute("userForm", new User());
 
-        return "register";
-    }
+    //     return "register";
+    // }
 
-    @PostMapping("/register")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
-        userValidator.validate(userForm, bindingResult);
+    // @PostMapping("/register")
+    // public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+    //     userValidator.validate(userForm, bindingResult);
 
-        if (bindingResult.hasErrors()) {
-            logger.error(String.valueOf(bindingResult.getFieldError()));
-            return "register";
-        }
+    //     if (bindingResult.hasErrors()) {
+    //         logger.error(String.valueOf(bindingResult.getFieldError()));
+    //         return "register";
+    //     }
 
-        userService.save(userForm);
-        userService.login(userForm.getUsername(), userForm.getPasswordConfirm());
+    //     userService.save(userForm);
+    //     userService.login(userForm.getUsername(), userForm.getPasswordConfirm());
 
-        return "redirect:/home";
-    }
+    //     return "redirect:/home";
+    // }
 }

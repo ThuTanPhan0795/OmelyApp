@@ -28,11 +28,11 @@ public class ContactController {
         this.mailSender = mailSender;
     }
 
-    @GetMapping("/contact")
-    public String showContactForm(Model model) {
-        model.addAttribute("contactMessage", new ContactMessage());
-        return "contact";
-    }
+    // @GetMapping("/contact")
+    // public String showContactForm(Model model) {
+    //     model.addAttribute("contactMessage", new ContactMessage());
+    //     return "contact";
+    // }
 
     @PostMapping("/submitContact")
     public String submitContactForm(@Valid @ModelAttribute("contactMessage") ContactMessage contactMessage, BindingResult result, Model model) {
