@@ -24,7 +24,7 @@ public class HomeController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping(value = {"/","/home"})
+    @GetMapping(value = {"/home"})
     public String home(@RequestParam(defaultValue = "0") int page, Model model) {
         Pageable pageable = PageRequest.of(page, 12); // 3 products per page
         Page<Product> productsPage = productService.findAll(pageable);
@@ -39,38 +39,31 @@ public class HomeController {
     public String index(@RequestParam(defaultValue = "0") int page, Model model) {
         return "index";
     }
-    @GetMapping(value = {"/contact.html"})
+    @GetMapping(value = {"/contact"})
     public String contact(@RequestParam(defaultValue = "0") int page, Model model) {
         return "contact";
     }
-    @GetMapping(value = {"/shop.html"})
+    @GetMapping(value = {"/shop"})
     public String shop(@RequestParam(defaultValue = "0") int page, Model model) {
         Pageable pageable = PageRequest.of(page, 12); // 3 products per page
         Page<Product> productsPage = productService.findAll(pageable);
         model.addAttribute("products", productsPage.getContent());
-        // model.addAttribute("productsCount", productService.count());
-        // model.addAttribute("categories", categoryService.findAll());
-        // model.addAttribute("currentPage", page);
-        // model.addAttribute("totalPages", productsPage.getTotalPages());
+        model.addAttribute("productsCount", productService.count());
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productsPage.getTotalPages());
         // return "home";
         return "shop";
     }
-    @GetMapping(value = {"/shopping-cart.html"})
-    public String shoppingcart(@RequestParam(defaultValue = "0") int page, Model model) {
-        return "shopping-cart";
-    }
-    @GetMapping(value = {"/check-out.html"})
+
+    @GetMapping(value = {"/check-out"})
     public String checkout(@RequestParam(defaultValue = "0") int page, Model model) {
         return "check-out";
     }
-    @GetMapping(value = {"/register.html"})
-    public String register(@RequestParam(defaultValue = "0") int page, Model model) {
-        return "register";
-    }
-    @GetMapping(value = {"/login.html"})
-    public String login(@RequestParam(defaultValue = "0") int page, Model model) {
-        return "login";
-    }
+    // @GetMapping(value = {"/login"})
+    // public String login(@RequestParam(defaultValue = "0") int page, Model model) {
+    //     return "login";
+    // }
 
     @RequestMapping("/searchByCategory")
     public String homePost(@RequestParam("categoryId") long categoryId, @RequestParam(defaultValue = "0") int page, Model model) {
@@ -81,11 +74,26 @@ public class HomeController {
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productsPage.getTotalPages());
-        return "home";
+        return "shop";
     }
 
     @GetMapping("/about")
     public String about() {
         return "about";
+    }
+
+    @GetMapping("/blog")
+    public String blog() {
+        return "blog";
+    }
+
+    @GetMapping("/blog-details")
+    public String blogdetails() {
+        return "blog-details";
+    }
+
+    @GetMapping("/faq")
+    public String faq() {
+        return "faq";
     }
 }

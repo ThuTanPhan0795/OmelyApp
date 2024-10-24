@@ -56,7 +56,7 @@ public class Product {
         return imageUrl;
     }
     public String getDescription(){
-        return name;
+        return description;
     }
     public long getId(){
         return id;
@@ -65,7 +65,7 @@ public class Product {
         return price;
     }
     public String getName(){
-        return "Name";
+        return name;
     }
 
 }

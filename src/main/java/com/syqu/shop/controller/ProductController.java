@@ -128,6 +128,6 @@ public class ProductController {
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productsPage.getTotalPages());
-        return "home";
+        return "shop";
     }
 }

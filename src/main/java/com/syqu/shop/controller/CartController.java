@@ -3,6 +3,7 @@ package com.syqu.shop.controller;
 import com.syqu.shop.domain.CartItem;
 import com.syqu.shop.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -22,13 +24,13 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping("/cart")
+    @GetMapping(value = {"/cart","/shopping-cart"})
     public String viewCart(Model model) {
         String username = getCurrentUsername();
         List<CartItem> cartItems = cartService.getCartItemsByUsername(username);
         model.addAttribute("products", cartItems);
         model.addAttribute("totalPrice", calculateTotalPrice(cartItems));
-        return "cart";
+        return "shopping-cart";
     }
 
     @PostMapping("/cart/add")
@@ -70,6 +72,22 @@ public class CartController {
         String username = getCurrentUsername();
         cartService.updateCart(username, productId, quantity);
         return "redirect:/cart";
+    }
+
+    @PostMapping("/cart/update-cart")
+    public ResponseEntity<?> updateCart(@RequestBody List<CartItem> cartItems) {
+        try {
+            String username = getCurrentUsername();
+            for (CartItem cartItem : cartItems ){
+                Long productID = cartItem.getId();
+                int quantity = cartItem.getQuantity();
+                cartService.updateCart(username, productID, quantity);
+            }
+            return ResponseEntity.ok().body("{\"message\": \"Cart updated successfully.\"}"); // Return a success message as JSON
+        } catch (Exception e) {
+            // Handle exceptions appropriately
+            return ResponseEntity.status(500).body("{\"error\": \"Failed to update the cart.\"}"); // Return error message as JSON
+        }
     }
 
     @PostMapping("/cart/updateQuantity")
