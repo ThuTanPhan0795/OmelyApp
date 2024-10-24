@@ -59,6 +59,10 @@
                         <table>
                             <thead>
                                 <tr>
+                                    <th>
+                                        <input type="checkbox" id="select-all" />
+                                        <label for="select-all">Select All</label>
+                                    </th>
                                     <th>Image</th>
                                     <th class="p-name">Product Name</th>
                                     <th>Price</th>
@@ -69,6 +73,9 @@
                             </thead>
                             <tbody>
                                 <tr th:each="product : ${products}" class="cart-item">
+                                    <td class="close-td first-row">
+                                        <input type="checkbox" class="item-checkbox" th:data-id="${product.product.id}" />
+                                    </td>
                                     <td class="cart-pic first-row">
                                         <img th:src="${product.product.imageUrl}" alt="" style="width: 50%; height: 50%">
                                     </td>
@@ -98,7 +105,7 @@
                         <div class="col-lg-4">
                             <div class="cart-buttons">
                                 <a href="#" class="primary-btn continue-shop">Continue shopping</a>
-                                <a href="#" class="primary-btn up-cart">Update cart</a>
+                                <button type="button" id="update-cart-btn" class="primary-btn up-cart" disabled>Update cart</button>
                             </div>
                             <div class="discount-coupon">
                                 <h6>Discount Codes</h6>
@@ -112,9 +119,9 @@
                             <div class="proceed-checkout">
                                 <ul>
                                     <li class="subtotal">Subtotal 
-                                        <span class="subtotal-price" th:text="${#numbers.formatDecimal(totalPrice, 2, 2)}"></span>
+                                        <span class="subtotal-price">$0.00</span>
                                     </li>
-                                    <li class="cart-total">Total <span class="total-cart-price">$240.00</span></li>
+                                    <li class="cart-total">Total <span class="total-cart-price">$0.00</span></li>
                                 </ul>
                                 <a href="#" class="proceed-btn">PROCEED TO CHECK OUT</a>
                             </div>

@@ -57,35 +57,87 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-// Function to update total and subtotal
-function updateTotals() {
+document.addEventListener('DOMContentLoaded', function () {
     const quantityInputs = document.querySelectorAll('.quantity-input');
-    let subtotal = 0;
+    const updateCartButton = document.getElementById('update-cart-btn');
+    const selectAllCheckbox = document.getElementById('select-all');
+    const subtotalPriceElement = document.querySelector('.subtotal-price');
+    const totalCartPriceElement = document.querySelector('.total-cart-price');
 
+    let isChanged = false;
+
+    // Function to update totals and subtotal
+    function updateTotals() {
+        let subtotal = 0;
+        let total = 0;
+
+        const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+        itemCheckboxes.forEach((checkbox) => {
+            const row = checkbox.closest('tr');
+            const priceElement = row.querySelector('.p-price');
+            const quantityInput = row.querySelector('.quantity-input');
+            const itemTotalElement = row.querySelector('.item-total');
+
+            const price = parseFloat(priceElement.textContent.replace('$', ''));
+            const quantity = parseInt(quantityInput.value, 10);
+            const totalForItem = price * quantity;
+
+            itemTotalElement.textContent = `$${totalForItem.toFixed(2)}`; // Update item total
+            total += totalForItem; // Update total
+
+            if (checkbox.checked) {
+                subtotal += totalForItem; // Only add to subtotal if checked
+            }
+        });
+
+        subtotalPriceElement.textContent = `$${subtotal.toFixed(2)}`; // Update subtotal
+        totalCartPriceElement.textContent = `$${subtotal.toFixed(2)}`; // Total is the same as subtotal for selected items
+    }
+
+    // Enable the update button when quantity is changed
     quantityInputs.forEach(input => {
-        const row = input.closest('tr');
-        const price = parseFloat(row.querySelector('.p-price').textContent.replace('$', ''));
-        const quantity = parseInt(input.value);
-        const totalCell = row.querySelector('.item-total');
-
-        // Update the total for this row
-        const total = price * quantity;
-        totalCell.textContent = total.toFixed(2); // Update the total cell
-
-        // Update subtotal
-        subtotal += total;
+        input.addEventListener('input', function () {
+            isChanged = true;
+            updateCartButton.disabled = false;
+            updateTotals(); // Update totals on quantity change
+        });
     });
 
-    // Update subtotal and total cart price
-    document.querySelector('.subtotal-price').textContent = subtotal.toFixed(2);
-    document.querySelector('.total-cart-price').textContent = subtotal.toFixed(2);
-}
+    // Handle select all checkbox
+    selectAllCheckbox.addEventListener('change', function () {
+        const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+        itemCheckboxes.forEach(checkbox => {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+        updateTotals(); // Update totals when select all is checked/unchecked
+    });
 
-// Add event listeners for quantity inputs
-document.querySelectorAll('.quantity-input').forEach(input => {
-    input.addEventListener('input', updateTotals);
+    // Handle individual item checkbox changes
+    const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+    itemCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            isChanged = true; // Assuming changing checkboxes is a change
+            updateCartButton.disabled = false;
+            updateTotals(); // Update totals on checkbox change
+        });
+    });
+
+    // Confirm navigation away if there are unsaved changes
+    window.addEventListener('beforeunload', function (event) {
+        if (isChanged) {
+            const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
+            event.returnValue = confirmationMessage; // For most browsers
+            return confirmationMessage; // For Firefox
+        }
+    });
+
+    // Handle removal of items
+    const removeLinks = document.querySelectorAll('.ti-close');
+    removeLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            isChanged = true;
+            updateCartButton.disabled = false;
+            updateTotals(); // Update totals after an item is removed
+        });
+    });
 });
-
-// Initial calculation on page load
-updateTotals();
-
