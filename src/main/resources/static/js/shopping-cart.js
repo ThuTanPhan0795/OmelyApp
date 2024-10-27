@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Handle navigation links
-    document.querySelectorAll("a").forEach((link) => {
+    document.querySelectorAll("[href]").forEach((link) => {
         link.addEventListener("click", function (event) {
             if (isChanged) {
                 event.preventDefault();
