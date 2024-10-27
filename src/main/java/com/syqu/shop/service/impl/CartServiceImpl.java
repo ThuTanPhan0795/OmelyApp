@@ -53,10 +53,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void updateCart(String username, long productId, int quantity) {
+    public void updateCart(String username, long productId, int quantity ,int selectItem) {
         CartItem cartItem = cartItemRepository.findByUsernameAndProductId(username, productId);
         if (cartItem != null) {
             cartItem.setQuantity(quantity);
+            cartItem.setSelectItem(selectItem);
             cartItemRepository.save(cartItem);
         }
     }

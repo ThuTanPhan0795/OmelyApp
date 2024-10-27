@@ -70,7 +70,7 @@ public class CartController {
     @PostMapping("/cart/update")
     public String updateCart(@RequestParam("productId") long productId, @RequestParam("quantity") int quantity) {
         String username = getCurrentUsername();
-        cartService.updateCart(username, productId, quantity);
+        cartService.updateCart(username, productId, quantity ,0);
         return "redirect:/cart";
     }
 
@@ -81,7 +81,8 @@ public class CartController {
             for (CartItem cartItem : cartItems ){
                 Long productID = cartItem.getId();
                 int quantity = cartItem.getQuantity();
-                cartService.updateCart(username, productID, quantity);
+                int selectItem = cartItem.getSelectItem(); // Update the selectItem state
+                cartService.updateCart(username, productID, quantity ,selectItem);
             }
             return ResponseEntity.ok().body("{\"message\": \"Cart updated successfully.\"}"); // Return a success message as JSON
         } catch (Exception e) {
@@ -99,7 +100,7 @@ public class CartController {
         }
 
         String username = getCurrentUsername();
-        cartService.updateCart(username, productId, quantity);
+        cartService.updateCart(username, productId, quantity ,0);
         return "Quantity updated successfully.";
     }
 

@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 public interface CartService {
     void addToCart(String username, long productId, int quantity);
     void removeFromCart(String username, long productId);
-    void updateCart(String username, long productId, int quantity);
+    void updateCart(String username, long productId, int quantity ,int selectItem);
     void clearCart(String username);
     List<CartItem> getCartItemsByUsername(String username);
 }

@@ -81,19 +81,21 @@ document.addEventListener("DOMContentLoaded", function () {
     function saveCart(callback) {
         const cartItems = [];
         const cartItemElements = document.querySelectorAll(".cart-item");
-
+    
         cartItemElements.forEach((itemElement) => {
             const productId = itemElement.querySelector(".quantity-input").getAttribute("data-id");
             const itemQuantity = itemElement.querySelector(".quantity-input").value;
-
+            const isChecked = itemElement.querySelector(".item-checkbox").checked;
+    
             if (itemQuantity > 0) {
                 cartItems.push({
                     id: parseInt(productId),
-                    quantity: parseInt(itemQuantity)
+                    quantity: parseInt(itemQuantity),
+                    selectItem: isChecked ? 1 : 0 // Store selection state
                 });
             }
         });
-
+    
         if (cartItems.length > 0) {
             fetch("/cart/update-cart", {
                 method: "POST",
@@ -105,7 +107,8 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => {
                 return response.json().then(data => {
                     if (response.ok) {
-                        if (callback) callback(); // Call the callback to redirect
+                        alert(data.message || "Cart updated successfully.");
+                        if (callback) callback();
                     } else {
                         alert(`Failed to update the cart: ${data.error || "No message available"}`);
                     }
@@ -115,8 +118,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("Error updating cart:", error);
                 alert("An error occurred. Please try again.");
             });
+        } else {
+            alert("No items in the cart to save.");
         }
     }
+    
 
     // Handle the update cart button click
     if (updateCartButton) {
