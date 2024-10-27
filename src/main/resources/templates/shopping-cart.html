@@ -78,14 +78,8 @@
                                         <input type="checkbox" 
                                                class="item-checkbox" 
                                                th:data-id="${product.product.id}" 
-                                               th:checked="${product.selectItem == 1}" 
-                                               onchange="this.disabled = false; this.parentNode.querySelector('.enable-checkbox').disabled = true;" />
-                                        <input type="checkbox" 
-                                               class="enable-checkbox" 
-                                               th:data-id="${product.product.id}" 
-                                               th:disabled="${product.selectItem == 0}" 
-                                               onchange="this.disabled = false; this.parentNode.querySelector('.item-checkbox').disabled = true;" />
-                                    </td>               
+                                               th:checked="${product.selectItem == 1}" />
+                                    </td>                                        
                                     <td class="cart-pic first-row">
                                         <img th:src="${product.product.imageUrl}" alt="" style="width: 50%; height: 50%">
                                     </td>

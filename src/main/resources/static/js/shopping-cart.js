@@ -107,7 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => {
                 return response.json().then(data => {
                     if (response.ok) {
-                        alert(data.message || "Cart updated successfully.");
                         if (callback) callback();
                     } else {
                         alert(`Failed to update the cart: ${data.error || "No message available"}`);
