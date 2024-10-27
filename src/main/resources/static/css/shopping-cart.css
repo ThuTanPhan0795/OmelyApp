@@ -1,0 +1,35 @@
+.confirmation-modal {
+    display: none; /* Hide modal by default */
+    position: fixed;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust position to center */
+    width: 300px; /* Set a specific width */
+    background: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+    z-index: 1000; /* Ensure it's on top */
+}
+
+.modal-content {
+    padding: 20px; /* Padding inside the modal */
+    text-align: center; /* Center text */
+}
+
+.button_popup {
+    margin: 10px; /* Space between buttons */
+    padding: 10px 20px; /* Padding for buttons */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    font-size: 16px; /* Font size */
+    transition: background 0.3s; /* Smooth background transition */
+}
+
+button:hover {
+    background: #f0f0f0; /* Light grey background on hover */
+}
+
+button:focus {
+    outline: none; /* Remove outline on focus */
+}

@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/shopping-cart.css" type="text/css">
 </head>
 
 <body>
@@ -105,7 +106,7 @@
                         <div class="col-lg-4">
                             <div class="cart-buttons">
                                 <a href="#" class="primary-btn continue-shop">Continue shopping</a>
-                                <button type="button" id="update-cart-btn" class="primary-btn up-cart" disabled>Update cart</button>
+                                <!-- <button type="button" id="update-cart-btn" class="primary-btn up-cart" disabled>Save cart</button> -->
                             </div>
                             <div class="discount-coupon">
                                 <h6>Discount Codes</h6>
@@ -128,6 +129,15 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <!-- Confirmation Modal -->
+        <div id="confirmationModal" class="confirmation-modal">
+            <div class="modal-content">
+                <h4>You have unsaved changes!</h4>
+                <p>Your cart is not saved. Would you like to save your cart before leaving?</p>
+                <button class="button_popup" id="save-cart">Save Cart</button>
+                <button class="button_popup" id="leave-without-saving">Leave Without Saving</button>
             </div>
         </div>
     </section>
