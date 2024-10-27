@@ -7,11 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const removeLinks = document.querySelectorAll('.ti-close');
     const confirmationModal = document.getElementById('confirmationModal');
     let isChanged = false;
+    let redirectUrl = ""; // To store the redirect URL
 
     // Function to update totals and subtotal
     function updateTotals() {
         let subtotal = 0;
-        let total = 0;
+        console.log("Updating totals...");
 
         const itemCheckboxes = document.querySelectorAll('.item-checkbox');
         itemCheckboxes.forEach((checkbox) => {
@@ -25,19 +26,59 @@ document.addEventListener("DOMContentLoaded", function () {
             const totalForItem = price * quantity;
 
             itemTotalElement.textContent = `$${totalForItem.toFixed(2)}`; // Update item total
-            total += totalForItem; // Update total
 
+            console.log(`Item Total for checkbox: ${checkbox.checked}, Price: ${price}, Quantity: ${quantity}, Total: ${totalForItem}`);
+
+            // Only add to subtotal if checked
             if (checkbox.checked) {
-                subtotal += totalForItem; // Only add to subtotal if checked
+                subtotal += totalForItem;
+                console.log(`Adding to subtotal: ${totalForItem}`);
+            } else {
+                console.log(`Not adding to subtotal because checkbox is unchecked.`);
             }
         });
 
         subtotalPriceElement.textContent = `$${subtotal.toFixed(2)}`; // Update subtotal
         totalCartPriceElement.textContent = `$${subtotal.toFixed(2)}`; // Total is the same as subtotal for selected items
+
+        console.log(`Subtotal: ${subtotal}`);
     }
 
+    // Enable the update button when quantity is changed
+    quantityInputs.forEach(input => {
+        input.addEventListener('input', function () {
+            isChanged = true;
+            if (updateCartButton) {
+                updateCartButton.disabled = false; // Only set disabled if the button exists
+            }
+            updateTotals(); // Update totals on quantity change
+        });
+    });
+
+    // Handle select all checkbox
+    selectAllCheckbox.addEventListener('change', function () {
+        const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+        itemCheckboxes.forEach(checkbox => {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+        updateTotals(); // Update totals when select all is checked/unchecked
+    });
+
+    // Handle individual item checkbox changes
+    const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+    itemCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            isChanged = true; // Changing checkboxes counts as a change
+            if (updateCartButton) {
+                updateCartButton.disabled = false; // Only set disabled if the button exists
+            }
+            updateTotals(); // Update totals on checkbox change
+            console.log(`Checkbox for product ID ${checkbox.getAttribute('data-id')} changed to: ${checkbox.checked}`);
+        });
+    });
+
     // Function to save cart
-    function saveCart() {
+    function saveCart(callback) {
         const cartItems = [];
         const cartItemElements = document.querySelectorAll(".cart-item");
 
@@ -64,8 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => {
                 return response.json().then(data => {
                     if (response.ok) {
-                        // alert(data.message || "Cart updated successfully.");
-                        location.reload();
+                        if (callback) callback(); // Call the callback to redirect
                     } else {
                         alert(`Failed to update the cart: ${data.error || "No message available"}`);
                     }
@@ -86,34 +126,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Enable the update button when quantity is changed
-    quantityInputs.forEach(input => {
-        input.addEventListener('input', function () {
-            isChanged = true;
-            updateCartButton.disabled = false;
-            updateTotals(); // Update totals on quantity change
-        });
-    });
-
-    // Handle select all checkbox
-    selectAllCheckbox.addEventListener('change', function () {
-        const itemCheckboxes = document.querySelectorAll('.item-checkbox');
-        itemCheckboxes.forEach(checkbox => {
-            checkbox.checked = selectAllCheckbox.checked;
-        });
-        updateTotals(); // Update totals when select all is checked/unchecked
-    });
-
-    // Handle individual item checkbox changes
-    const itemCheckboxes = document.querySelectorAll('.item-checkbox');
-    itemCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function () {
-            isChanged = true; // Changing checkboxes counts as a change
-            updateCartButton.disabled = false;
-            updateTotals(); // Update totals on checkbox change
-        });
-    });
-
     // Show confirmation modal when navigating away
     function showConfirmationModal() {
         confirmationModal.style.display = 'flex';
@@ -124,18 +136,22 @@ document.addEventListener("DOMContentLoaded", function () {
         link.addEventListener('click', function (event) {
             if (isChanged) {
                 event.preventDefault(); // Prevent navigation
+                redirectUrl = link.href; // Store the redirect URL
                 showConfirmationModal(); // Show the modal
+
                 // Handle confirmation buttons
                 document.getElementById('save-cart').onclick = function () {
-                    saveCart();
-                    confirmationModal.style.display = 'none';
-                    setTimeout(() => {
-                        window.location.href = link.href; // Navigate after saving
-                    }, 500); // Delay to allow save
+                    saveCart(() => {
+                        confirmationModal.style.display = 'none';
+                        setTimeout(() => {
+                            window.location.href = redirectUrl; // Navigate after saving
+                        }, 500); // Delay to allow save
+                    });
                 };
+
                 document.getElementById('leave-without-saving').onclick = function () {
                     confirmationModal.style.display = 'none';
-                    window.location.href = link.href; // Navigate without saving
+                    window.location.href = redirectUrl; // Navigate without saving
                 };
             }
         });
@@ -145,8 +161,13 @@ document.addEventListener("DOMContentLoaded", function () {
     removeLinks.forEach(link => {
         link.addEventListener('click', function () {
             isChanged = true;
-            updateCartButton.disabled = false;
+            if (updateCartButton) {
+                updateCartButton.disabled = false; // Only set disabled if the button exists
+            }
             updateTotals(); // Update totals after an item is removed
         });
     });
+
+    // Initial call to update totals when the page loads
+    updateTotals();
 });

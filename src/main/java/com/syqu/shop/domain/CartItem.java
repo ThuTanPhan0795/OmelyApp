@@ -17,6 +17,8 @@ public class CartItem {
 
     private int quantity;
 
+    private int selectItem;
+
     public CartItem() {
     }
 
@@ -58,5 +60,13 @@ public class CartItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getSelectItem() {
+        return selectItem;
+    }
+
+    public void setSelectItem(int selectItem) {
+        this.selectItem = selectItem;
     }
 }
