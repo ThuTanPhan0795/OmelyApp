@@ -73,9 +73,9 @@ public class StartupData implements CommandLineRunner {
     }
 
     private void exampleProducts(){
-        final String NAME = "Example Name";
-        final String IMAGE_URL = "https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX7389458.jpg";
-        final String DESCRIPTION = "Example Description";
+        final String NAME = "Powerful Blender";
+        final String IMAGE_URL = "https://raw.githubusercontent.com/ThuTanPhan0795/OmelyApp/refs/heads/fashi/src/main/resources/static/img/products/product-2.jpg";
+        final String DESCRIPTION = "A powerful blender for smoothies and shakes.";
         final BigDecimal PRICE = BigDecimal.valueOf(22);
 
         Product product1 = new Product();

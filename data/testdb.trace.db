@@ -1,0 +1,150 @@
+2024-10-27 19:15:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE CART_ITEM (ID BIGINT NOT NULL AUTO_INCREMENT, QUANTITY INTEGER NOT NULL, SELECT_ITEM INTEGER NOT NULL, USERNAME VARCHAR(255), PRODUCT_ID BIGINT NOT NULL, PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table cart_item (id bigint not null auto_increment, quantity integer not null, select_item integer not null, username varchar(255), product_id bigint not null, primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:15:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE CATEGORY (ID BIGINT NOT NULL, CAT_NAME VARCHAR(255), PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table category (id bigint not null, cat_name varchar(255), primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:15:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE CONTACT_MESSAGE (ID BIGINT NOT NULL AUTO_INCREMENT, EMAIL VARCHAR(255), MESSAGE VARCHAR(255), NAME VARCHAR(255), PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table contact_message (id bigint not null auto_increment, email varchar(255), message varchar(255), name varchar(255), primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:15:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE HIBERNATE_SEQUENCE (NEXT_VAL BIGINT) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table hibernate_sequence (next_val bigint) engine=InnoDB [42001-200]
+2024-10-27 19:15:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HIBERNATE_SEQUENCE" not found; SQL statement:
+insert into hibernate_sequence values ( 1 ) [42102-200]
+2024-10-27 19:15:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE PRODUCT (ID BIGINT NOT NULL, DESCRIPTION VARCHAR(500), IMAGE VARCHAR(255), NAME VARCHAR(255), PRICE DECIMAL(19,2), CATEGORY_ID BIGINT, PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table product (id bigint not null, description varchar(500), image varchar(255), name varchar(255), price decimal(19,2), category_id bigint, primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:15:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE USER (ID BIGINT NOT NULL, AGE INTEGER, BALANCE DECIMAL(19,2), CITY VARCHAR(255), EMAIL VARCHAR(255), FIRST_NAME VARCHAR(255), GENDER VARCHAR(255), LAST_NAME VARCHAR(255), PASSWORD VARCHAR(255), PASSWORD_CONFIRM VARCHAR(255), USERNAME VARCHAR(255), PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table user (id bigint not null, age integer, balance decimal(19,2), city varchar(255), email varchar(255), first_name varchar(255), gender varchar(255), last_name varchar(255), password varchar(255), password_confirm varchar(255), username varchar(255), primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:15:24 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+alter table user drop index UK_ob8kqyqqgmefl0aco34akdtpe [42102-200]
+2024-10-27 19:15:24 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email) [42102-200]
+2024-10-27 19:15:24 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+alter table user drop index UK_sb8bbouer5wak8vyiiy4pf2bx [42102-200]
+2024-10-27 19:15:24 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+alter table user add constraint UK_sb8bbouer5wak8vyiiy4pf2bx unique (username) [42102-200]
+2024-10-27 19:15:24 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CART_ITEM" not found; SQL statement:
+alter table cart_item add constraint FKjcyd5wv4igqnw413rgxbfu4nv foreign key (product_id) references product (id) [42102-200]
+2024-10-27 19:15:24 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCT" not found; SQL statement:
+alter table product add constraint FK1mtsbur82frn64de7balymq9s foreign key (category_id) references category (id) [42102-200]
+2024-10-27 19:15:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCT" not found; SQL statement:
+select product0_.id as id1_3_, product0_.category_id as category6_3_, product0_.description as descript2_3_, product0_.image as image3_3_, product0_.name as name4_3_, product0_.price as price5_3_ from product product0_ limit ? [42102-200]
+2024-10-27 19:15:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCT" not found; SQL statement:
+select product0_.id as id1_3_, product0_.category_id as category6_3_, product0_.description as descript2_3_, product0_.image as image3_3_, product0_.name as name4_3_, product0_.price as price5_3_ from product product0_ limit ? [42102-200]
+2024-10-27 19:18:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CART_ITEM" not found; SQL statement:
+alter table cart_item drop foreign key FKjcyd5wv4igqnw413rgxbfu4nv [42102-200]
+2024-10-27 19:18:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCT" not found; SQL statement:
+alter table product drop foreign key FK1mtsbur82frn64de7balymq9s [42102-200]
+2024-10-27 19:18:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE CART_ITEM (ID BIGINT NOT NULL AUTO_INCREMENT, QUANTITY INTEGER NOT NULL, SELECT_ITEM INTEGER NOT NULL, USERNAME VARCHAR(255), PRODUCT_ID BIGINT NOT NULL, PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table cart_item (id bigint not null auto_increment, quantity integer not null, select_item integer not null, username varchar(255), product_id bigint not null, primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:18:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE CATEGORY (ID BIGINT NOT NULL, CAT_NAME VARCHAR(255), PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table category (id bigint not null, cat_name varchar(255), primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:18:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE CONTACT_MESSAGE (ID BIGINT NOT NULL AUTO_INCREMENT, EMAIL VARCHAR(255), MESSAGE VARCHAR(255), NAME VARCHAR(255), PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table contact_message (id bigint not null auto_increment, email varchar(255), message varchar(255), name varchar(255), primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:18:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE HIBERNATE_SEQUENCE (NEXT_VAL BIGINT) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table hibernate_sequence (next_val bigint) engine=InnoDB [42001-200]
+2024-10-27 19:18:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HIBERNATE_SEQUENCE" not found; SQL statement:
+insert into hibernate_sequence values ( 1 ) [42102-200]
+2024-10-27 19:18:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE PRODUCT (ID BIGINT NOT NULL, DESCRIPTION VARCHAR(500), IMAGE VARCHAR(255), NAME VARCHAR(255), PRICE DECIMAL(19,2), CATEGORY_ID BIGINT, PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table product (id bigint not null, description varchar(500), image varchar(255), name varchar(255), price decimal(19,2), category_id bigint, primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:18:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE USER (ID BIGINT NOT NULL, AGE INTEGER, BALANCE DECIMAL(19,2), CITY VARCHAR(255), EMAIL VARCHAR(255), FIRST_NAME VARCHAR(255), GENDER VARCHAR(255), LAST_NAME VARCHAR(255), PASSWORD VARCHAR(255), PASSWORD_CONFIRM VARCHAR(255), USERNAME VARCHAR(255), PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table user (id bigint not null, age integer, balance decimal(19,2), city varchar(255), email varchar(255), first_name varchar(255), gender varchar(255), last_name varchar(255), password varchar(255), password_confirm varchar(255), username varchar(255), primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:18:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email) [42102-200]
+2024-10-27 19:18:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+alter table user add constraint UK_sb8bbouer5wak8vyiiy4pf2bx unique (username) [42102-200]
+2024-10-27 19:18:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CART_ITEM" not found; SQL statement:
+alter table cart_item add constraint FKjcyd5wv4igqnw413rgxbfu4nv foreign key (product_id) references product (id) [42102-200]
+2024-10-27 19:18:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCT" not found; SQL statement:
+alter table product add constraint FK1mtsbur82frn64de7balymq9s foreign key (category_id) references category (id) [42102-200]
+2024-10-27 19:18:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCT" not found; SQL statement:
+select product0_.id as id1_3_, product0_.category_id as category6_3_, product0_.description as descript2_3_, product0_.image as image3_3_, product0_.name as name4_3_, product0_.price as price5_3_ from product product0_ limit ? [42102-200]
+2024-10-27 19:18:14 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCT" not found; SQL statement:
+select product0_.id as id1_3_, product0_.category_id as category6_3_, product0_.description as descript2_3_, product0_.image as image3_3_, product0_.name as name4_3_, product0_.price as price5_3_ from product product0_ limit ? [42102-200]
+2024-10-27 19:19:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CART_ITEM" not found; SQL statement:
+alter table cart_item drop foreign key FKjcyd5wv4igqnw413rgxbfu4nv [42102-200]
+2024-10-27 19:19:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCT" not found; SQL statement:
+alter table product drop foreign key FK1mtsbur82frn64de7balymq9s [42102-200]
+2024-10-27 19:22:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CART_ITEM" not found; SQL statement:
+alter table cart_item drop foreign key FKjcyd5wv4igqnw413rgxbfu4nv [42102-200]
+2024-10-27 19:22:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCT" not found; SQL statement:
+alter table product drop foreign key FK1mtsbur82frn64de7balymq9s [42102-200]
+2024-10-27 19:22:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE CART_ITEM (ID BIGINT NOT NULL AUTO_INCREMENT, QUANTITY INTEGER NOT NULL, SELECT_ITEM INTEGER NOT NULL, USERNAME VARCHAR(255), PRODUCT_ID BIGINT NOT NULL, PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table cart_item (id bigint not null auto_increment, quantity integer not null, select_item integer not null, username varchar(255), product_id bigint not null, primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:22:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE CATEGORY (ID BIGINT NOT NULL, CAT_NAME VARCHAR(255), PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table category (id bigint not null, cat_name varchar(255), primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:22:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE CONTACT_MESSAGE (ID BIGINT NOT NULL AUTO_INCREMENT, EMAIL VARCHAR(255), MESSAGE VARCHAR(255), NAME VARCHAR(255), PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table contact_message (id bigint not null auto_increment, email varchar(255), message varchar(255), name varchar(255), primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:22:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE HIBERNATE_SEQUENCE (NEXT_VAL BIGINT) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table hibernate_sequence (next_val bigint) engine=InnoDB [42001-200]
+2024-10-27 19:22:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HIBERNATE_SEQUENCE" not found; SQL statement:
+insert into hibernate_sequence values ( 1 ) [42102-200]
+2024-10-27 19:22:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE PRODUCT (ID BIGINT NOT NULL, DESCRIPTION VARCHAR(500), IMAGE VARCHAR(255), NAME VARCHAR(255), PRICE DECIMAL(19,2), CATEGORY_ID BIGINT, PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table product (id bigint not null, description varchar(500), image varchar(255), name varchar(255), price decimal(19,2), category_id bigint, primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:22:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE USER (ID BIGINT NOT NULL, AGE INTEGER, BALANCE DECIMAL(19,2), CITY VARCHAR(255), EMAIL VARCHAR(255), FIRST_NAME VARCHAR(255), GENDER VARCHAR(255), LAST_NAME VARCHAR(255), PASSWORD VARCHAR(255), PASSWORD_CONFIRM VARCHAR(255), USERNAME VARCHAR(255), PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table user (id bigint not null, age integer, balance decimal(19,2), city varchar(255), email varchar(255), first_name varchar(255), gender varchar(255), last_name varchar(255), password varchar(255), password_confirm varchar(255), username varchar(255), primary key (id)) engine=InnoDB [42001-200]
+2024-10-27 19:22:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email) [42102-200]
+2024-10-27 19:22:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+alter table user add constraint UK_sb8bbouer5wak8vyiiy4pf2bx unique (username) [42102-200]
+2024-10-27 19:22:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CART_ITEM" not found; SQL statement:
+alter table cart_item add constraint FKjcyd5wv4igqnw413rgxbfu4nv foreign key (product_id) references product (id) [42102-200]
+2024-10-27 19:22:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCT" not found; SQL statement:
+alter table product add constraint FK1mtsbur82frn64de7balymq9s foreign key (category_id) references category (id) [42102-200]
+2024-10-27 19:22:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCT" not found; SQL statement:
+select product0_.id as id1_3_, product0_.category_id as category6_3_, product0_.description as descript2_3_, product0_.image as image3_3_, product0_.name as name4_3_, product0_.price as price5_3_ from product product0_ limit ? [42102-200]
+2024-10-27 19:22:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCT" not found; SQL statement:
+select product0_.id as id1_3_, product0_.category_id as category6_3_, product0_.description as descript2_3_, product0_.image as image3_3_, product0_.name as name4_3_, product0_.price as price5_3_ from product product0_ limit ? [42102-200]
+2024-10-27 19:23:15 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CART_ITEM" not found; SQL statement:
+select cartitem0_.id as id1_0_, cartitem0_.product_id as product_5_0_, cartitem0_.quantity as quantity2_0_, cartitem0_.select_item as select_i3_0_, cartitem0_.username as username4_0_ from cart_item cartitem0_ where cartitem0_.username=? [42102-200]
+2024-10-27 19:24:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CART_ITEM" not found; SQL statement:
+alter table cart_item drop foreign key FKjcyd5wv4igqnw413rgxbfu4nv [42102-200]
+2024-10-27 19:24:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCT" not found; SQL statement:
+alter table product drop foreign key FK1mtsbur82frn64de7balymq9s [42102-200]

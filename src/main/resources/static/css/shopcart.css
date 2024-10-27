@@ -13,6 +13,15 @@
     text-align: center;
 }
 
+/* Add this to define text colors */
+.success {
+    color: green; /* Green text for success messages */
+}
+
+.error {
+    color: red; /* Red text for error messages */
+}
+
 .popup-content {
     position: relative;
 }
