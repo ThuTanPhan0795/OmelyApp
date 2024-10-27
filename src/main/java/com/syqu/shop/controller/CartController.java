@@ -2,6 +2,9 @@ package com.syqu.shop.controller;
 
 import com.syqu.shop.domain.CartItem;
 import com.syqu.shop.service.CartService;
+
+import javassist.bytecode.stackmap.BasicBlock.Catch;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CartController {
@@ -41,10 +46,18 @@ public class CartController {
     }
 
     @GetMapping("/cart/add/{productId}")
-    public String addToCartByPath(@PathVariable("productId") long productId, @RequestParam(defaultValue = "1") int quantity) {
+    public ResponseEntity<Map<String, String>> addToCartByPath(@PathVariable("productId") long productId, @RequestParam(defaultValue = "1") int quantity) {
         String username = getCurrentUsername();
-        cartService.addToCart(username, productId, quantity);
-        return "redirect:/cart";
+        Map<String, String> response = new HashMap<>();
+        try {
+          cartService.addToCart(username, productId, quantity);
+          response.put("message", "Product added to cart successfully!");
+          return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.put("message", "Product added to cart failed!");
+        }
+       return ResponseEntity.ok(response);
     }
 
     @GetMapping("/cart/remove/{id}")

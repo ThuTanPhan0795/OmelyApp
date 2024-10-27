@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/shopcart.css" type="text/css">
 </head>
 
 <body>
@@ -205,7 +206,9 @@
                                             </div>
                                             <ul>
                                                 <li class="w-icon active">
-                                                    <a th:href="@{'/cart/add/' + ${product.id}}"><i class="icon_bag_alt"></i></a>
+                                                    <a href="#" class="add-to-cart-btn" th:data-product-id="${product.id}">
+                                                        <i class="icon_bag_alt"></i>
+                                                    </a>
                                                 </li>
                                                 <li class="quick-view"><a href="">+ Quick View</a></li>
                                                 <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
@@ -372,6 +375,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     </footer>
     <!-- Footer Section End -->
 
+    <!-- Add this near the end of your HTML body -->
+    <div id="cart-popup" class="cart-popup">
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <p id="popup-message">Product added to cart successfully!</p>
+        </div>
+    </div>
+
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -383,6 +394,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/shopcart.js"></script>
 </body>
 
 </html>
