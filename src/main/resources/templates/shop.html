@@ -189,9 +189,9 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-5 col-md-5 text-right">
+                            <!-- <div class="col-lg-5 col-md-5 text-right">
                                 <p>Show 01- 09 Of 36 Product</p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="product-list">
@@ -236,17 +236,36 @@
                         </div> <!-- Closing row -->
                     </div> <!-- Closing product-list -->
                       <!-- Pagination Controls -->
-                    <nav aria-label="Page navigation">
+                      <nav aria-label="Page navigation">
                         <ul class="pagination justify-content-center">
                             <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
                                 <a class="page-link" th:href="@{/shop(page=${currentPage - 1})}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                    
+                            <!-- First Page and Ellipsis if necessary -->
+                            <li class="page-item" th:if="${currentPage > 3}">
+                                <a class="page-link" th:href="@{/shop(page=0)}">1</a>
+                            </li>
+                            <li class="page-item disabled" th:if="${currentPage > 3}">
+                                <span class="page-link">...</span>
+                            </li>
+                    
+                            <!-- Display current, previous, and next few pages -->
+                            <li class="page-item" th:each="i : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 0, currentPage < totalPages - 3 ? currentPage + 2 : totalPages - 1)}"
                                 th:classappend="${i == currentPage ? 'active' : ''}">
                                 <a class="page-link" th:href="@{/shop(page=${i})}" th:text="${i + 1}"></a>
                             </li>
+                    
+                            <!-- Last Page and Ellipsis if necessary -->
+                            <li class="page-item disabled" th:if="${currentPage < totalPages - 4}">
+                                <span class="page-link">...</span>
+                            </li>
+                            <li class="page-item" th:if="${currentPage < totalPages - 3}">
+                                <a class="page-link" th:href="@{/shop(page=${totalPages - 1})}" th:text="${totalPages}"></a>
+                            </li>
+                    
                             <li class="page-item" th:classappend="${currentPage == totalPages - 1 ? 'disabled' : ''}">
                                 <a class="page-link" th:href="@{/shop(page=${currentPage + 1})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
@@ -254,12 +273,6 @@
                             </li>
                         </ul>
                     </nav>
-                    <!-- <div class="loading-more">
-                        <i class="icon_loading"></i>
-                        <a href="#">
-                            Loading More
-                        </a>
-                    </div> -->
                 </div>
             </div>
         </div>
