@@ -117,12 +117,40 @@
                             <h4>Your Order</h4>
                             <div class="order-total">
                                 <ul class="order-table">
-                                    <li>Product <span>Total</span></li>
-                                    <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                    <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                    <li class="fw-normal">Combination x 1 <span>$120.00</span></li>
-                                    <li class="fw-normal">Subtotal <span>$240.00</span></li>
-                                    <li class="total-price">Total <span>$240.00</span></li>
+                                    <div class="cart-table">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                
+                                                    <th>Image</th>
+                                                    <th class="p-name">Product Name</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Total</th>
+                                                  
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="product : ${selectedItems}" class="cart-item">
+                                                                                          
+                                                    <td class="cart-pic first-row">
+                                                        <img th:src="${product.product.imageUrl}" alt="" style="width: 50%; height: 50%">
+                                                    </td>
+                                                    <td class="cart-title first-row">
+                                                        <h5 th:text="${product.product.name}"></h5>
+                                                    </td>
+                                                    <td class="p-price first-row" th:text="${#numbers.formatDecimal(product.product.price, 2, 2)}"></td>
+                                                    <td class="total-price first-row qua-col">
+                                                        <h5 th:text="${product.quantity}"></h5>
+                                                    </td>
+                                                    <td class="p-price first-row item-total" th:text="${#numbers.formatDecimal(product.quantity * product.product.price, 2, 2)}"></td>
+                                                    
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <li class="fw-normal">Subtotal <span class="subtotal-price">$240.00</span></li>
+                                    <li class="total-price">Total <span class="total-cart-price">$240.00</span></li>
                                 </ul>
                                 <div class="payment-check">
                                     <div class="pc-item">
@@ -272,6 +300,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/checkout.js"></script>
 </body>
 
 </html>

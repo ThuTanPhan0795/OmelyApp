@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Handle navigation links
     document.querySelectorAll('a[href^="./"]').forEach((link) => {
         link.addEventListener("click", function (event) {
-            if (isChanged) {
+            if (isChanged && !link.getAttribute("href").endsWith("check-out")) {
                 event.preventDefault();
                 redirectUrl = link.href;
                 showConfirmationModal();
@@ -91,6 +91,26 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+
+    // Handle navigation links for checkout
+    document.querySelectorAll('a[href^="./check-out"]').forEach((link) => {
+        link.addEventListener("click", function (event) {
+            if (isChanged) {
+                event.preventDefault(); // Prevent the default link action
+
+                // Save the cart before navigating
+                saveCart(() => {
+                    // Redirect to the checkout page after saving the cart
+                    window.location.href = link.href; // Navigate to checkout
+                });
+            } else {
+                // No changes, directly navigate to the checkout page
+                window.location.href = link.href; // Navigate to checkout
+            }
+        });
+    });
+
+
 
     // Handle removal of items
     removeLinks.forEach((link) => {

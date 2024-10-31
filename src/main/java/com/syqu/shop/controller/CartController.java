@@ -74,10 +74,13 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    @GetMapping("/cart/checkout")
-    public String checkout() {
-        // Handle checkout logic
-        return "checkout";
+    @GetMapping("check-out")
+    public String checkout(Model model) {
+        String userName = getCurrentUsername();  // Implement this method to retrieve the current user’s ID
+        List<CartItem> selectedItems = cartService.getSelectedItemsForUser(userName);
+        
+        model.addAttribute("selectedItems", selectedItems); // Pass selected items to the view
+        return "check-out";
     }
 
     @PostMapping("/cart/update")

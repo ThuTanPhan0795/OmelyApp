@@ -56,10 +56,10 @@ public class HomeController {
         return "shop";
     }
 
-    @GetMapping(value = {"/check-out"})
-    public String checkout(@RequestParam(defaultValue = "0") int page, Model model) {
-        return "check-out";
-    }
+    // @GetMapping(value = {"/check-out"})
+    // public String checkout(@RequestParam(defaultValue = "0") int page, Model model) {
+    //     return "check-out";
+    // }
     // @GetMapping(value = {"/login"})
     // public String login(@RequestParam(defaultValue = "0") int page, Model model) {
     //     return "login";
