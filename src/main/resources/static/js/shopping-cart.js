@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const quantityInput = row.querySelector(".quantity-input");
             const itemTotalElement = row.querySelector(".item-total");
 
-            const price = parseFloat(priceElement.textContent.replace("$", ""));
-            const quantity = parseInt(quantityInput.value, 10);
+            const price = parseFloat(priceElement.textContent.replace("$", "").replace(",", "")); // Handle potential formatting
+            const quantity = parseInt(quantityInput.value, 10) || 0; // Default to 0 if input is not valid
             const totalForItem = price * quantity;
 
             itemTotalElement.textContent = `$${totalForItem.toFixed(2)}`; // Update item total
@@ -35,12 +35,34 @@ document.addEventListener("DOMContentLoaded", function () {
         totalCartPriceElement.textContent = `$${subtotal.toFixed(2)}`;
     }
 
-    // Mark cart as changed and update totals on quantity change
+    // Handle quantity input changes
     quantityInputs.forEach((input) => {
+        let currentValue = input.value; // Store the initial value when the input is created
+
         input.addEventListener("input", function () {
-            isChanged = true;
-            updateCartButton && (updateCartButton.disabled = false);
-            updateTotals();
+            isChanged = true; // Mark cart as changed
+            updateCartButton && (updateCartButton.disabled = false); // Enable the update button
+
+            // Update currentValue only if the new input is a valid number
+            if (!isNaN(this.value) && this.value.trim() !== "") {
+                currentValue = this.value; // Update to the current value if valid
+            }
+            updateTotals(); // Recalculate totals
+        });
+
+        input.addEventListener("blur", function () {
+            if (this.value.trim() === "") {
+                // If input is blank, revert to the last valid value
+                console.log("Reverting to: " + currentValue); // Log the value being reverted to
+                this.value = currentValue; // Revert to the last valid value
+            } else {
+                // Update current value if the input is valid
+                if (!isNaN(this.value) && this.value.trim() !== "") {
+                    currentValue = this.value; // Update to the new valid value
+                    console.log("Current valid value: " + currentValue); // Log the new valid value
+                }
+            }
+            updateTotals(); // Ensure totals are updated after blur event
         });
     });
 
@@ -109,8 +131,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-
-
 
     // Handle removal of items
     removeLinks.forEach((link) => {
