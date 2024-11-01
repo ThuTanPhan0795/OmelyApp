@@ -137,11 +137,17 @@
                     <li class="active"><a href="./index">Home</a></li>
                     <li><a href="./shop">Shop</a></li>
                     <li><a>Collection</a>
-                        <ul class="dropdown">
+                        <ul class="dropdown" th:each="cat : ${categories}">
+                            <li>
+                                <a th:href="@{/searchByCategory(categoryId=${cat.id})}" 
+                                   th:text="${cat.categoryName}"></a>
+                            </li>
+                        </ul>
+                        <!-- <ul class="dropdown">
                             <li><a href="#">Men's</a></li>
                             <li><a href="#">Women's</a></li>
                             <li><a href="#">Kid's</a></li>
-                        </ul>
+                        </ul> -->
                     </li>
                     <li><a href="./blog">Blog</a></li>
                     <li><a href="./contact">Contact</a></li>
