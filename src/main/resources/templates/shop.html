@@ -44,6 +44,9 @@
                     <div class="breadcrumb-text">
                         <a href="#"><i class="fa fa-home"></i> Home</a>
                         <span>Shop</span>
+                        <span sec:authorize="!isAuthenticated()" style="color: red; text-align: center; display: block; padding: 10px;">
+                            You have not logged in. Please log in to add products to the cart.
+                        </span>
                     </div>
                 </div>
             </div>
@@ -206,7 +209,7 @@
                                             </div>
                                             <ul>
                                                 <li class="w-icon active">
-                                                    <a href="#" class="add-to-cart-btn" th:data-product-id="${product.id}">
+                                                    <a sec:authorize="isAuthenticated()" href="#" class="add-to-cart-btn" th:data-product-id="${product.id}">
                                                         <i class="icon_bag_alt"></i>
                                                     </a>
                                                 </li>

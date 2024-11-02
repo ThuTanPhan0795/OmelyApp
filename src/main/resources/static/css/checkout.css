@@ -1,0 +1,63 @@
+/* Billing Details Section */
+.checkout-section .checkout-form h4 {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#billingDetailsSection p {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+#existingBillingDetails div {
+    margin-bottom: 8px;
+}
+
+#billingPreview {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Form Styles */
+.checkout-form label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.checkout-form input[type="text"],
+.checkout-form input[type="email"],
+.checkout-form input[type="tel"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Order Summary */
+.place-order .order-table li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    color: #333;
+}
+
+.place-order .total-price {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.site-btn.place-btn {
+    background-color: #5a88ca;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.site-btn.place-btn:hover {
+    background-color: #4872a1;
+}

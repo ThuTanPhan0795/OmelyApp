@@ -34,7 +34,7 @@ public class StartupData implements CommandLineRunner {
         userAccount();
         category();
         for (int i = 0 ; i<= 100 ; i++){
-            exampleProducts(i);   
+            exampleProducts(i+10);   
         }
     }
 
@@ -66,11 +66,11 @@ public class StartupData implements CommandLineRunner {
         Category category1 = new Category();
         Category category2 = new Category();
         Category category3 = new Category();
-        category1.setId(1);
+        category1.setId(11);
         category1.setCategoryName("Men's");
-        category2.setId(2);
+        category2.setId(12);
         category2.setCategoryName("Women's");
-        category3.setId(3);
+        category3.setId(13);
         category3.setCategoryName("Kid's");
 
         categoryRepository.save(category1);

@@ -29,6 +29,19 @@ document.addEventListener("DOMContentLoaded", function () {
         subtotalPriceElement.textContent = `$${subtotal.toFixed(2)}`;
         totalCartPriceElement.textContent = `$${subtotal.toFixed(2)}`;
     }
+    const billingAddresses = {
+        1: "John Doe, 123 Main St, New York, NY 10001",
+        2: "Jane Smith, 456 Market St, Los Angeles, CA 90001",
+        3: "Bob Johnson, 789 Elm St, Chicago, IL 60601"
+    };
+    
+    function showPreview(id) {
+        const billingPreview = document.getElementById("billingPreview");
+        const billingDetails = document.getElementById("billingDetails");
+        billingDetails.innerText = billingAddresses[id];
+        billingPreview.style.display = "block";
+    }
+    
 
     // Call updateTotals on page load
     updateTotals();

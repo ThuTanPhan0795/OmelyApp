@@ -59,56 +59,182 @@
                         <div class="checkout-content">
                             <a href="#" class="content-btn">Click Here To Login</a>
                         </div>
-                        <h4>Biiling Details</h4>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <label for="fir">First Name<span>*</span></label>
-                                <input type="text" id="fir">
+            
+                        <!-- Instructional Text for Available Address -->
+                        <div class="col-12 mb-3">
+                            <h4>Your Available Address </h4>
+                        </div>
+            
+                        <!-- Address 1 Section -->
+                        <div class="col-md-12 form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="address1">
+                                <label class="custom-control-label" for="address1" data-toggle="collapse" data-target="#shipping-address-1">Your Address 1</label>
                             </div>
-                            <div class="col-lg-6">
-                                <label for="last">Last Name<span>*</span></label>
-                                <input type="text" id="last">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="cun-name">Company Name</label>
-                                <input type="text" id="cun-name">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="cun">Country<span>*</span></label>
-                                <input type="text" id="cun">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="street">Street Address<span>*</span></label>
-                                <input type="text" id="street" class="street-first">
-                                <input type="text">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="zip">Postcode / ZIP (optional)</label>
-                                <input type="text" id="zip">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="town">Town / City<span>*</span></label>
-                                <input type="text" id="town">
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="email">Email Address<span>*</span></label>
-                                <input type="text" id="email">
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="phone">Phone<span>*</span></label>
-                                <input type="text" id="phone">
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="create-item">
-                                    <label for="acc-create">
-                                        Create an account?
-                                        <input type="checkbox" id="acc-create">
-                                        <span class="checkmark"></span>
-                                    </label>
+                            <div class="collapse mb-4" id="shipping-address-1">
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label>First Name</label>
+                                        <input class="form-control" type="text" placeholder="John">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Last Name</label>
+                                        <input class="form-control" type="text" placeholder="Doe">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>E-mail</label>
+                                        <input class="form-control" type="text" placeholder="example@email.com">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Mobile No</label>
+                                        <input class="form-control" type="text" placeholder="+123 456 789">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Address</label>
+                                        <input class="form-control" type="text" placeholder="123 Street">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>District</label>
+                                        <input class="form-control" type="text" placeholder="District Name">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Country</label>
+                                        <select class="custom-select">
+                                            <option selected>United States</option>
+                                            <option>Afghanistan</option>
+                                            <option>Albania</option>
+                                            <option>Algeria</option>
+                                            <option>Viet Nam</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>City</label>
+                                        <input class="form-control" type="text" placeholder="New York">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>ZIP Code</label>
+                                        <input class="form-control" type="text" placeholder="123">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+            
+                        <!-- Address 2 Section -->
+                        <div class="col-md-12 form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="address2">
+                                <label class="custom-control-label" for="address2" data-toggle="collapse" data-target="#shipping-address-2">Your Address 2</label>
+                            </div>
+                            <div class="collapse mb-4" id="shipping-address-2">
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label>First Name</label>
+                                        <input class="form-control" type="text" placeholder="John">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Last Name</label>
+                                        <input class="form-control" type="text" placeholder="Doe">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>E-mail</label>
+                                        <input class="form-control" type="text" placeholder="example@email.com">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Mobile No</label>
+                                        <input class="form-control" type="text" placeholder="+123 456 789">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Address</label>
+                                        <input class="form-control" type="text" placeholder="123 Street">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>District</label>
+                                        <input class="form-control" type="text" placeholder="District Name">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Country</label>
+                                        <select class="custom-select">
+                                            <option selected>United States</option>
+                                            <option>Afghanistan</option>
+                                            <option>Albania</option>
+                                            <option>Algeria</option>
+                                            <option>Viet Nam</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>City</label>
+                                        <input class="form-control" type="text" placeholder="New York">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>ZIP Code</label>
+                                        <input class="form-control" type="text" placeholder="123">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Instructional Text for Creating New Address -->
+                        <div class="col-12 mb-3">
+                            <h4>Create new Address </h4>
+                        </div>
+            
+                        <div class="col-md-12 form-group">
+                            <div class="mb-4">
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label>First Name</label>
+                                        <input class="form-control" type="text" placeholder="John">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Last Name</label>
+                                        <input class="form-control" type="text" placeholder="Doe">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>E-mail</label>
+                                        <input class="form-control" type="text" placeholder="example@email.com">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Mobile No</label>
+                                        <input class="form-control" type="text" placeholder="+123 456 789">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Address</label>
+                                        <input class="form-control" type="text" placeholder="123 Street">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>District</label>
+                                        <input class="form-control" type="text" placeholder="District Name">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Country</label>
+                                        <select class="custom-select">
+                                            <option selected>United States</option>
+                                            <option>Afghanistan</option>
+                                            <option>Albania</option>
+                                            <option>Algeria</option>
+                                            <option>Viet Nam</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>City</label>
+                                        <input class="form-control" type="text" placeholder="New York">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>ZIP Code</label>
+                                        <input class="form-control" type="text" placeholder="123">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Account Creation Option -->
+                        <div class="col-md-12 form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="newaccount">
+                                <label class="custom-control-label" for="newaccount">Save address</label>
+                            </div>
+                        </div>
+                    </div>                
                     <div class="col-lg-6">
                         <div class="checkout-content">
                             <input type="text" placeholder="Enter Your Coupon Code">
@@ -120,8 +246,7 @@
                                     <div class="cart-table">
                                         <table>
                                             <thead>
-                                                <tr>
-                
+                                                <tr>        
                                                     <th>Image</th>
                                                     <th class="p-name">Product Name</th>
                                                     <th>Price</th>
