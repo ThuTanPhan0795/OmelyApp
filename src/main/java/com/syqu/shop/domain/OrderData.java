@@ -10,14 +10,15 @@ import java.math.BigDecimal;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.Date;  // Add the Date import
 
 @Data
 @NoArgsConstructor // Generates a no-args constructor
 @AllArgsConstructor // Generates a constructor with all fields
 @Builder // Enables the Builder pattern
 @Entity
-@Table(name = "CheckoutData")
-public class CheckoutData {
+@Table(name = "OrderData")
+public class OrderData {
     @Column(name = "username", nullable = false)
     private String username;
 
@@ -65,9 +66,18 @@ public class CheckoutData {
     @NotNull
     private String listProductId;
 
+    @Column(name = "list_product_quantity", nullable = false)
+    @NotNull
+    private String listProductQuantity;
+
     @Column(name = "total_price")
     @NotNull
     private BigDecimal totalPrice;
+
+    // New orderDate field
+    @Column(name = "order_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)  // Use @Temporal to map to a timestamp
+    private Date orderDate;
 
     // Explicit getters and setters
 
@@ -154,6 +164,13 @@ public class CheckoutData {
         return listProductId;
     }
 
+    public void setListProductQuantity(String listProductQuantity) {
+        this.listProductQuantity = listProductQuantity;
+    }
+    public String getListProductQuantity() {
+        return listProductQuantity;
+    }
+
     public void setListProductId(String listProductId) {
         this.listProductId = listProductId;
     }
@@ -164,5 +181,13 @@ public class CheckoutData {
 
     public void setTotalPrice(BigDecimal totalPrice){
         this.totalPrice = totalPrice;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 }

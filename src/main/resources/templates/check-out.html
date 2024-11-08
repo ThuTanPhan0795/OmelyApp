@@ -80,7 +80,8 @@
                                     <label class="custom-control-label" th:for="'address' + ${iterStat.index}"
                                         th:text="${checkoutUserInfor.firstName} + ' ' + ${checkoutUserInfor.lastName}"
                                         data-toggle="collapse" 
-                                        th:data-target="'#shipping-address-' + ${iterStat.index}">
+                                        th:data-target="'#shipping-address-' + ${iterStat.index}"
+                                        th:data-index="${iterStat.index}">
                                         <!-- Label for each address will display user's first and last name -->
                                     </label>
                                 </div>
@@ -147,7 +148,8 @@
                                     th:checked="${#lists.size(checkoutUserInfors) == 0}"
                                     th:disabled="${#lists.size(checkoutUserInfors) == 0}"
                                     data-toggle="collapse" 
-                                    data-target="#create-account">
+                                    data-target="#create-account"
+                                    th:data-index="${#lists.size(checkoutUserInfors)}">
                                 <label class="custom-control-label" for="create-account-radio">Create new account</label>
                             </div>
                         </div>
@@ -241,7 +243,7 @@
                                                     <td class="cart-pic first-row">
                                                         <img th:src="${product.product.imageUrl}" alt="" style="width: 50%; height: 50%">
                                                     </td>
-                                                    <td class="cart-title first-row" th:id="product-id" th:value="${product.product.id}">
+                                                    <td class="cart-title first-row" th:id="${product.product.id}">
                                                         <h5 th:text="${product.product.name}"></h5>
                                                     </td>
                                                     <td class="p-price first-row" th:text="${#numbers.formatDecimal(product.product.price, 2, 2)}"></td>
