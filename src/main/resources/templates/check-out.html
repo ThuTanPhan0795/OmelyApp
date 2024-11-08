@@ -57,7 +57,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="checkout-content">
-                            <a href="#" class="content-btn">Click Here To Login</a>
+                            <a href="#" class="content-btn">Click Here To Create New Adress</a>
                         </div>
             
                         <!-- Instructional Text for Available Address -->
@@ -65,11 +65,11 @@
                             <h4>Billing Address </h4>
                         </div>
                         <div class="col-12 mb-3" th:if="${#lists.size(checkoutUserInfors) > 0}">
-                            <h6>You have an available account! </h6>
-                            <h6> You can use it or create a new account.</h6>
+                            <h6>You have an available billing address ! </h6>
+                            <h6> You can use it or input new billing address</h6>
                         </div>
                         <div class="col-12 mb-3" th:if="${checkoutUserInfors == null || #lists.size(checkoutUserInfors) == 0}">
-                            <h6>You don't have an available account ! Please create a new account.</h6>
+                            <h6>You don't have an available billing address ! Please input below form .</h6>
                         </div>
                         <!-- Display Address Sections Dynamically if $checkoutUserInfors is not empty -->
                         <div class="col-md-12 form-group">
@@ -133,7 +133,6 @@
                                         </div>
                                         <div class="col-12 mb-3">
                                             <h6>If you click save , your adress will save for the next time .</h6>
-                                            <h6>If you don't want save your adress , you don't need to click it .</h6>
                                         </div>
                                         <div class="col-md-12 form-group">
                                             <button type="button" class="btn btn-primary save-address-btn" th:data-index="${iterStat.index}">Save</button>
@@ -144,19 +143,24 @@
                         
                             <!-- Radio Button for Creating a New Account -->
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" id="create-account-radio" name="selectedAddress"
-                                    th:checked="${#lists.size(checkoutUserInfors) == 0}"
-                                    th:disabled="${#lists.size(checkoutUserInfors) == 0}"
-                                    data-toggle="collapse" 
-                                    data-target="#create-account"
-                                    th:data-index="${#lists.size(checkoutUserInfors)}">
-                                <label class="custom-control-label" for="create-account-radio">Create new account</label>
-                            </div>
+                                <input type="radio" class="custom-control-input" 
+                                       th:id="'address' + ${#lists.size(checkoutUserInfors)}" 
+                                       name="selectedAddress"
+                                       th:checked="${#lists.size(checkoutUserInfors) == 0 ? true : false}">
+                                <label class="custom-control-label" 
+                                       th:for="'address' + ${#lists.size(checkoutUserInfors)}"
+                                       th:disabled="${#lists.size(checkoutUserInfors) == 0 ? true : false}"
+                                       data-toggle="collapse"
+                                       th:data-target="'#shipping-address-' + ${#lists.size(checkoutUserInfors)}"
+                                       th:data-index="${#lists.size(checkoutUserInfors)}">
+                                       New Billing Address
+                                </label>
+                            </div>                      
                         </div>
                         
                         <!-- Collapse Panel for Creating New Account -->
-                        <div class="collapse mb-4" id="create-account"
-                             th:classappend="${#lists.size(checkoutUserInfors) == 0 ? ' show' : ''}">
+                        <div class="collapse mb-4" th:id="'shipping-address-' + ${#lists.size(checkoutUserInfors)}"
+                            th:classappend="${#lists.size(checkoutUserInfors) == 0 ? ' show' : ''}">
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label>First Name</label>
@@ -202,7 +206,6 @@
                                 </div>
                                 <div class="col-12 mb-3">
                                     <h6>If you click save , your adress will save for the next time .</h6>
-                                    <h6>If you don't want save your adress , you don't need to click it .</h6>
                                 </div>
                                 <div class="col-md-12 form-group">
                                     <button type="button" class="btn btn-primary save-address-btn" th:data-index="${#lists.size(checkoutUserInfors)}">Save</button>

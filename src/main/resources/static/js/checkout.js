@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll('.save-address-btn').forEach(button => {
         button.addEventListener('click', function() {
             const index = this.getAttribute('data-index');
+            console.log(index);
             const userId = document.querySelector(`input[name='firstName_${index}']`).getAttribute('data-id');
             // Collect the data from the form fields for this address section
             const addressData = {
@@ -61,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 city: getInputValue(`input[name='city_${index}']`),
                 zipCode: getInputValue(`input[name='zipCode_${index}']`)
             };
+            console.log(addressData);
 
             // Function to check if the field is empty and return the placeholder value if it is
             function getInputValue(selector) {
@@ -76,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 body: JSON.stringify(addressData)
             })
-            .then(response => response.json())
+            // .then(response => response.json())
             .then(data => {
                 alert('Address saved successfully!');
             })
