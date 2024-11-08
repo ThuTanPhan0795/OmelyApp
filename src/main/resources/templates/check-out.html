@@ -226,7 +226,10 @@
                         </div>
                         <div class="place-order">
                             <h4>Your Order</h4>
-                            <div class="order-total">
+                            <div class="col-12 mb-3" th:if="${selectedItems == null || #lists.size(selectedItems) == 0}">
+                                <h6>You don't have any items to checkout ! Please select the items in your shopping cart .</h6>
+                            </div>
+                            <div class="order-total" th:if="${#lists.size(selectedItems) > 0}">
                                 <ul class="order-table">
                                     <div class="cart-table">
                                         <table>
@@ -283,6 +286,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="discount-coupon" style="margin-top: 40px;">
+                            <a href="./shopping-cart" class="primary-btn continue-shop">Back to shopping cart</a>
+                        </div>                        
                     </div>
                 </div>
             </form>

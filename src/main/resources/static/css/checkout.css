@@ -61,3 +61,8 @@
 .site-btn.place-btn:hover {
     background-color: #4872a1;
 }
+.is-invalid {
+    border-color: red;
+    background-color: #f8d7da;
+}
+
