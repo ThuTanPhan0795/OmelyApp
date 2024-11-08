@@ -75,7 +75,7 @@
                         <div class="col-md-12 form-group">
                             <div th:each="checkoutUserInfor, iterStat : ${checkoutUserInfors}">
                                 <!-- Radio button to select one address at a time -->
-                                <div class="custom-control custom-radio">
+                                <div class="custom-control custom-radio address-radio">
                                     <input type="radio" class="custom-control-input" name="selectedAddress" th:id="'address' + ${iterStat.index}">
                                     <label class="custom-control-label" th:for="'address' + ${iterStat.index}"
                                         th:text="${checkoutUserInfor.firstName} + ' ' + ${checkoutUserInfor.lastName}"
@@ -87,7 +87,7 @@
                                 </div>
                         
                                 <!-- Collapsible Address Details -->
-                                <div class="collapse mb-4" th:id="'shipping-address-' + ${iterStat.index}">
+                                <div class="collapse mb-4 address-collapse" th:id="'shipping-address-' + ${iterStat.index}">
                                     <div class="row">
                                         <div class="col-md-6 form-group" th:id="'id_' + ${iterStat.index}" th:value="${checkoutUserInfor.id}">
                                             <label>First Name</label>
@@ -142,7 +142,7 @@
                             </div>
                         
                             <!-- Radio Button for Creating a New Account -->
-                            <div class="custom-control custom-radio">
+                            <div class="custom-control custom-radio address-radio">
                                 <input type="radio" class="custom-control-input" 
                                        th:id="'address' + ${#lists.size(checkoutUserInfors)}" 
                                        name="selectedAddress"
@@ -159,7 +159,7 @@
                         </div>
                         
                         <!-- Collapse Panel for Creating New Account -->
-                        <div class="collapse mb-4" th:id="'shipping-address-' + ${#lists.size(checkoutUserInfors)}"
+                        <div class="collapse mb-4 address-collapse" th:id="'shipping-address-' + ${#lists.size(checkoutUserInfors)}"
                             th:classappend="${#lists.size(checkoutUserInfors) == 0 ? ' show' : ''}">
                             <div class="row">
                                 <div class="col-md-6 form-group">

@@ -162,6 +162,29 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     });
+
+    // Get all radio buttons and collapsible elements
+    const radioButtons = document.querySelectorAll('.address-radio');
+    const collapsibleElements = document.querySelectorAll('.address-collapse');
+
+    // Add click event listeners to each radio button
+    radioButtons.forEach((radio, index) => {
+        radio.addEventListener('change', function() {
+            // Hide all collapsible elements
+            collapsibleElements.forEach(collapse => {
+                collapse.classList.remove('show');
+            });
+
+            // Show the collapsible element associated with the checked radio button
+            if (radio.checked) {
+                const targetId = radio.getAttribute('data-target');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.classList.add('show');
+                }
+            }
+        });
+    });
     
     
 
