@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+
+import java.math.BigDecimal;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -13,9 +16,8 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor // Generates a constructor with all fields
 @Builder // Enables the Builder pattern
 @Entity
-@Table(name = "CheckoutUserInfor")
-public class CheckoutUserInfor {
-
+@Table(name = "CheckoutData")
+public class CheckoutData {
     @Column(name = "username", nullable = false)
     private String username;
 
@@ -58,6 +60,14 @@ public class CheckoutUserInfor {
     @Column(name = "zip_code", nullable = false)
     @NotNull
     private String zipCode;
+
+    @Column(name = "list_product_id", nullable = false)
+    @NotNull
+    private String listProductId;
+
+    @Column(name = "total_price")
+    @NotNull
+    private BigDecimal totalPrice;
 
     // Explicit getters and setters
 
@@ -140,10 +150,19 @@ public class CheckoutUserInfor {
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
-    public void setUsername(String userName) {
-        this.username = userName;
+    public String getListProductId() {
+        return listProductId;
     }
-    public String getUsername() {
-        return username;
+
+    public void setListProductId(String listProductId) {
+        this.listProductId = listProductId;
+    }
+    
+    public BigDecimal getTotalPrice(){
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice){
+        this.totalPrice = totalPrice;
     }
 }

@@ -43,6 +43,48 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
 
+    // Select all save buttons
+    document.querySelectorAll('.save-address-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const index = this.getAttribute('data-index');
+            const userId = document.querySelector(`input[name='firstName_${index}']`).getAttribute('data-id');
+            // Collect the data from the form fields for this address section
+            const addressData = {
+                id: userId,
+                firstName: getInputValue(`input[name='firstName_${index}']`),
+                lastName: getInputValue(`input[name='lastName_${index}']`),
+                email: getInputValue(`input[name='email_${index}']`),
+                mobileNo: getInputValue(`input[name='mobileNo_${index}']`),
+                address: getInputValue(`input[name='address_${index}']`),
+                district: getInputValue(`input[name='district_${index}']`),
+                country: document.querySelector(`select[name='country_${index}']`).value, // Select value will be directly used
+                city: getInputValue(`input[name='city_${index}']`),
+                zipCode: getInputValue(`input[name='zipCode_${index}']`)
+            };
+            // Function to check if the field is empty and return the placeholder value if it is
+            // Function to check if the field is empty and return the placeholder value if it is
+            function getInputValue(selector) {
+                const inputElement = document.querySelector(selector);
+                return inputElement.value.trim() === '' ? inputElement.placeholder : inputElement.value;
+            }
+    
+            // Send the data to the backend via AJAX
+            fetch('/saveAddress', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(addressData)
+            })
+            //.then(response => response.json())
+            .then(data => {
+                alert('Address saved successfully!');
+            })
+            .catch(error => {
+                console.error('Error saving address:', error);
+            });
+        });
+    });
     // Call updateTotals on page load
     updateTotals();
 });

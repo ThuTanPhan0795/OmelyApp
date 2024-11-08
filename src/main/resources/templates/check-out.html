@@ -61,179 +61,159 @@
                         </div>
             
                         <!-- Instructional Text for Available Address -->
-                        <div class="col-12 mb-3">
-                            <h4>Your Available Address </h4>
+                        <div class="col-12 mb-3 ">
+                            <h4>Billing Address </h4>
                         </div>
-            
-                        <!-- Address 1 Section -->
+                        <div class="col-12 mb-3" th:if="${#lists.size(checkoutUserInfors) > 0}">
+                            <h6>You have an available account! </h6>
+                            <h6> You can use it or create a new account.</h6>
+                        </div>
+                        <div class="col-12 mb-3" th:if="${checkoutUserInfors == null || #lists.size(checkoutUserInfors) == 0}">
+                            <h6>You don't have an available account ! Please create a new account.</h6>
+                        </div>
+                        <!-- Display Address Sections Dynamically if $checkoutUserInfors is not empty -->
                         <div class="col-md-12 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="address1">
-                                <label class="custom-control-label" for="address1" data-toggle="collapse" data-target="#shipping-address-1">Your Address 1</label>
-                            </div>
-                            <div class="collapse mb-4" id="shipping-address-1">
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label>First Name</label>
-                                        <input class="form-control" type="text" placeholder="John">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Last Name</label>
-                                        <input class="form-control" type="text" placeholder="Doe">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>E-mail</label>
-                                        <input class="form-control" type="text" placeholder="example@email.com">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Mobile No</label>
-                                        <input class="form-control" type="text" placeholder="+123 456 789">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Address</label>
-                                        <input class="form-control" type="text" placeholder="123 Street">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>District</label>
-                                        <input class="form-control" type="text" placeholder="District Name">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Country</label>
-                                        <select class="custom-select">
-                                            <option selected>United States</option>
-                                            <option>Afghanistan</option>
-                                            <option>Albania</option>
-                                            <option>Algeria</option>
-                                            <option>Viet Nam</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>City</label>
-                                        <input class="form-control" type="text" placeholder="New York">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>ZIP Code</label>
-                                        <input class="form-control" type="text" placeholder="123">
+                            <div th:each="checkoutUserInfor, iterStat : ${checkoutUserInfors}">
+                                <!-- Radio button to select one address at a time -->
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="selectedAddress" th:id="'address' + ${iterStat.index}">
+                                    <label class="custom-control-label" th:for="'address' + ${iterStat.index}"
+                                        th:text="${checkoutUserInfor.firstName} + ' ' + ${checkoutUserInfor.lastName}"
+                                        data-toggle="collapse" 
+                                        th:data-target="'#shipping-address-' + ${iterStat.index}">
+                                        <!-- Label for each address will display user's first and last name -->
+                                    </label>
+                                </div>
+                        
+                                <!-- Collapsible Address Details -->
+                                <div class="collapse mb-4" th:id="'shipping-address-' + ${iterStat.index}">
+                                    <div class="row">
+                                        <div class="col-md-6 form-group" th:id="'id_' + ${iterStat.index}" th:value="${checkoutUserInfor.id}">
+                                            <label>First Name</label>
+                                            <input class="form-control" type="text" th:placeholder="${checkoutUserInfor.firstName}" th:name="'firstName_' + ${iterStat.index}" th:data-id="${checkoutUserInfor.id}">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>Last Name</label>
+                                            <input class="form-control" type="text" th:placeholder="${checkoutUserInfor.lastName}" th:name="'lastName_' + ${iterStat.index}">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>E-mail</label>
+                                            <input class="form-control" type="text" th:placeholder="${checkoutUserInfor.email}" th:name="'email_' + ${iterStat.index}">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>Mobile No</label>
+                                            <input class="form-control" type="text" th:placeholder="${checkoutUserInfor.mobileNo}" th:name="'mobileNo_' + ${iterStat.index}">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>Address</label>
+                                            <input class="form-control" type="text" th:placeholder="${checkoutUserInfor.address}" th:name="'address_' + ${iterStat.index}">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>District</label>
+                                            <input class="form-control" type="text" th:placeholder="${checkoutUserInfor.district}" th:name="'district_' + ${iterStat.index}">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>Country</label>
+                                            <select class="custom-select" name="country" th:name="'country_' + ${iterStat.index}">
+                                                <option value="United States" th:selected="${checkoutUserInfor.country == 'United States'}">United States</option>
+                                                <option value="Afghanistan" th:selected="${checkoutUserInfor.country == 'Afghanistan'}">Afghanistan</option>
+                                                <option value="Albania" th:selected="${checkoutUserInfor.country == 'Albania'}">Albania</option>
+                                                <option value="Algeria" th:selected="${checkoutUserInfor.country == 'Algeria'}">Algeria</option>
+                                                <option value="Viet Nam" th:selected="${checkoutUserInfor.country == 'Viet Nam'}">Viet Nam</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>City</label>
+                                            <input class="form-control" type="text" th:placeholder="${checkoutUserInfor.city}" th:name="'city_' + ${iterStat.index}">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>ZIP Code</label>
+                                            <input class="form-control" type="text" th:placeholder="${checkoutUserInfor.zipCode}" th:name="'zipCode_' + ${iterStat.index}">
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <h6>If you click save , your adress will save for the next time .</h6>
+                                            <h6>If you don't want save your adress , you don't need to click it .</h6>
+                                        </div>
+                                        <div class="col-md-12 form-group">
+                                            <button type="button" class="btn btn-primary save-address-btn" th:data-index="${iterStat.index}">Save</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-            
-                        <!-- Address 2 Section -->
-                        <div class="col-md-12 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="address2">
-                                <label class="custom-control-label" for="address2" data-toggle="collapse" data-target="#shipping-address-2">Your Address 2</label>
+                        
+                            <!-- Radio Button for Creating a New Account -->
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="create-account-radio" name="selectedAddress"
+                                    th:checked="${#lists.size(checkoutUserInfors) == 0}"
+                                    th:disabled="${#lists.size(checkoutUserInfors) == 0}"
+                                    data-toggle="collapse" 
+                                    data-target="#create-account">
+                                <label class="custom-control-label" for="create-account-radio">Create new account</label>
                             </div>
-                            <div class="collapse mb-4" id="shipping-address-2">
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label>First Name</label>
-                                        <input class="form-control" type="text" placeholder="John">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Last Name</label>
-                                        <input class="form-control" type="text" placeholder="Doe">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>E-mail</label>
-                                        <input class="form-control" type="text" placeholder="example@email.com">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Mobile No</label>
-                                        <input class="form-control" type="text" placeholder="+123 456 789">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Address</label>
-                                        <input class="form-control" type="text" placeholder="123 Street">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>District</label>
-                                        <input class="form-control" type="text" placeholder="District Name">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Country</label>
-                                        <select class="custom-select">
-                                            <option selected>United States</option>
-                                            <option>Afghanistan</option>
-                                            <option>Albania</option>
-                                            <option>Algeria</option>
-                                            <option>Viet Nam</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>City</label>
-                                        <input class="form-control" type="text" placeholder="New York">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>ZIP Code</label>
-                                        <input class="form-control" type="text" placeholder="123">
-                                    </div>
+                        </div>
+                        
+                        <!-- Collapse Panel for Creating New Account -->
+                        <div class="collapse mb-4" id="create-account"
+                             th:classappend="${#lists.size(checkoutUserInfors) == 0 ? ' show' : ''}">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>First Name</label>
+                                    <input class="form-control" type="text" placeholder="" th:name="'firstName_' + ${#lists.size(checkoutUserInfors)}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Last Name</label>
+                                    <input class="form-control" type="text" placeholder="" th:name="'lastName_' + ${#lists.size(checkoutUserInfors)}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>E-mail</label>
+                                    <input class="form-control" type="text" placeholder="" th:name="'email_' + ${#lists.size(checkoutUserInfors)}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Mobile No</label>
+                                    <input class="form-control" type="text" placeholder="" th:name="'mobileNo_' + ${#lists.size(checkoutUserInfors)}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Address</label>
+                                    <input class="form-control" type="text" placeholder="" th:name="'address_' + ${#lists.size(checkoutUserInfors)}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>District</label>
+                                    <input class="form-control" type="text" placeholder="" th:name="'district_' + ${#lists.size(checkoutUserInfors)}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Country</label>
+                                    <select class="custom-select" th:name="'country_' + ${#lists.size(checkoutUserInfors)}">
+                                        <option selected>United States</option>
+                                        <option>Afghanistan</option>
+                                        <option>Albania</option>
+                                        <option>Algeria</option>
+                                        <option>Viet Nam</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>City</label>
+                                    <input class="form-control" type="text" placeholder="" th:name="'city_' + ${#lists.size(checkoutUserInfors)}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>ZIP Code</label>
+                                    <input class="form-control" type="text" placeholder="" th:name="'zipCode_' + ${#lists.size(checkoutUserInfors)}">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <h6>If you click save , your adress will save for the next time .</h6>
+                                    <h6>If you don't want save your adress , you don't need to click it .</h6>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <button type="button" class="btn btn-primary save-address-btn" th:data-index="${#lists.size(checkoutUserInfors)}">Save</button>
                                 </div>
                             </div>
-                        </div>
-            
-                        <!-- Instructional Text for Creating New Address -->
-                        <div class="col-12 mb-3">
-                            <h4>Create new Address </h4>
-                        </div>
-            
-                        <div class="col-md-12 form-group">
-                            <div class="mb-4">
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label>First Name</label>
-                                        <input class="form-control" type="text" placeholder="John">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Last Name</label>
-                                        <input class="form-control" type="text" placeholder="Doe">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>E-mail</label>
-                                        <input class="form-control" type="text" placeholder="example@email.com">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Mobile No</label>
-                                        <input class="form-control" type="text" placeholder="+123 456 789">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Address</label>
-                                        <input class="form-control" type="text" placeholder="123 Street">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>District</label>
-                                        <input class="form-control" type="text" placeholder="District Name">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Country</label>
-                                        <select class="custom-select">
-                                            <option selected>United States</option>
-                                            <option>Afghanistan</option>
-                                            <option>Albania</option>
-                                            <option>Algeria</option>
-                                            <option>Viet Nam</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>City</label>
-                                        <input class="form-control" type="text" placeholder="New York">
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>ZIP Code</label>
-                                        <input class="form-control" type="text" placeholder="123">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-            
+                        </div>                        
                         <!-- Account Creation Option -->
-                        <div class="col-md-12 form-group">
+                        <!-- <div class="col-md-12 form-group">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="newaccount">
                                 <label class="custom-control-label" for="newaccount">Save address</label>
                             </div>
-                        </div>
+                        </div> -->
                     </div>                
                     <div class="col-lg-6">
                         <div class="checkout-content">
@@ -261,7 +241,7 @@
                                                     <td class="cart-pic first-row">
                                                         <img th:src="${product.product.imageUrl}" alt="" style="width: 50%; height: 50%">
                                                     </td>
-                                                    <td class="cart-title first-row">
+                                                    <td class="cart-title first-row" th:id="product-id" th:value="${product.product.id}">
                                                         <h5 th:text="${product.product.name}"></h5>
                                                     </td>
                                                     <td class="p-price first-row" th:text="${#numbers.formatDecimal(product.product.price, 2, 2)}"></td>

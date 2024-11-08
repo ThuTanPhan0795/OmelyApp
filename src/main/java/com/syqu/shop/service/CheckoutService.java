@@ -10,5 +10,5 @@ public interface CheckoutService {
     List<CheckoutUserInfor> getUserInfoByUsername(String username);
     void deleteUserInfoByUsernameAndId(String username, Long id);
     // New method to update user info by username and id
-    CheckoutUserInfor updateUserInfoByUsernameAndId(String username, Long id, CheckoutUserInfor updatedInfo);
+    CheckoutUserInfor updateUserInfoById(Long id, CheckoutUserInfor updatedInfo);
 }

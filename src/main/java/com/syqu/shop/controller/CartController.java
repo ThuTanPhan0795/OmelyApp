@@ -1,7 +1,9 @@
 package com.syqu.shop.controller;
 
 import com.syqu.shop.domain.CartItem;
+import com.syqu.shop.domain.CheckoutUserInfor;
 import com.syqu.shop.service.CartService;
+import com.syqu.shop.service.CheckoutService;
 
 import javassist.bytecode.stackmap.BasicBlock.Catch;
 
@@ -23,10 +25,12 @@ import java.util.Map;
 public class CartController {
 
     private final CartService cartService;
+    private final CheckoutService checkoutService;
 
     @Autowired
-    public CartController(CartService cartService) {
+    public CartController(CartService cartService , CheckoutService checkoutService ) {
         this.cartService = cartService;
+        this.checkoutService = checkoutService;
     }
 
     @GetMapping(value = {"/cart","/shopping-cart"})
@@ -78,8 +82,10 @@ public class CartController {
     public String checkout(Model model) {
         String userName = getCurrentUsername();  // Implement this method to retrieve the current user’s ID
         List<CartItem> selectedItems = cartService.getSelectedItemsForUser(userName);
+        List<CheckoutUserInfor> checkoutUserInfors = checkoutService.getUserInfoByUsername(userName);
         
         model.addAttribute("selectedItems", selectedItems); // Pass selected items to the view
+        model.addAttribute("checkoutUserInfors", checkoutUserInfors); // Pass selected items to the view
         return "check-out";
     }
 
