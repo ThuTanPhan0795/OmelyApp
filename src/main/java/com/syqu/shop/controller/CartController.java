@@ -78,7 +78,7 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    @GetMapping("check-out")
+    @GetMapping({"/check-out","/checkout"})
     public String checkout(Model model) {
         String userName = getCurrentUsername();  // Implement this method to retrieve the current user’s ID
         List<CartItem> selectedItems = cartService.getSelectedItemsForUser(userName);

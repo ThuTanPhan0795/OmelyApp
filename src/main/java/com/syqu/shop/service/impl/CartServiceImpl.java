@@ -71,4 +71,9 @@ public class CartServiceImpl implements CartService {
     public List<CartItem> getSelectedItemsForUser(String username ) {
         return cartItemRepository.findByUsernameAndSelectItem(username, 1);
     }
+
+    @Override
+    public void removeFromCartByProductId(long productId) { 
+        cartItemRepository.removeByProductId(productId);
+    }
 }

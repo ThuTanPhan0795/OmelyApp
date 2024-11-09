@@ -117,17 +117,35 @@ document.addEventListener("DOMContentLoaded", function () {
     // Handle navigation links for checkout
     document.querySelectorAll('a[href^="./check-out"]').forEach((link) => {
         link.addEventListener("click", function (event) {
-            if (isChanged) {
-                event.preventDefault(); // Prevent the default link action
-
-                // Save the cart before navigating
-                saveCart(() => {
-                    // Redirect to the checkout page after saving the cart
-                    window.location.href = link.href; // Navigate to checkout
-                });
+            var anySelected = false;
+            var checkboxes = document.querySelectorAll('.item-checkbox');
+            
+            // Check if at least one checkbox is selected
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    anySelected = true;
+                }
+            });
+        
+            // If no item is selected, show the error and stop further action
+            if (!anySelected) {
+                event.preventDefault();  // Prevent the page navigation
+                document.getElementById("error-message").style.display = "block";  // Show error message
             } else {
-                // No changes, directly navigate to the checkout page
-                window.location.href = link.href; // Navigate to checkout
+                // If items are selected, proceed to checkout by triggering navigation manually
+                document.getElementById("error-message").style.display = "none";  // Hide error message
+                if (isChanged) {
+                    event.preventDefault(); // Prevent the default link action
+    
+                    // Save the cart before navigating
+                    saveCart(() => {
+                        // Redirect to the checkout page after saving the cart
+                        window.location.href = link.href; // Navigate to checkout
+                    });
+                } else {
+                    // No changes, directly navigate to the checkout page
+                    window.location.href = link.href; // Navigate to checkout
+                }
             }
         });
     });

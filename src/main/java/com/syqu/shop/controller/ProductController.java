@@ -1,9 +1,14 @@
 package com.syqu.shop.controller;
 
+import com.syqu.shop.domain.CartItem;
 import com.syqu.shop.domain.Product;
 import com.syqu.shop.service.ProductService;
+import com.syqu.shop.service.CartService;
 import com.syqu.shop.service.CategoryService;
 import com.syqu.shop.validator.ProductValidator;
+
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +32,14 @@ public class ProductController {
     private final ProductService productService;
     private final ProductValidator productValidator;
     private final CategoryService categoryService;
+    private final CartService cartService;
 
     @Autowired
-    public ProductController(ProductService productService, ProductValidator productValidator, CategoryService categoryService) {
+    public ProductController(ProductService productService, ProductValidator productValidator, CategoryService categoryService , CartService cartService) {
         this.productService = productService;
         this.productValidator = productValidator;
         this.categoryService = categoryService;
+        this.cartService = cartService;
     }
 
     @GetMapping("/product/new")
@@ -91,8 +98,11 @@ public class ProductController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/product/delete/{id}")
+    @GetMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable("id") long productId) {
+
+        cartService.removeFromCartByProductId(productId);
+
         Product product = productService.findById(productId);
         if (product != null) {
             productService.delete(productId);

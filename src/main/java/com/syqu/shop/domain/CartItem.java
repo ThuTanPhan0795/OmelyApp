@@ -11,7 +11,7 @@ public class CartItem {
 
     private String username;
 
-    @ManyToOne(cascade = CascadeType.ALL) // Use cautiously
+    @ManyToOne(cascade = CascadeType.PERSIST)  // Don't use REMOVE. Only use persist, or no cascade.
     @JoinColumn(name = "product_id", nullable = false) // Specify the foreign key column name
     private Product product;
 

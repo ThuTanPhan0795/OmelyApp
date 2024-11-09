@@ -13,4 +13,5 @@ public interface CartService {
     void clearCart(String username);
     List<CartItem> getCartItemsByUsername(String username);
     List<CartItem> getSelectedItemsForUser(String username);
+    void removeFromCartByProductId(long productId);
 }

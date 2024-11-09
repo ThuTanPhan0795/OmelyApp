@@ -24,18 +24,18 @@ public class HomeController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping(value = {"/home"})
-    public String home(@RequestParam(defaultValue = "0") int page, Model model) {
-        Pageable pageable = PageRequest.of(page, 12); // 3 products per page
-        Page<Product> productsPage = productService.findAll(pageable);
-        model.addAttribute("products", productsPage.getContent());
-        model.addAttribute("productsCount", productService.count());
-        model.addAttribute("categories", categoryService.findAll());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", productsPage.getTotalPages());
-        return "home";
-    }
-    @GetMapping(value = {"/", "/index"})
+    // @GetMapping(value = {"/home"})
+    // public String home(@RequestParam(defaultValue = "0") int page, Model model) {
+    //     Pageable pageable = PageRequest.of(page, 12); // 3 products per page
+    //     Page<Product> productsPage = productService.findAll(pageable);
+    //     model.addAttribute("products", productsPage.getContent());
+    //     model.addAttribute("productsCount", productService.count());
+    //     model.addAttribute("categories", categoryService.findAll());
+    //     model.addAttribute("currentPage", page);
+    //     model.addAttribute("totalPages", productsPage.getTotalPages());
+    //     return "home";
+    // }
+    @GetMapping(value = {"/", "/index","/home"})
     public String index(@RequestParam(defaultValue = "0") int page, Model model) {
         return "index";
     }
