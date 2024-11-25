@@ -8,6 +8,7 @@ import com.syqu.shop.service.CheckoutService;
 import javassist.bytecode.stackmap.BasicBlock.Catch;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -64,11 +65,21 @@ public class CartController {
        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/cart/remove/{id}")
-    public String removeFromCart(@PathVariable("id") long productId) {
-        String username = getCurrentUsername();
-        cartService.removeFromCart(username, productId);
-        return "redirect:/cart";
+    // @GetMapping("/cart/remove/{id}")
+    // public String removeFromCart(@PathVariable("id") long productId) {
+    //     String username = getCurrentUsername();
+    //     cartService.removeFromCart(username, productId);
+    //     return "redirect:/cart";
+    // }
+    @DeleteMapping("cart/remove/{productId}")
+    public ResponseEntity<Void> removeItem(@PathVariable Long productId) {
+        try {
+            String username = getCurrentUsername();
+            cartService.removeFromCart(username, productId);
+            return ResponseEntity.noContent().build(); // Return 204 No Content on success
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/cart/clear")

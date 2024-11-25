@@ -102,9 +102,10 @@
                                     </td>
                                     <td class="total-price first-row item-total" th:text="${#numbers.formatDecimal(product.quantity * product.product.price, 2, 2)}"></td>
                                     <td class="close-td first-row">
-                                        <a th:href="@{'/cart/remove/' + ${product.product.id}}" 
+                                        <a href="#" 
                                            class="ti-close btn btn-sm" 
-                                           onclick="return confirm('Are you sure you want to remove this item?');">
+                                           th:data-product-id="${product.product.id}" 
+                                           onclick="return false;">
                                         </a>
                                     </td>
                                 </tr>

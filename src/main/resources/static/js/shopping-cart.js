@@ -150,14 +150,95 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Handle removal of items
+    // Handle removal of items via Ajax
     removeLinks.forEach((link) => {
-        link.addEventListener("click", function () {
-            isChanged = true;
-            updateCartButton && (updateCartButton.disabled = false);
-            updateTotals();
+        link.addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent default link behavior
+
+            const productId = this.getAttribute("data-product-id");
+            const row = this.closest("tr");
+
+            console.log(`Attempting to remove product with ID: ${productId}`);
+
+            fetch(`/cart/remove/${productId}`, {
+                method: "DELETE",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        // Remove the item's row from the DOM
+                        if (row) row.remove();
+                        console.log(`Product with ID: ${productId} removed successfully.`);
+
+                        isChanged = true;
+
+                        // Re-select updated checkboxes and inputs after item removal
+                        refreshCartElements();
+
+                        // Explicitly recalculate totals after removal
+                        updateTotalsForDeleteItem();
+
+                        updateCartButton && (updateCartButton.disabled = false); // Enable update button
+                    } else {
+                        alert("Failed to remove the item. Please try again.");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error removing item:", error);
+                    alert("An error occurred. Please try again.");
+                });
         });
     });
+
+    // Function to refresh cart elements after DOM changes
+    function refreshCartElements() {
+        // Use let here instead of const to reassign the variables
+        let itemCheckboxes = document.querySelectorAll(".item-checkbox");
+        let quantityInputs = document.querySelectorAll(".quantity-input");
+
+        console.log("Cart elements refreshed. Remaining items:", itemCheckboxes.length);
+    }
+
+    // Ensure updateTotals function is working correctly
+    function updateTotalsForDeleteItem() {
+        let subtotal = 0;
+        console.log("Updating totals...");
+        let itemCheckboxes = document.querySelectorAll(".item-checkbox");
+        // Loop through all items in the cart
+        itemCheckboxes.forEach((checkbox) => {
+            const row = checkbox.closest("tr");
+            const priceElement = row.querySelector(".p-price");
+            const quantityInput = row.querySelector(".quantity-input");
+
+            const price = parseFloat(priceElement.textContent.replace("$", "").replace(",", ""));
+            const quantity = parseInt(quantityInput.value, 10) || 0;
+            const totalForItem = price * quantity;
+
+            console.log(
+                `Item: Price = $${price}, Quantity = ${quantity}, Total for Item = $${totalForItem}`
+            );
+
+            if (checkbox.checked) {
+                subtotal += totalForItem;
+                console.log(
+                    `Checkbox is checked. Adding $${totalForItem} to subtotal. New subtotal: $${subtotal}`
+                );
+            } else {
+                console.log("Checkbox is unchecked. Skipping item.");
+            }
+        });
+
+        console.log(`Final subtotal: $${subtotal}`);
+
+        // Update the total and subtotal text
+        subtotalPriceElement.textContent = `$${subtotal.toFixed(2)}`;
+        totalCartPriceElement.textContent = `$${subtotal.toFixed(2)}`;
+
+        console.log("Updated subtotal and total on the UI.");
+    }
 
     // Save cart function
     function saveCart(callback) {
