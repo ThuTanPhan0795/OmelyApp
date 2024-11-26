@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class CartController {
 
@@ -81,13 +83,26 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    @GetMapping("/cart/clear")
-    public String clearCart() {
-        String username = getCurrentUsername();
-        cartService.clearCart(username);
-        return "redirect:/cart";
+    @PostMapping("/cart/remove-all")
+    @ResponseBody
+    public ResponseEntity<String> removeAllItems(HttpSession session) {
+        try {
+            String username = getCurrentUsername(); // This should fetch the logged-in user's username
+            cartService.clearCart(username); // Clear the user's cart
+            return ResponseEntity.ok("{\"status\":\"success\",\"message\":\"All items removed successfully\"}");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .body("{\"status\":\"error\",\"message\":\"Failed to remove items\"}");
+        }
     }
+
+
+    // @GetMapping("/cart/clear")
+    // public String clearCart() {
+    //     String username = getCurrentUsername();
+    //     cartService.clearCart(username);
+    //     return "redirect:/cart";
+    // }
 
     @GetMapping({"/check-out","/checkout"})
     public String checkout(Model model) {

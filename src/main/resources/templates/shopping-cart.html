@@ -58,11 +58,11 @@
                 <h6>YOUR SHOPPING CART </h6>
             </div>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12" id = "cart-container">
                     <div class="col-12 mb-3" th:if="${products == null || #lists.size(products) == 0}">
                         <h6>Your shopping cart is empty ! Please select the items in shop page .</h6>
                     </div>
-                    <div class="cart-table" th:if="${#lists.size(products) > 0}">
+                    <div class="cart-table" id="cart-table" th:if="${#lists.size(products) > 0}">
                         <table>
                             <thead>
                                 <tr>
@@ -75,7 +75,7 @@
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
-                                    <th><i class="ti-close"></i> 
+                                    <th><i class="ti-close" id="delete-all"></i> 
                                         <label for="select-all">Delete All</label>
                                     </th>
                                 </tr>
@@ -105,7 +105,7 @@
                                     <td class="total-price first-row item-total" th:text="${#numbers.formatDecimal(product.quantity * product.product.price, 2, 2)}"></td>
                                     <td class="close-td first-row">
                                         <a href="#" 
-                                           class="ti-close btn btn-sm" 
+                                           class="ti-close btn btn-sm" id="delete-item" 
                                            th:data-product-id="${product.product.id}" 
                                            onclick="return false;">
                                         </a>
@@ -120,7 +120,7 @@
                                 <a href="./shop" class="primary-btn continue-shop">Continue shopping</a>
                                 <!-- <button type="button" id="update-cart-btn" class="primary-btn up-cart" disabled>Save cart</button> -->
                             </div>
-                            <div class="discount-coupon" th:if="${#lists.size(products) > 0}">
+                            <div class="discount-coupon"  id="cart-table" th:if="${#lists.size(products) > 0}">
                                 <h6>Discount Codes</h6>
                                 <form action="#" class="coupon-form">
                                     <input type="text" placeholder="Enter your codes">
@@ -128,7 +128,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="col-lg-4 offset-lg-4" th:if="${#lists.size(products) > 0}">
+                        <div class="col-lg-4 offset-lg-4"  id="cart-table" th:if="${#lists.size(products) > 0}">
                             <div class="proceed-checkout">
                                 <div id="error-message" style="color: red; display: none;">
                                     Please select at least one item to proceed to checkout.

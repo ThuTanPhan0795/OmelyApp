@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let itemCheckboxes = document.querySelectorAll(".item-checkbox");
     const subtotalPriceElement = document.querySelector(".subtotal-price");
     const totalCartPriceElement = document.querySelector(".total-cart-price");
-    const removeLinks = document.querySelectorAll(".ti-close");
+    const removeLinks = document.querySelectorAll("#delete-item");
     const confirmationModal = document.getElementById("confirmationModal");
     let isChanged = false;
     let redirectUrl = ""; // To store the redirect URL
@@ -198,10 +198,72 @@ document.addEventListener("DOMContentLoaded", function () {
     function refreshCartElements() {
         // Use let here instead of const to reassign the variables
         let itemCheckboxes = document.querySelectorAll(".item-checkbox");
-        let quantityInputs = document.querySelectorAll(".quantity-input");
+        if (itemCheckboxes.length == 0){
+            clearAllCartTables ();
+        }
+        //let quantityInputs = document.querySelectorAll(".quantity-input");
 
         // console.log("Cart elements refreshed. Remaining items:", itemCheckboxes.length);
     }
+    document.getElementById("delete-all").addEventListener("click", function () {
+        // Confirm with the user before deleting all items
+        if (!confirm("Are you sure you want to delete all items from the cart?")) {
+            return;
+        }
+    
+        fetch("/cart/remove-all", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",  // Optional, but good practice
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to delete all items, server responded with status: " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+           // Handle successful removal
+            console.log("All items removed successfully:", data.message);
+
+            clearAllCartTables ();
+    
+            // Recalculate totals (make sure this function is available)
+            //updateTotals();
+        })
+        .catch(error => {
+            console.error("Error deleting all items:", error);
+        });
+    });
+
+    function clearAllCartTables (){
+        // Safely clear all cart tables (check if elements with the ID exist)
+        const cartTables = document.querySelectorAll("#cart-table");  // Use querySelectorAll to get all matching elements
+        if (cartTables.length > 0) {
+            cartTables.forEach(cartTable => {
+                cartTable.innerHTML = ""; // Clear each table's contents
+                console.log("Cart table cleared successfully.");
+            });
+            // Create and insert the empty cart message
+            const emptyCartMessage = document.createElement('div');
+            emptyCartMessage.classList.add('col-12', 'mb-3');
+            emptyCartMessage.innerHTML = `
+                <h6>Your shopping cart is empty! Please select the items in the shop page.</h6>
+            `;
+
+            // Get the cart container by its ID
+            const cartContainer = document.getElementById('cart-container'); // Ensure you're targeting the correct container
+            if (cartContainer) {
+                cartContainer.appendChild(emptyCartMessage); // Append the empty cart message
+            } else {
+                console.error("Cart container with ID 'cart-container' not found.");
+            }
+        } else {
+            console.error("Cart tables not found.");
+        }
+    }
+    
     
     // Save cart function
     function saveCart(callback) {
