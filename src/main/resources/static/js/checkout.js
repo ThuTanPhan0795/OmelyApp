@@ -182,7 +182,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 contentType: 'application/json',
                 data: JSON.stringify(orderData),
                 success: function (response) {
-                    alert('Order placed successfully!');
+                    // alert('Order placed successfully!');
+                    window.location.href = '/order';
                 },
                 error: function (xhr, status, error) {
                     alert('There was an error placing the order. Please try again.');

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Fashi Template">
+    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fashi | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/shopping-cart.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header Section Begin -->
+    <div th:replace="fragments/header :: header"></div>
+    <!-- Header End -->
+
+      <!-- Shopping Cart Section Begin -->
+      <section class="shopping-cart spad">
+        <div class="container">
+            <div class="discount-coupon">
+                <h6>YOUR ORDERS</h6>
+            </div>
+            <div class="row">
+                <div class="col-lg-12" id="cart-container">
+                    <!-- Message for empty orders -->
+                    <div class="col-12 mb-3" th:if="${orders == null || #lists.size(orders) == 0}">
+                        <h6>You don't have any orders available.</h6>
+                    </div>
+    
+                    <!-- Table to display orders -->
+                    <div class="cart-table" id="cart-table" th:if="${orders != null && #lists.size(orders) > 0}">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <!-- <th>EMAIL</th> -->
+                                    <th>PRODUCT</th>
+                                    <th>ORDER DATE</th>
+                                    <th>TOTAL PRICE</th>
+                                    <th>ADDRESS</th>
+                                    <!-- <th>MOBILE NO</th> -->
+                                    <th>STATUS</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dynamically generated rows for orders -->
+                                <tr th:each="order, orderStat : ${orders}" class="cart-item">
+                                    <!-- Combine product IDs and quantities -->
+                                    <td class="cart-pic first-row">
+                                        <div th:each="item : ${orderCartItems[orderStat.index]}">
+                                            <img th:src="${item.product.imageUrl}" alt="" style="width: 15%; height: 15%">
+                                            <span th:text="${item.product.name} + ' x ' + ${item.quantity}"></span><br />
+                                        </div>
+                                    </td>
+                                    <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td th:text="${#numbers.formatDecimal(order.totalPrice, 2, 2)}"></td>
+                                    <td class="cart-title first-row address-cell">
+                                        <span th:text="${order.address}"></span><br />
+                                        <span th:text="', ' + ${order.district} + ', ' + ${order.city} + ', ' + ${order.country}"></span><br />
+                                        <span>Mobile No: </span><span th:text="${order.mobileNo}"></span>
+                                    </td>
+                                    <!-- <td class="cart-title first-row" th:text="${order.mobileNo}"></td> -->
+                                    <td class="cart-title first-row">
+                                        <span th:text="|${order.orderStatus == 1 ? 'Confirming' :
+                                            order.orderStatus == 2 ? 'Picking up' :
+                                            order.orderStatus == 3 ? 'Delivering' :
+                                            order.orderStatus == 4 ? 'Evaluation' :
+                                            order.orderStatus == 5 ? 'Delivered' :
+                                            order.orderStatus == 6 ? 'Cancelled' :
+                                            order.orderStatus == 7 ? 'Return' : ''}|">
+                                        </span>
+                                    </td>
+                                    <td class="cart-title first-row">
+                                        <span th:if="${order.orderStatus == 1}">
+                                            <a href="#" class="btn btn-primary">Cancel</a>
+                                        </span>
+                                        <span th:if="${order.orderStatus == 5 or order.orderStatus == 6}">
+                                            <a href="#" class="btn btn-primary">Delete</a>
+                                        </span>
+                                        <span th:if="${order.orderStatus != 1 and order.orderStatus != 5 and order.orderStatus != 6}"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+        
+        <!-- Shopping Cart Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer-left">
+                        <div class="footer-logo">
+                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                        </div>
+                        <ul>
+                            <li>Address: 60-49 Road 11378 New York</li>
+                            <li>Phone: +65 11.188.888</li>
+                            <li>Email: hello.colorlib@gmail.com</li>
+                        </ul>
+                        <div class="footer-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <div class="footer-widget">
+                        <h5>Information</h5>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Checkout</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Serivius</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h5>My Account</h5>
+                        <ul>
+                            <li><a href="#">My Account</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Shopping Cart</a></li>
+                            <li><a href="#">Shop</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="newslatter-item">
+                        <h5>Join Our Newsletter Now</h5>
+                        <p>Get E-mail updates about our latest shop and special offers.</p>
+                        <form action="#" class="subscribe-form">
+                            <input type="text" placeholder="Enter Your Mail">
+                            <button type="button">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-reserved">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright-text">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </div>
+                        <div class="payment-pic">
+                            <img src="img/payment-method.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.zoom.min.js"></script>
+    <script src="js/jquery.dd.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

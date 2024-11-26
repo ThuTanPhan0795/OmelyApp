@@ -1,0 +1,42 @@
+/* Style the table to control column width */
+.cart-table table {
+    width: 100%;
+    table-layout: fixed; /* Ensures fixed column widths */
+    border-collapse: collapse;
+}
+
+.cart-table th, .cart-table td {
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Address column */
+.cart-table .address-cell {
+    width: 20%; /* Adjust width as needed */
+    word-wrap: break-word; /* Allows text wrapping */
+    white-space: normal; /* Prevents text from staying on one line */
+    overflow: hidden; /* Hides overflow text */
+}
+
+/* Mobile number column */
+.cart-table td:first-row {
+    text-align: center;
+}
+
+/* Button */
+.cart-table a.btn {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+/* Add responsiveness for smaller screens */
+@media (max-width: 768px) {
+    .cart-table .address-cell {
+        width: 100%; /* Full width for mobile */
+    }
+
+    .cart-table table {
+        font-size: 14px; /* Reduce font size for smaller screens */
+    }
+}

@@ -1,5 +1,7 @@
 package com.syqu.shop.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,12 @@ public class OrderServiceImpl implements OrderService {
     public void save(OrderData orderData) {
         // TODO Auto-generated method stub
         oderRepository.save(orderData);
+    }
+
+    @Override
+    public List<OrderData> getOrderDataByUsername(String username) {
+        // TODO Auto-generated method stub
+        return oderRepository.findByUsernameOrderByIdDesc(username);
     }
     
 }

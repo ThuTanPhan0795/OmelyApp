@@ -33,7 +33,7 @@ public class StartupData implements CommandLineRunner {
         adminAccount();
         userAccount();
         category();
-        for (int i = 0 ; i<= 100 ; i++){
+        for (int i = 0 ; i<= 10 ; i++){
             exampleProducts(i+10);   
         }
     }

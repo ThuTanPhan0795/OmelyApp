@@ -1,18 +1,25 @@
 package com.syqu.shop.controller;
+import com.syqu.shop.domain.CartItem;
 import com.syqu.shop.domain.CheckoutUserInfor;
 import com.syqu.shop.domain.OrderData;
 import com.syqu.shop.domain.OrderRequestDTO;
+import com.syqu.shop.domain.OrderStatus;
+import com.syqu.shop.domain.Product;
 import com.syqu.shop.service.CheckoutService;
 import com.syqu.shop.service.OrderService;
+import com.syqu.shop.service.ProductService;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -20,11 +27,14 @@ public class CheckoutController {
 
     private final CheckoutService checkoutService;
     private final OrderService orderService;
+    private final  ProductService productService;
 
     @Autowired
-    public CheckoutController(CheckoutService checkoutService ,OrderService orderService) {
+    public CheckoutController(CheckoutService checkoutService ,OrderService orderService ,
+                               ProductService productService) {
         this.checkoutService = checkoutService;
         this.orderService = orderService;
+        this.productService = productService;
     }
 
     @PostMapping("/saveAddress")
@@ -86,6 +96,8 @@ public class CheckoutController {
 
         // Set the order date (current date and time)
         orderData.setOrderDate(new Date());
+
+        orderData.setOrderStatus(OrderStatus.WAITING_FOR_CONFIRMATION);
         
         orderService.save(orderData);
 
@@ -99,4 +111,50 @@ public class CheckoutController {
         }
         return null; // Or handle anonymous users as needed
     }
+    @GetMapping("/order")
+    public String getOrderDetails(Model model) {
+        String username = getCurrentUsername(); // Get the current username
+        List<OrderData> orders = orderService.getOrderDataByUsername(username);
+        List<List<CartItem>> orderCartItems = new ArrayList<>(); // List to store CartItems
+        
+        // Pass the orders to the model
+        model.addAttribute("orders", orders);
+        
+        // Loop through the orders
+        for (OrderData order : orders) {
+            List<CartItem> cartItems = new ArrayList<>();
+            String listProductId = order.getListProductId();  // Get product IDs as a string
+            String listProductQuantity = order.getListProductQuantity();  
+            
+            // Split the string of product IDs (e.g., "6-7-8") into an array
+            String[] productIdArray = listProductId.split("-");
+            String[] productQuantityArray = listProductQuantity.split("-");
+            
+            // Convert the string array to a List<Long> of product IDs and map quantities
+            for (int i = 0; i < productIdArray.length; i++) {
+                try {
+                    Long productID = Long.parseLong(productIdArray[i].trim()); // Convert string to Long
+                    Product product = productService.findById(productID); // Fetch the product by ID
+                    if (product != null) {
+                        // Get the corresponding quantity for this product
+                        int quantity = i < productQuantityArray.length ? Integer.parseInt(productQuantityArray[i].trim()) : 0;
+                        CartItem cartItem = new CartItem();
+                        cartItem.setProduct(product); // Set the product
+                        cartItem.setQuantity(quantity); // Set the quantity
+                        cartItems.add(cartItem); // Add the cart item to the list
+                    }
+                } catch (NumberFormatException e) {
+                    // Handle any errors in case the product ID or quantity cannot be parsed
+                    e.printStackTrace();
+                }
+            }
+            orderCartItems.add(cartItems);
+        }
+        
+        // Add the list of cart items to the model
+        model.addAttribute("orderCartItems", orderCartItems);
+        
+        return "order"; // Return the view name
+    }    
+    
 }

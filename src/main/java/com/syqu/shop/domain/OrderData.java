@@ -79,6 +79,10 @@ public class OrderData {
     @Temporal(TemporalType.TIMESTAMP)  // Use @Temporal to map to a timestamp
     private Date orderDate;
 
+    @Column(name = "order_status", nullable = false)
+    @NotNull
+    private int orderStatus;
+
     // Explicit getters and setters
 
     public Long getId() {
@@ -189,5 +193,13 @@ public class OrderData {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public int getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(int orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }
