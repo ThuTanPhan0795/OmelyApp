@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const updateCartButton = document.querySelector(".up-cart");
     const quantityInputs = document.querySelectorAll(".quantity-input");
     const selectAllCheckbox = document.getElementById("select-all");
-    const itemCheckboxes = document.querySelectorAll(".item-checkbox");
+    let itemCheckboxes = document.querySelectorAll(".item-checkbox");
     const subtotalPriceElement = document.querySelector(".subtotal-price");
     const totalCartPriceElement = document.querySelector(".total-cart-price");
     const removeLinks = document.querySelectorAll(".ti-close");
@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to update totals and subtotal
     function updateTotals() {
         let subtotal = 0;
+        itemCheckboxes = document.querySelectorAll(".item-checkbox");
 
         itemCheckboxes.forEach((checkbox) => {
             const row = checkbox.closest("tr");
@@ -53,13 +54,13 @@ document.addEventListener("DOMContentLoaded", function () {
         input.addEventListener("blur", function () {
             if (this.value.trim() === "") {
                 // If input is blank, revert to the last valid value
-                console.log("Reverting to: " + currentValue); // Log the value being reverted to
+                // console.log("Reverting to: " + currentValue); // Log the value being reverted to
                 this.value = currentValue; // Revert to the last valid value
             } else {
                 // Update current value if the input is valid
                 if (!isNaN(this.value) && this.value.trim() !== "") {
                     currentValue = this.value; // Update to the new valid value
-                    console.log("Current valid value: " + currentValue); // Log the new valid value
+                    // console.log("Current valid value: " + currentValue); // Log the new valid value
                 }
             }
             updateTotals(); // Ensure totals are updated after blur event
@@ -95,21 +96,21 @@ document.addEventListener("DOMContentLoaded", function () {
             if (isChanged && !link.getAttribute("href").endsWith("check-out")) {
                 event.preventDefault();
                 redirectUrl = link.href;
-                showConfirmationModal();
+                // showConfirmationModal();
 
-                document.getElementById("save-cart").onclick = function () {
-                    saveCart(() => {
-                        confirmationModal.style.display = "none";
-                        setTimeout(() => {
-                            window.location.href = redirectUrl;
-                        }, 500);
-                    });
-                };
-
-                document.getElementById("leave-without-saving").onclick = function () {
+                // document.getElementById("save-cart").onclick = function () {
+                saveCart(() => {
                     confirmationModal.style.display = "none";
-                    window.location.href = redirectUrl;
-                };
+                    setTimeout(() => {
+                        window.location.href = redirectUrl;
+                    }, 500);
+                });
+                // };
+
+                // document.getElementById("leave-without-saving").onclick = function () {
+                //     confirmationModal.style.display = "none";
+                //     window.location.href = redirectUrl;
+                // };
             }
         });
     });
@@ -158,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const productId = this.getAttribute("data-product-id");
             const row = this.closest("tr");
 
-            console.log(`Attempting to remove product with ID: ${productId}`);
+            // console.log(`Attempting to remove product with ID: ${productId}`);
 
             fetch(`/cart/remove/${productId}`, {
                 method: "DELETE",
@@ -171,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (response.ok) {
                         // Remove the item's row from the DOM
                         if (row) row.remove();
-                        console.log(`Product with ID: ${productId} removed successfully.`);
+                        // console.log(`Product with ID: ${productId} removed successfully.`);
 
                         isChanged = true;
 
@@ -179,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         refreshCartElements();
 
                         // Explicitly recalculate totals after removal
-                        updateTotalsForDeleteItem();
+                        updateTotals();
 
                         updateCartButton && (updateCartButton.disabled = false); // Enable update button
                     } else {
@@ -187,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 })
                 .catch((error) => {
-                    console.error("Error removing item:", error);
+                    // console.error("Error removing item:", error);
                     alert("An error occurred. Please try again.");
                 });
         });
@@ -199,47 +200,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let itemCheckboxes = document.querySelectorAll(".item-checkbox");
         let quantityInputs = document.querySelectorAll(".quantity-input");
 
-        console.log("Cart elements refreshed. Remaining items:", itemCheckboxes.length);
+        // console.log("Cart elements refreshed. Remaining items:", itemCheckboxes.length);
     }
-
-    // Ensure updateTotals function is working correctly
-    function updateTotalsForDeleteItem() {
-        let subtotal = 0;
-        console.log("Updating totals...");
-        let itemCheckboxes = document.querySelectorAll(".item-checkbox");
-        // Loop through all items in the cart
-        itemCheckboxes.forEach((checkbox) => {
-            const row = checkbox.closest("tr");
-            const priceElement = row.querySelector(".p-price");
-            const quantityInput = row.querySelector(".quantity-input");
-
-            const price = parseFloat(priceElement.textContent.replace("$", "").replace(",", ""));
-            const quantity = parseInt(quantityInput.value, 10) || 0;
-            const totalForItem = price * quantity;
-
-            console.log(
-                `Item: Price = $${price}, Quantity = ${quantity}, Total for Item = $${totalForItem}`
-            );
-
-            if (checkbox.checked) {
-                subtotal += totalForItem;
-                console.log(
-                    `Checkbox is checked. Adding $${totalForItem} to subtotal. New subtotal: $${subtotal}`
-                );
-            } else {
-                console.log("Checkbox is unchecked. Skipping item.");
-            }
-        });
-
-        console.log(`Final subtotal: $${subtotal}`);
-
-        // Update the total and subtotal text
-        subtotalPriceElement.textContent = `$${subtotal.toFixed(2)}`;
-        totalCartPriceElement.textContent = `$${subtotal.toFixed(2)}`;
-
-        console.log("Updated subtotal and total on the UI.");
-    }
-
+    
     // Save cart function
     function saveCart(callback) {
         const cartItems = [];
@@ -273,11 +236,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }))
                 .catch((error) => {
-                    console.error("Error updating cart:", error);
+                    // console.error("Error updating cart:", error);
                     alert("An error occurred. Please try again.");
                 });
         } else {
-            alert("No items in the cart to save.");
+             // Navigate to the next page without saving
+            if (redirectUrl) {
+                window.location.href = redirectUrl; // Redirect to the saved URL
+            } else {
+                console.log("No redirect URL available.");
+            }
         }
     }
 
