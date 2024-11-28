@@ -38,11 +38,22 @@ public class CartController {
 
     @GetMapping(value = {"/cart","/shopping-cart"})
     public String viewCart(Model model) {
+         // Check if the user is authenticated
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated() || isAnonymousUser(authentication)) {
+            // Redirect to login if the user is not logged in
+            return "redirect:/login";
+        }
         String username = getCurrentUsername();
         List<CartItem> cartItems = cartService.getCartItemsByUsername(username);
         model.addAttribute("products", cartItems);
         model.addAttribute("totalPrice", calculateTotalPrice(cartItems));
         return "shopping-cart";
+    }
+
+    private boolean isAnonymousUser(Authentication authentication) {
+        return authentication.getPrincipal().equals("anonymousUser");
     }
 
     @PostMapping("/cart/add")

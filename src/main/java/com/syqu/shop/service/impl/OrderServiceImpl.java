@@ -30,5 +30,23 @@ public class OrderServiceImpl implements OrderService {
         // TODO Auto-generated method stub
         return oderRepository.findByUsernameOrderByIdDesc(username);
     }
+
+    @Override
+    public OrderData findById(long orderId) {
+        // TODO Auto-generated method stub
+        return oderRepository.findById(orderId);
+    }
+
+    @Override
+    public void deleteById(Long orderId) {
+        // TODO Auto-generated method stub
+         oderRepository.deleteById(orderId);
+    }
+
+    @Override
+    public List<OrderData> getAllOrders() {
+        // TODO Auto-generated method stub
+        return oderRepository.findAllByOrderByIdDesc();
+    }
     
 }

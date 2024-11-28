@@ -39,7 +39,7 @@
       <section class="shopping-cart spad">
         <div class="container">
             <div class="discount-coupon">
-                <h6>YOUR ORDERS</h6>
+                <h6>ORDERS MANAGEMENT</h6>
             </div>
             <div class="row">
                 <div class="col-lg-12" id="cart-container">
@@ -82,30 +82,29 @@
                                     </td>
                                     <!-- <td class="cart-title first-row" th:text="${order.mobileNo}"></td> -->
                                     <td class="cart-title first-row">
-                                        <span th:id="'order-status-text-' + ${order.id}" th:text="|${order.orderStatus == 1 ? 'Confirming' :
-                                            order.orderStatus == 2 ? 'Picking up' :
-                                            order.orderStatus == 3 ? 'Delivering' :
-                                            order.orderStatus == 4 ? 'Evaluation' :
-                                            order.orderStatus == 5 ? 'Delivered' :
-                                            order.orderStatus == 6 ? 'Cancelled' :
-                                            order.orderStatus == 7 ? 'Return' : ''}|">
+                                        <span>
+                                            <select 
+                                            th:id="'status-dropdown-' + ${order.id}" 
+                                            th:name="'orderStatus-' + ${order.id}" 
+                                            class="form-control" 
+                                            th:onchange="'updateOrderStatus(' + ${order.id} + ')'"
+                                        >
+                                            <option th:value="1" th:selected="${order.orderStatus == 1}" th:text="'Confirming'"></option>
+                                            <option th:value="2" th:selected="${order.orderStatus == 2}" th:text="'Picking up'"></option>
+                                            <option th:value="3" th:selected="${order.orderStatus == 3}" th:text="'Delivering'"></option>
+                                            <option th:value="4" th:selected="${order.orderStatus == 4}" th:text="'Evaluation'"></option>
+                                            <option th:value="5" th:selected="${order.orderStatus == 5}" th:text="'Delivered'"></option>
+                                            <option th:value="6" th:selected="${order.orderStatus == 6}" th:text="'Cancelled'"></option>
+                                            <option th:value="7" th:selected="${order.orderStatus == 7}" th:text="'Return'"></option>
+                                        </select>                                        
                                         </span>
                                     </td>
                                     <td class="cart-title first-row">
                                         <span th:id="'order-status-' + ${order.id}">
-                                            <!-- Show Cancel button for status 1 -->
-                                            <span th:if="${order.orderStatus == 1}">
-                                                <a href="#" class="btn btn-primary" 
-                                                   th:onclick="'cancelOrder(' + ${order.id} + ')'">Cancel</a>
-                                            </span>
                                             <!-- Show Delete button for status 5 or 6 -->
-                                            <span th:if="${order.orderStatus == 5 or order.orderStatus == 6}">
+                                            <span>
                                                 <a href="#" class="btn btn-primary" 
                                                    th:onclick="'deleteOrder(' + ${order.id} + ')'">Delete</a>
-                                            </span>
-                                            <!-- Show placeholder for other statuses -->
-                                            <span th:if="${order.orderStatus != 1 and order.orderStatus != 5 and order.orderStatus != 6}">
-                                                ---
                                             </span>
                                         </span>
                                     </td>                                    
@@ -208,7 +207,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/order.js"></script>
+    <script src="js/order-manager.js"></script>
 </body>
 
 </html>
