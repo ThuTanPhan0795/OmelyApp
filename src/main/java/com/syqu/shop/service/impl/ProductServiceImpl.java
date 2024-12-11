@@ -5,9 +5,12 @@ import com.syqu.shop.repository.ProductRepository;
 import com.syqu.shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -71,6 +74,36 @@ public class ProductServiceImpl implements ProductService {
     public long count() {
         return productRepository.count();
     }
+
+    @Override
+    public Page<Product> getFilteredProducts(int page, String sortBy, Integer categories, BigDecimal minPrice, BigDecimal maxPrice) {
+        // Create Sort object based on sortBy parameter
+        Sort sort;
+
+        switch (sortBy) {
+            case "priceAsc":
+                sort = Sort.by("price").ascending();
+                break;
+            case "priceDesc":
+                sort = Sort.by("price").descending();
+                break;
+            case "newest":
+                sort = Sort.by("createdAt").descending();
+                break;
+            case "oldest":
+                sort = Sort.by("createdAt").ascending();
+                break;
+            default:
+                sort = Sort.unsorted();
+        }
+
+        // Create Pageable object
+        PageRequest pageable = PageRequest.of(page, 12, sort); // Assuming 12 items per page
+
+        // Call repository method
+        return productRepository.findFilteredProducts(categories, minPrice, maxPrice, pageable);
+    }
+    
 
     // @Override
     // public Page<Product> findAllSorted(String sortBy, Pageable pageable) {

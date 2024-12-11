@@ -82,7 +82,7 @@
                                 </div>
                             </div>
                             <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                                data-min="33" data-max="98">
+                                data-min="0" data-max="100">
                                 <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
                                 <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
                                 <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
@@ -118,8 +118,8 @@
                                 <label class="cs-green" for="cs-green">Green</label>
                             </div>
                         </div>
-                    </div>
-                    <div class="filter-widget">
+                    </div> -->
+                    <!-- <div class="filter-widget">
                         <h4 class="fw-title">Size</h4>
                         <div class="fw-size-choose">
                             <div class="sc-item">
@@ -155,11 +155,10 @@
                 </div>
                 <div class="col-lg-9 order-1 order-lg-2">
                     <div class="product-show-option">
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-lg-7 col-md-7">
                                 <div class="select-option">
                                     <select id="sorting-dropdown" th:id="'sorting-dropdown-' + ${currentPage}">
-                                        <option value="">Default Sorting</option>
                                         <option value="priceAsc" th:selected="${sortBy == 'priceAsc'}">Price: Low to High</option>
                                         <option value="priceDesc" th:selected="${sortBy == 'priceDesc'}">Price: High to Low</option>
                                         <option value="newest" th:selected="${sortBy == 'newest'}">Newest</option>
@@ -167,7 +166,78 @@
                                     </select>
                                 </div>
                             </div>
+                        </div> -->
+                        <div class="filter-bar">
+                            <!-- Filter Dropdowns -->
+                            <div class="filter-options">
+                                <div class="filter-item">
+                                    <select id="sorting-dropdown" th:id="sorting-dropdown">
+                                        <option>Option</option>
+                                        <option value="priceAsc" th:selected="${sortBy == 'priceAsc'}">Price: Low -> High</option>
+                                        <option value="priceDesc" th:selected="${sortBy == 'priceDesc'}">Price: High -> Low</option>
+                                        <option value="newest" th:selected="${sortBy == 'newest'}">Time: Newest</option>
+                                        <option value="oldest" th:selected="${sortBy == 'oldest'}">Time: Oldest</option>
+                                        <option value="newest" th:selected="${sortBy == 'newest'}">Sale: Low -> High</option>
+                                        <option value="oldest" th:selected="${sortBy == 'oldest'}">Sale: High -> Low</option>
+                                    </select>
+                                </div>
+                                <div class="filter-item" th:id="category-sorting-dropdown">
+                                    <select>
+                                        <option value="">Category</option> <!-- Default option -->
+                                        <option th:each="cat : ${categories}" 
+                                                th:value="${cat.id}" 
+                                                th:text="${cat.categoryName}">
+                                            <!-- The option text and value will be dynamically populated -->
+                                        </option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-item" th:id="price-sorting-dropdown">
+                                    <select>
+                                        <option value="">Price</option>
+                                        <option value="0-10">From 0-10</option>
+                                        <option value="10-50">From 10-50</option>
+                                        <option value="20-30">From 20-30</option>
+                                        <option value="30-40">From 30-40</option>
+                                        <option value="40-50">From 40-50</option>
+                                        <option value="50-60">From 50-60</option>
+                                        <option value="60-70">From 60-70</option>
+                                        <option value="70-80">From 70-80</option>
+                                        <option value="80-90">From 80-90</option>
+                                        <option value="90-100">From 90-100</option>
+                                        <option value="100">Higher 100</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- <div class="filter-item">
+                                    <select>
+                                        <option>Technology</option>
+                                        <option value="Technology">Technology1</option>
+                                        <option value="Technology">Technology2</option>
+                                    </select>
+                                </div> -->
+                            </div>
+                    
+                            <!-- Reset Filters Button -->
+                            <div class="reset-filters">
+                                <button class="reset-button">
+                                    <span class="filter-count">2</span>
+                                    Reset filters
+                                </button>
+                            </div>
                         </div>
+                        <!-- <div class="row">
+                            <div class="col-lg-7 col-md-7">
+                                <div class="select-option">
+                                    <select id="sorting-dropdown" th:id="'sorting-dropdown-' + ${currentPage}">
+                                        <option value="priceAsc" th:selected="${sortBy == 'priceAsc'}">Price: Low to High</option>
+                                        <option value="priceDesc" th:selected="${sortBy == 'priceDesc'}">Price: High to Low</option>
+                                        <option value="newest" th:selected="${sortBy == 'newest'}">Newest</option>
+                                        <option value="oldest" th:selected="${sortBy == 'oldest'}">Oldest</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div> -->
                     </div>
                     <div class="product-list" th:id="product-list">
                         <div th:replace="fragments/product-list :: product-list"></div>

@@ -7,7 +7,10 @@ import com.syqu.shop.service.CartService;
 import com.syqu.shop.service.CategoryService;
 import com.syqu.shop.validator.ProductValidator;
 
+import java.math.BigDecimal;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.data.domain.Sort;
 import org.slf4j.Logger;
@@ -144,28 +147,21 @@ public class ProductController {
         model.addAttribute("totalPages", productsPage.getTotalPages());
         return "shop";
     }
-    // @GetMapping(value = {"/shop"})
-    // public String shop(@RequestParam(defaultValue = "0") int page, Model model) {
-    //     Pageable pageable = PageRequest.of(page, 12); // 3 products per page
-    //     Page<Product> productsPage = productService.findAll(pageable);
-    //     model.addAttribute("products", productsPage.getContent());
-    //     model.addAttribute("productsCount", productService.count());
-    //     model.addAttribute("categories", categoryService.findAll());
-    //     model.addAttribute("currentPage", page);
-    //     model.addAttribute("totalPages", productsPage.getTotalPages());
-    //     // return "home";
-    //     return "shop";
-    // }
-    @GetMapping("/sort")
-    public ResponseEntity<Page<Product>> getProducts(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "12") int size,
-        @RequestParam(required = false) String sortBy) {
+    
+    @GetMapping("/shop")
+    public String getFilteredProducts(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "newest") String sortBy,
+                                  Model model) {
+        Pageable pageable = PageRequest.of(page, 12, determineSort(sortBy));
+        // update findAll function for sorting categories minPrice maxPrice
+        Page<Product> productsPage = productService.findAll(pageable);
 
-        Pageable pageable = PageRequest.of(page, size, determineSort(sortBy));
-
-        Page<Product> products = productService.findAll(pageable);
-        return ResponseEntity.ok(products);
+        model.addAttribute("products", productsPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productsPage.getTotalPages());
+        model.addAttribute("productsCount", productsPage.getTotalElements());
+        model.addAttribute("categories", categoryService.findAll());
+        return "shop";
     }
 
     private Sort determineSort(String sortBy) {
@@ -174,10 +170,35 @@ public class ProductController {
         } else if ("priceDesc".equals(sortBy)) {
             return Sort.by(Sort.Direction.DESC, "price");
         } else if ("newest".equals(sortBy)) {
-            return Sort.by(Sort.Direction.DESC, "createdDate");
+            return Sort.by(Sort.Direction.DESC, "id");
         } else if ("oldest".equals(sortBy)) {
-            return Sort.by(Sort.Direction.ASC, "createdDate");
+            return Sort.by(Sort.Direction.ASC, "id");
         }
         return Sort.unsorted();
     }
+
+    @GetMapping("/shop_filter")
+    public String filterShop(
+                            @RequestParam(defaultValue = "0") int page,                // Page number
+                            @RequestParam(defaultValue = "newest") String sortBy,      // Sorting option
+                            @RequestParam(required = false) Integer categories,        // Category ID (nullable)
+                            @RequestParam(required = false) BigDecimal minPrice,          // Minimum price (nullable)
+                            @RequestParam(required = false) BigDecimal maxPrice,          // Maximum price (nullable)
+                            Model model,
+                            HttpServletRequest request) {   
+        Page<Product> productsPage = productService.getFilteredProducts(page,sortBy,categories,minPrice,maxPrice);
+        model.addAttribute("products", productsPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productsPage.getTotalPages());
+        model.addAttribute("productsCount", productsPage.getTotalElements());
+        model.addAttribute("sortBy", sortBy);
+
+        String requestedWith = request.getHeader("X-Requested-With");
+        if ("XMLHttpRequest".equals(requestedWith)) {
+            return "fragments/product-list :: product-list";
+        }
+        model.addAttribute("categories", categoryService.findAll());
+        return "shop";
+    }
+
 }

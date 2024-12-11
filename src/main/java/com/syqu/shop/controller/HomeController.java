@@ -4,6 +4,8 @@ import com.syqu.shop.domain.Product;
 import com.syqu.shop.service.CategoryService;
 import com.syqu.shop.service.ProductService;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,42 +49,6 @@ public class HomeController {
     @GetMapping(value = {"/contact"})
     public String contact(@RequestParam(defaultValue = "0") int page, Model model) {
         return "contact";
-    }
-
-    @CrossOrigin(origins = "*") // Allow all origins or specify the allowed origin
-    @GetMapping(value = "/shop")
-    public String shop(@RequestParam(defaultValue = "0") int page,
-                    @RequestParam(defaultValue = "default") String sortBy,
-                    Model model,
-                    HttpServletRequest request) {
-        Pageable pageable = PageRequest.of(page, 12, determineSort(sortBy));
-        Page<Product> productsPage = productService.findAll(pageable);
-
-        model.addAttribute("products", productsPage.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", productsPage.getTotalPages());
-        model.addAttribute("productsCount", productsPage.getTotalElements());
-        model.addAttribute("sortBy", sortBy);
-
-        String requestedWith = request.getHeader("X-Requested-With");
-        if ("XMLHttpRequest".equals(requestedWith)) {
-            return "fragments/product-list :: product-list";
-        }
-        model.addAttribute("categories", categoryService.findAll());
-        return "shop";
-    }
-
-    private Sort determineSort(String sortBy) {
-        if ("priceAsc".equals(sortBy)) {
-            return Sort.by(Sort.Direction.ASC, "price");
-        } else if ("priceDesc".equals(sortBy)) {
-            return Sort.by(Sort.Direction.DESC, "price");
-        } else if ("newest".equals(sortBy)) {
-            return Sort.by(Sort.Direction.DESC, "id");
-        } else if ("oldest".equals(sortBy)) {
-            return Sort.by(Sort.Direction.ASC, "id");
-        }
-        return Sort.unsorted();
     }
 
     // @GetMapping(value = {"/check-out"})
