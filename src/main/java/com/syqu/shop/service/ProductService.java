@@ -11,6 +11,7 @@ public interface ProductService {
     Product findById(long id);
     Page<Product> findAll(Pageable pageable);
     Page<Product> findAllByCategoryId(long categoryId, Pageable pageable);
-    Page<Product> findByNameContaining(String name, Pageable pageable); // Add this method
+    Page<Product> findByNameContaining(String name, Pageable pageable);
+    // Page<Product> findAllSorted(String sortBy, Pageable pageable); // Add this method for sorting
     long count();
 }

@@ -60,15 +60,31 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> findAllByCategoryId(long categoryId, Pageable pageable) {
-        return productRepository.findByCategoryId(categoryId, pageable);
+        return productRepository.findByCategoryIdOrderByIdDesc(categoryId, pageable);
     }
     @Override
     public Page<Product> findByNameContaining(String name, Pageable pageable) {
-        return productRepository.findByNameContainingIgnoreCase(name, pageable); // Use case-insensitive search
+        return productRepository.findByNameContainingIgnoreCaseOrderByIdDesc(name, pageable); // Use case-insensitive search
     }
 
     @Override
     public long count() {
         return productRepository.count();
     }
+
+    // @Override
+    // public Page<Product> findAllSorted(String sortBy, Pageable pageable) {
+    //     switch (sortBy) {
+    //         case "priceAsc":
+    //             return productRepository.findAllByOrderByPriceAsc(pageable);
+    //         case "priceDesc":
+    //             return productRepository.findAllByOrderByPriceDesc(pageable);
+    //         case "newest":
+    //             return productRepository.findAllByOrderByIdDesc(pageable);
+    //         case "oldest":
+    //             return productRepository.findAllByOrderByIdAsc(pageable);
+    //         default:
+    //             return productRepository.findAll(pageable);
+    //     }
+    // }
 }

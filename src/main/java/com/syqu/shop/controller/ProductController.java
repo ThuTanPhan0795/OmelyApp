@@ -9,6 +9,7 @@ import com.syqu.shop.validator.ProductValidator;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ProductController {
@@ -139,5 +143,41 @@ public class ProductController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productsPage.getTotalPages());
         return "shop";
+    }
+    // @GetMapping(value = {"/shop"})
+    // public String shop(@RequestParam(defaultValue = "0") int page, Model model) {
+    //     Pageable pageable = PageRequest.of(page, 12); // 3 products per page
+    //     Page<Product> productsPage = productService.findAll(pageable);
+    //     model.addAttribute("products", productsPage.getContent());
+    //     model.addAttribute("productsCount", productService.count());
+    //     model.addAttribute("categories", categoryService.findAll());
+    //     model.addAttribute("currentPage", page);
+    //     model.addAttribute("totalPages", productsPage.getTotalPages());
+    //     // return "home";
+    //     return "shop";
+    // }
+    @GetMapping("/sort")
+    public ResponseEntity<Page<Product>> getProducts(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "12") int size,
+        @RequestParam(required = false) String sortBy) {
+
+        Pageable pageable = PageRequest.of(page, size, determineSort(sortBy));
+
+        Page<Product> products = productService.findAll(pageable);
+        return ResponseEntity.ok(products);
+    }
+
+    private Sort determineSort(String sortBy) {
+        if ("priceAsc".equals(sortBy)) {
+            return Sort.by(Sort.Direction.ASC, "price");
+        } else if ("priceDesc".equals(sortBy)) {
+            return Sort.by(Sort.Direction.DESC, "price");
+        } else if ("newest".equals(sortBy)) {
+            return Sort.by(Sort.Direction.DESC, "createdDate");
+        } else if ("oldest".equals(sortBy)) {
+            return Sort.by(Sort.Direction.ASC, "createdDate");
+        }
+        return Sort.unsorted();
     }
 }

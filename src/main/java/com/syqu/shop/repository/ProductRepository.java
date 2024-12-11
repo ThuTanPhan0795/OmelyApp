@@ -12,7 +12,8 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findById(long id);
     Optional<Product> findByName(String name);
-    Page<Product> findAll(Pageable pageable);
-    Page<Product> findByCategoryId(long categoryId, Pageable pageable);
-    Page<Product> findByNameContainingIgnoreCase(String name, Pageable pageable); // Add this method
+
+    Page<Product> findAll(Pageable pageable); // Ordered by ID decreasing
+    Page<Product> findByCategoryIdOrderByIdDesc(long categoryId, Pageable pageable); // Ordered by ID decreasing for category
+    Page<Product> findByNameContainingIgnoreCaseOrderByIdDesc(String name, Pageable pageable); // Ordered by ID decreasing for name search
 }

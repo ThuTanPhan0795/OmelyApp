@@ -44,3 +44,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+// function applySorting() {
+//     const sortBy = document.getElementById('sorting-dropdown').value;
+//     const currentPage = new URLSearchParams(window.location.search).get('page') || 0;
+//     const pageSize = new URLSearchParams(window.location.search).get('size') || 12;
+//     console.log("sortBy "+sortBy);
+//     console.log("currentPage "+currentPage);
+//     console.log("pageSize "+pageSize);
+//     window.location.href = `/sort?page=${currentPage}&size=${pageSize}&sortBy=${sortBy}`;
+// }
+

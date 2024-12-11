@@ -3,12 +3,17 @@ package com.syqu.shop.controller;
 import com.syqu.shop.domain.Product;
 import com.syqu.shop.service.CategoryService;
 import com.syqu.shop.service.ProductService;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,17 +48,41 @@ public class HomeController {
     public String contact(@RequestParam(defaultValue = "0") int page, Model model) {
         return "contact";
     }
-    @GetMapping(value = {"/shop"})
-    public String shop(@RequestParam(defaultValue = "0") int page, Model model) {
-        Pageable pageable = PageRequest.of(page, 12); // 3 products per page
+
+    @CrossOrigin(origins = "*") // Allow all origins or specify the allowed origin
+    @GetMapping(value = "/shop")
+    public String shop(@RequestParam(defaultValue = "0") int page,
+                    @RequestParam(defaultValue = "default") String sortBy,
+                    Model model,
+                    HttpServletRequest request) {
+        Pageable pageable = PageRequest.of(page, 12, determineSort(sortBy));
         Page<Product> productsPage = productService.findAll(pageable);
+
         model.addAttribute("products", productsPage.getContent());
-        model.addAttribute("productsCount", productService.count());
-        model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productsPage.getTotalPages());
-        // return "home";
+        model.addAttribute("productsCount", productsPage.getTotalElements());
+        model.addAttribute("sortBy", sortBy);
+
+        String requestedWith = request.getHeader("X-Requested-With");
+        if ("XMLHttpRequest".equals(requestedWith)) {
+            return "fragments/product-list :: product-list";
+        }
+        model.addAttribute("categories", categoryService.findAll());
         return "shop";
+    }
+
+    private Sort determineSort(String sortBy) {
+        if ("priceAsc".equals(sortBy)) {
+            return Sort.by(Sort.Direction.ASC, "price");
+        } else if ("priceDesc".equals(sortBy)) {
+            return Sort.by(Sort.Direction.DESC, "price");
+        } else if ("newest".equals(sortBy)) {
+            return Sort.by(Sort.Direction.DESC, "id");
+        } else if ("oldest".equals(sortBy)) {
+            return Sort.by(Sort.Direction.ASC, "id");
+        }
+        return Sort.unsorted();
     }
 
     // @GetMapping(value = {"/check-out"})

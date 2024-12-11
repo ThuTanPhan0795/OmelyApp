@@ -121,6 +121,12 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
 
             let selectedAddress = $('input[name="selectedAddress"]:checked');
+
+            if (!selectedAddress.length) {
+                alert('You need to select a billing address.');
+                return;
+            }
+            
             let selectedAddressID = selectedAddress.attr('id');
             let addressIndex = selectedAddressID ? selectedAddressID.replace('address', '') : undefined;
 
