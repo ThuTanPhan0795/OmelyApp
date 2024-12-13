@@ -136,7 +136,7 @@ public class ProductController {
         return "products";
     }
 
-    // @GetMapping("/searchByProductName")
+    // @GetMapping("searchByProductName")
     // public String searchByProductName(@RequestParam("query") String query, @RequestParam(defaultValue = "0") int page, Model model) {
     //     Pageable pageable = PageRequest.of(page, 12); // 12 products per page
     //     Page<Product> productsPage = productService.findByNameContaining(query, pageable);
@@ -147,48 +147,35 @@ public class ProductController {
     //     model.addAttribute("totalPages", productsPage.getTotalPages());
     //     return "shop";
     // }
-    @GetMapping("/searchByProductName")
-    public String searchByProductName(
-                                    @RequestParam String query,
-                                    @RequestParam(defaultValue = "0") int page,
-                                    Model model,
-                                    HttpServletRequest request) {
-
-        Pageable pageable = PageRequest.of(page, 12); // 12 products per page
-        Page<Product> productsPage = productService.findByNameContaining(query, pageable);
-        model.addAttribute("products", productsPage.getContent());
-        model.addAttribute("productsCount", productsPage.getTotalElements());
-        model.addAttribute("categories", categoryService.findAll());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", productsPage.getTotalPages());
-        model.addAttribute("query", query); // Retain the query for display
-
-        // Check if the request is an AJAX call
-        String requestedWith = request.getHeader("X-Requested-With");
-        if ("XMLHttpRequest".equals(requestedWith)) {
-            // Return only the product list fragment
-            return "fragments/product-list :: product-list";
-        }
-
-        // Otherwise, return the full shop page
-        model.addAttribute("categories", categoryService.findAll());
-        return "shop";
-    }
         
     @GetMapping("/shop")
-    public String getFilteredProducts(@RequestParam(defaultValue = "0") int page,
-                                  @RequestParam(defaultValue = "newest") String sortBy,
-                                  Model model) {
-        Pageable pageable = PageRequest.of(page, 12, determineSort(sortBy));
-        // update findAll function for sorting categories minPrice maxPrice
-        Page<Product> productsPage = productService.findAll(pageable);
+    public String getFilteredProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "newest") String sortBy,
+            @RequestParam(required = false) String query,  // Optional query parameter
+            Model model) {
 
+        // Determine sorting
+        Pageable pageable = PageRequest.of(page, 12, determineSort(sortBy));
+
+        Page<Product> productsPage;
+
+        // If 'query' parameter is provided, use the 'findByNameContaining' method
+        if (query != null && !query.trim().isEmpty()) {
+            productsPage = productService.findByNameContaining(query, pageable);
+        } else {
+            // Otherwise, use the 'findAll' method
+            productsPage = productService.findAll(pageable);
+        }
+
+        // Add attributes to the model for rendering the page
         model.addAttribute("products", productsPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productsPage.getTotalPages());
         model.addAttribute("productsCount", productsPage.getTotalElements());
         model.addAttribute("categories", categoryService.findAll());
-        return "shop";
+
+        return "shop";  // Return the shop page template
     }
 
     private Sort determineSort(String sortBy) {
@@ -211,9 +198,10 @@ public class ProductController {
                             @RequestParam(required = false) Long categories,        // Category ID (nullable)
                             @RequestParam(required = false) BigDecimal minPrice,          // Minimum price (nullable)
                             @RequestParam(required = false) BigDecimal maxPrice,          // Maximum price (nullable)
+                            @RequestParam(required = false) String query, 
                             Model model,
                             HttpServletRequest request) {                           
-        Page<Product> productsPage = productService.getFilteredProducts(page,sortBy,categories,minPrice,maxPrice);
+        Page<Product> productsPage = productService.getFilteredProducts(page,sortBy,categories,minPrice,maxPrice,query);
         model.addAttribute("products", productsPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productsPage.getTotalPages());

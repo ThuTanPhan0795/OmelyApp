@@ -92,6 +92,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const sortingValue = sortingDropdown ? sortingDropdown.value : null;
         const categoryValue = categorySortingDropdown ? categorySortingDropdown.value : null;
         const priceValue = priceSortingDropdown ? priceSortingDropdown.value : null;
+        const query = searchInput.value.trim();
+        console.log("queryxxx "+query);
         let minPrice = '';
         let maxPrice = '';
 
@@ -107,7 +109,8 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("categoryValue "+ categoryValue);
         console.log("minPrice "+ minPrice);
         console.log("maxPrice "+ maxPrice);
-        filterProducts(page, sortingValue, categoryValue, minPrice, maxPrice);
+        console.log("queryxy "+ query);
+        filterProducts(page, sortingValue, categoryValue, minPrice, maxPrice ,query);
 
     }
 
@@ -133,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
         filterProducts(page, sortBy, selectedCategories, minPrice, maxPrice);
     });
 
-    function filterProducts(page, sortBy, selectedCategories, minPrice, maxPrice) {
+    function filterProducts(page, sortBy, selectedCategories, minPrice, maxPrice , query) {
         // Remove '€' and '$' symbols from price values before passing
         // minPrice = minPrice.replace('€', '').replace('$', '').trim();
         // maxPrice = maxPrice.replace('€', '').replace('$', '').trim();
@@ -146,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (selectedCategories !== null) params.append("categories", selectedCategories);
         if (minPrice !== null) params.append("minPrice", minPrice);
         if (maxPrice !== null) params.append("maxPrice", maxPrice);
+        if (query !== null) params.append("query", query);
 
         const url = `/shop_filter?${params.toString()}`;
         console.log("url "+ url);
@@ -197,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
             filter.selectedIndex = 0; // Reset dropdown to the first option
         });
         updateFilterCount(); // Refresh filter count
-        filterProducts(0,"newest",null,null,null);
+        filterProducts(0,"newest",null,null,null,null);
     }
 
     // Add change event listeners to all dropdowns
@@ -210,4 +214,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initialize the filter count on page load
     updateFilterCount();
+
+    
+    //search by name function 
+    const searchForm = document.getElementById("search-form");
+    const searchInput = document.getElementById("search-input");
+    const searchButton = document.getElementById("search-btn"); // Select the button
+
+    // Handle search button click
+    searchButton.addEventListener("click", function () {
+        console.log("search call");
+        triggerSearch(); // Trigger search logic when the button is clicked
+    });
+
+    // Prevent form submission and trigger search logic instead
+    // searchForm.addEventListener("submit", function (event) {
+    //     console.log("search call");
+    //     event.preventDefault(); // Prevent default form submission
+    //     triggerSearch();
+    // });
+
+    function triggerSearch() {
+        console.log("triggerSearch call");
+        const query = searchInput.value.trim();
+        console.log("query  "+query);
+        if (!query) return;
+
+        const currentPage = window.location.pathname;
+        console.log("currentPage  "+currentPage);
+
+        if (currentPage === "/shop") {
+            // Perform AJAX search if on /shop
+            sortingdropdown(0);
+        } else {
+            // Redirect if not on /shop
+            window.location.href = `/searchByProductName?query=${encodeURIComponent(query)}`;
+        }
+    }
 });
+    
+

@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getFilteredProducts(int page, String sortBy, Long categories, BigDecimal minPrice, BigDecimal maxPrice) {
+    public Page<Product> getFilteredProducts(int page, String sortBy, Long categories, BigDecimal minPrice, BigDecimal maxPrice ,String name) {
         // Create Sort object based on sortBy parameter
         Sort sort;
 
@@ -101,7 +101,7 @@ public class ProductServiceImpl implements ProductService {
         PageRequest pageable = PageRequest.of(page, 12, sort); // Assuming 12 items per page
 
         // Call repository method
-        return productRepository.findFilteredProducts(categories, minPrice, maxPrice, pageable);
+        return productRepository.findFilteredProducts(categories, minPrice, maxPrice,name, pageable);
     }
     
 

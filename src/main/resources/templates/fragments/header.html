@@ -46,14 +46,30 @@
                     </div>
                 </div>
                 <div class="col-lg-7 col-md-7">
-                    <div class="advanced-search">
-                        <button type="button" class="category-btn">All Categories</button>
-                        <form class="input-group" action="#" th:action="@{/searchByProductName}" method="get">
-                            <input type="text" name="query" placeholder="What do you need?">
-                            <button type="submit"><i class="ti-search"></i></button>
-                        </form>
+                    <!-- Conditionally display content based on the current URL using Thymeleaf -->
+                    <div th:switch="${#httpServletRequest.requestURI}">
+                        <!-- If the URL is /home -->
+                        <div th:case="'/shop'" class="advanced-search">
+                            <button type="button" class="category-btn">All Categories</button>
+                            <div class="input-group">
+                                <input id="search-input" type="text" name="query" placeholder="What do you need?">
+                                <button id="search-btn" type="button"><i class="ti-search"></i></button>
+                            </div>
+                        </div>
+                
+                        <!-- If the URL is not /home -->
+                        <div th:case="*">
+                            <div class="advanced-search">
+                                <button type="button" class="category-btn">All Categories</button>
+                                <form class="input-group" th:action="@{/shop}" method="get">
+                                    <input type="text" name="query" placeholder="What do you need?" th:value="${param.query}">
+                                    <button type="submit"><i class="ti-search"></i></button>
+                                </form>                                
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </div>                
+                
                 <div class="col-lg-3 text-right col-md-3">
                     <ul class="nav-right">
                         <a th:href="@{/cart}">
