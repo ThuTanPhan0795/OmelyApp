@@ -68,12 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault(); // Prevent default link behavior
 
                 const page = this.getAttribute("data-page");
-                const sortingDropdown = document.querySelector('[id^="sorting-dropdown"]');
-                const sortBy = sortingDropdown.value;
-
-                if (page !== null) {
-                    loadProducts(page, sortBy);
-                }
+                sortingdropdown(page);
             });
         });
     }
@@ -144,7 +139,15 @@ document.addEventListener("DOMContentLoaded", function () {
         // maxPrice = maxPrice.replace('€', '').replace('$', '').trim();
 
         const xhr = new XMLHttpRequest();
-        const url = `/shop_filter?page=${page}&sortBy=${sortBy}&categories=${selectedCategories}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
+        const params = new URLSearchParams();
+        params.append("page", page);
+        params.append("sortBy", sortBy);
+
+        if (selectedCategories !== null) params.append("categories", selectedCategories);
+        if (minPrice !== null) params.append("minPrice", minPrice);
+        if (maxPrice !== null) params.append("maxPrice", maxPrice);
+
+        const url = `/shop_filter?${params.toString()}`;
         console.log("url "+ url);
         xhr.open("GET", url, true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -194,6 +197,7 @@ document.addEventListener("DOMContentLoaded", function () {
             filter.selectedIndex = 0; // Reset dropdown to the first option
         });
         updateFilterCount(); // Refresh filter count
+        filterProducts(0,"newest",null,null,null);
     }
 
     // Add change event listeners to all dropdowns

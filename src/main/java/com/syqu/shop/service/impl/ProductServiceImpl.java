@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getFilteredProducts(int page, String sortBy, Integer categories, BigDecimal minPrice, BigDecimal maxPrice) {
+    public Page<Product> getFilteredProducts(int page, String sortBy, Long categories, BigDecimal minPrice, BigDecimal maxPrice) {
         // Create Sort object based on sortBy parameter
         Sort sort;
 
@@ -88,10 +88,10 @@ public class ProductServiceImpl implements ProductService {
                 sort = Sort.by("price").descending();
                 break;
             case "newest":
-                sort = Sort.by("createdAt").descending();
+                sort = Sort.by("id").descending();
                 break;
             case "oldest":
-                sort = Sort.by("createdAt").ascending();
+                sort = Sort.by("id").ascending();
                 break;
             default:
                 sort = Sort.unsorted();

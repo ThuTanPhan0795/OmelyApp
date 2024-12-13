@@ -25,7 +25,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
          + "(:minPrice IS NULL OR p.price >= :minPrice) AND "
          + "(:maxPrice IS NULL OR p.price <= :maxPrice)")
     Page<Product> findFilteredProducts(
-            @Param("categories") Integer categories,
+            @Param("categories") Long categories,
             @Param("minPrice") BigDecimal minPrice,
             @Param("maxPrice") BigDecimal maxPrice,
             Pageable pageable);
