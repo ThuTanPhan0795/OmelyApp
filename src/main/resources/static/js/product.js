@@ -315,20 +315,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const popupMessage = document.getElementById('popup-message');
     const closePopupButton = document.querySelector('.close-popup');
 
-    // Function to show the popup
-    function showPopup(message) {
-        const popup = document.getElementById('cart-popup'); // Select popup
-        const popupMessage = popup.querySelector('.popup-message'); // Select message
+ // Function to show the popup with a message and type (success/error)
+   function showPopup(message, type = "success") {
+        const popup = document.getElementById("cart-popup");
+        const popupMessage = popup.querySelector(".popup-message");
 
-        popupMessage.textContent = message; // Update message content
-        popup.classList.add('show'); // Add class to show popup
+        popupMessage.textContent = message; // Set the message
 
-        // Hide the popup after 3 seconds
+        // Add or remove the 'error' class based on type
+        if (type === "error") {
+            popup.classList.add("error");
+        } else {
+            popup.classList.remove("error");
+        }
+
+        popup.classList.add("show"); // Show the popup
+
+        // Hide popup after 3 seconds
         setTimeout(() => {
-            popup.classList.remove('show');
+            popup.classList.remove("show", "error");
         }, 1000);
-    }
-
+   }
 
     // Close popup when the user clicks the 'x' button
     closePopupButton.addEventListener('click', () => {
@@ -359,16 +366,16 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(url)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Failed to add to cart');
+                    showPopup('Failed to add product to cart.', 'error');  // Show error message
                 }
                 return response.json();
             })
             .then(data => {
-                showPopup(data.message);  // Show success message in popup
+                showPopup(data.message, 'success');  // Show success message in popup
             })
             .catch(error => {
                 console.error('Error:', error);
-                showPopup('Failed to add product to cart.', 'danger');  // Show error message
+                showPopup('Failed to add product to cart.', 'error');  // Show error message
             });
     }
     setupAddToCartButtons();

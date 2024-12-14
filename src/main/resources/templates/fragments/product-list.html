@@ -17,10 +17,10 @@
         <!-- <p class="text-muted" th:text="'Total results: ' + ${productsCount}"></p> -->
     </div>
     <!-- Popup container -->
-<div id="cart-popup" class="popup">
-    <span class="popup-icon">✔</span>
-    <span class="popup-message"></span>
-</div>
+    <div id="cart-popup" class="popup">
+        <span class="popup-icon">✔</span>
+        <span class="popup-message"></span>
+    </div>
     <div class="product-list" th:id="product-list">
         <div class="row">
             <div class="col-lg-4 col-sm-6" th:each="product : ${products}">

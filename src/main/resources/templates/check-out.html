@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/popup.css" type="text/css">
 </head>
 
 <body>
@@ -211,6 +212,11 @@
                                     <button type="button" class="btn btn-primary save-address-btn" th:data-index="${#lists.size(checkoutUserInfors)}">Save</button>
                                 </div>
                             </div>
+                        </div>
+                        <!-- Popup container -->
+                        <div id="cart-popup" class="popup">
+                            <span class="popup-icon">✔</span>
+                            <span class="popup-message"></span>
                         </div>                        
                         <!-- Account Creation Option -->
                         <!-- <div class="col-md-12 form-group">

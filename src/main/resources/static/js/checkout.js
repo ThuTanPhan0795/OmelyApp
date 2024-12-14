@@ -100,14 +100,36 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: JSON.stringify(addressData)
             })
             .then(data => {
-                alert('Address saved successfully!');
+                // alert('Address saved successfully!');
+                showPopup('Address saved successfully!' ,'success')
             })
             .catch(error => {
                 console.error('Error saving address:', error);
-                alert('An error occurred while saving the address. Please try again.');
+                // alert('An error occurred while saving the address. Please try again.');
+                showPopup('An error occurred while saving the address. Please try again.' ,'error')
             });
         });
     });
+    function showPopup(message, type = "success") {
+        const popup = document.getElementById("cart-popup");
+        const popupMessage = popup.querySelector(".popup-message");
+
+        popupMessage.textContent = message; // Set the message
+
+        // Add or remove the 'error' class based on type
+        if (type === "error") {
+            popup.classList.add("error");
+        } else {
+            popup.classList.remove("error");
+        }
+
+        popup.classList.add("show"); // Show the popup
+
+        // Hide popup after 3 seconds
+        setTimeout(() => {
+            popup.classList.remove("show", "error");
+        }, 1000);
+   }
 
     // Function to get input value or use the placeholder if empty
     function getInputValue(selector) {
