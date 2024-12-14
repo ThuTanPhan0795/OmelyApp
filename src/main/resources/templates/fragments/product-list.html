@@ -1,5 +1,21 @@
 <div th:fragment="product-list">
     <!-- Product List -->
+    <div class="search-results-info text-center my-4">
+        <!-- Show search query only if it is not empty -->
+        <!-- <div th:if="${query != null and !query.isEmpty()}">
+            <h1 class="display-4" th:text="'Showing results for: ' + ${query}"></h4>
+        </div> -->
+        <div class="result-container">
+            <span class="result-count" th:text="' Showing: ' + ${productsCount} + ' results'"></span>
+            <div class="tag-box" th:if="${query != null and !query.isEmpty()}" th:attr="data-query=${query}">
+                <span th:text="${query}"></span>
+                <span class="close-icon">X</span> <!-- Clicking X should trigger the listener -->
+            </div>
+        </div>
+    
+        <!-- Show total number of results -->
+        <!-- <p class="text-muted" th:text="'Total results: ' + ${productsCount}"></p> -->
+    </div>
     <div class="product-list" th:id="product-list">
         <div class="row">
             <div class="col-lg-4 col-sm-6" th:each="product : ${products}">

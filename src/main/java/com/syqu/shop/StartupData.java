@@ -30,12 +30,12 @@ public class StartupData implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        adminAccount();
-        userAccount();
-        category();
-        for (int i = 0 ; i<= 10 ; i++){
-            exampleProducts(i+10);   
-        }
+        // adminAccount();
+        // userAccount();
+        // category();
+        // for (int i = 0 ; i<= 10 ; i++){
+        //     exampleProducts(i+10);   
+        // }
     }
 
     private void userAccount(){

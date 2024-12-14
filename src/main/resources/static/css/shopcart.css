@@ -148,3 +148,71 @@
         padding: 1px 5px;
     }
 }
+/* General container for results */
+.result-container {
+    display: flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    margin: 10px 0;
+}
+
+/* Styling for the result count */
+.result-count {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Box for the query tag */
+.tag-box {
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #555;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for tag-box */
+.tag-box:hover {
+    background-color: #e6f7ff; /* Light blue background */
+    border-color: #91d5ff; /* Blue border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Deeper shadow */
+}
+
+/* Close icon inside the tag box */
+.close-icon {
+    margin-left: 10px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect for close icon */
+.close-icon:hover {
+    color: #d9534f; /* Red color on hover */
+    transform: scale(1.2); /* Slight zoom effect */
+}
+
+/* Add a subtle animation to the tag-box when it appears */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tag-box {
+    animation: fadeIn 0.3s ease-out;
+}
+

@@ -76,23 +76,41 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initial setup for sorting dropdown
     const sortingDropdown = document.querySelector('[id^="sorting-dropdown"]');
     sortingDropdown.addEventListener("change", function () {
-        sortingdropdown(0);
+        const tagBox = document.querySelector(".tag-box");
+        console.log("tagBox", tagBox);
+        let query = null;
+        if (tagBox) {
+            query = tagBox.getAttribute("data-query");
+            console.log("Query from tag-box:", query);
+        }
+        sortingdropdown(0,query);
     });
     const categorySortingDropdown = document.querySelector('#category-sorting-dropdown select');
     categorySortingDropdown.addEventListener("change", function () {
-        sortingdropdown(0);
+        const tagBox = document.querySelector(".tag-box");
+        let query = null;
+        if (tagBox) {
+            query = tagBox.getAttribute("data-query");
+            console.log("Query from tag-box:", query);
+        }
+        sortingdropdown(0,query);
     });
     const priceSortingDropdown = document.querySelector('#price-sorting-dropdown select');
     priceSortingDropdown.addEventListener("change", function () {
-        sortingdropdown(0);
+        const tagBox = document.querySelector(".tag-box");
+        let query = null;
+        if (tagBox) {
+            query = tagBox.getAttribute("data-query");
+            console.log("Query from tag-box:", query);
+        }
+        sortingdropdown(0,query);
     });
 
-    function sortingdropdown(pageNumber){
+    function sortingdropdown(pageNumber ,query){
         const page = pageNumber; // Start from the first page when sorting changes
         const sortingValue = sortingDropdown ? sortingDropdown.value : null;
         const categoryValue = categorySortingDropdown ? categorySortingDropdown.value : null;
         const priceValue = priceSortingDropdown ? priceSortingDropdown.value : null;
-        const query = searchInput.value.trim();
         console.log("queryxxx "+query);
         let minPrice = '';
         let maxPrice = '';
@@ -145,6 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const params = new URLSearchParams();
         params.append("page", page);
         params.append("sortBy", sortBy);
+        console.log("query "+ query);
 
         if (selectedCategories !== null) params.append("categories", selectedCategories);
         if (minPrice !== null) params.append("minPrice", minPrice);
@@ -167,8 +186,32 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 console.error("Error " + xhr.status + ": " + xhr.responseText);
             }
+
+            // add remove search text function 
+            const resultContainer = document.querySelector(".result-container");
+    
+            if (resultContainer) {
+                console.log("Result Container found!");
+                
+                // Event delegation for .close-icon
+                resultContainer.addEventListener("click", function (event) {
+                    console.log("Clicked inside result container:", event.target);
+                    
+                    if (event.target.classList.contains("close-icon")) {
+                        console.log("Close button clicked!");
+                        
+                        const tagBox = event.target.closest(".tag-box");
+                        if (tagBox) {
+                            console.log("Removing tag-box:", tagBox);
+                            tagBox.remove();
+                            sortingdropdown(0,null);
+                        }
+                    }
+                });
+            }   
+            // end remove search text function 
         };
-        xhr.send();
+        xhr.send();       
     }
 
     const filters = document.querySelectorAll(".filter-item select"); // All dropdowns
@@ -201,7 +244,13 @@ document.addEventListener("DOMContentLoaded", function () {
             filter.selectedIndex = 0; // Reset dropdown to the first option
         });
         updateFilterCount(); // Refresh filter count
-        filterProducts(0,"newest",null,null,null,null);
+        const tagBox = document.querySelector(".tag-box");
+        let query = null;
+        if (tagBox) {
+            query = tagBox.getAttribute("data-query");
+            console.log("Query from tag-box:", query);
+        }
+        filterProducts(0,"newest",null,null,null,query);
     }
 
     // Add change event listeners to all dropdowns
@@ -237,20 +286,20 @@ document.addEventListener("DOMContentLoaded", function () {
     function triggerSearch() {
         console.log("triggerSearch call");
         const query = searchInput.value.trim();
-        console.log("query  "+query);
-        if (!query) return;
-
+        // Clear the search input box after searching
+        searchInput.value = "";
+        if (!query) return;  
         const currentPage = window.location.pathname;
-        console.log("currentPage  "+currentPage);
-
+        console.log("currentPage  " + currentPage);  
         if (currentPage === "/shop") {
             // Perform AJAX search if on /shop
-            sortingdropdown(0);
+            sortingdropdown(0 , query);
         } else {
             // Redirect if not on /shop
             window.location.href = `/searchByProductName?query=${encodeURIComponent(query)}`;
         }
-    }
+    }    
+
 });
     
 

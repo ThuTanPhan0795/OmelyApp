@@ -174,6 +174,7 @@ public class ProductController {
         model.addAttribute("totalPages", productsPage.getTotalPages());
         model.addAttribute("productsCount", productsPage.getTotalElements());
         model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("query", query);
 
         return "shop";  // Return the shop page template
     }
@@ -207,6 +208,7 @@ public class ProductController {
         model.addAttribute("totalPages", productsPage.getTotalPages());
         model.addAttribute("productsCount", productsPage.getTotalElements());
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("query", query);
 
         String requestedWith = request.getHeader("X-Requested-With");
         if ("XMLHttpRequest".equals(requestedWith)) {
