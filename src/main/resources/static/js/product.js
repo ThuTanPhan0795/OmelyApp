@@ -190,6 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("ok2");
                 // Update pagination links
                 setupPaginationLinks();
+                setupAddToCartButtons();
             } else {
                 console.error("Error " + xhr.status + ": " + xhr.responseText);
             }
@@ -305,7 +306,72 @@ document.addEventListener("DOMContentLoaded", function () {
             // Redirect if not on /shop
             window.location.href = `/searchByProductName?query=${encodeURIComponent(query)}`;
         }
-    }    
+    }  
+
+    // fix issue after filterProducts is called  'Add to Cart' buttons function is not work 
+    
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+    const cartPopup = document.getElementById('cart-popup');
+    const popupMessage = document.getElementById('popup-message');
+    const closePopupButton = document.querySelector('.close-popup');
+
+    // Function to show the popup
+    function showPopup(message) {
+        const popup = document.getElementById('cart-popup'); // Select popup
+        const popupMessage = popup.querySelector('.popup-message'); // Select message
+
+        popupMessage.textContent = message; // Update message content
+        popup.classList.add('show'); // Add class to show popup
+
+        // Hide the popup after 3 seconds
+        setTimeout(() => {
+            popup.classList.remove('show');
+        }, 1000);
+    }
+
+
+    // Close popup when the user clicks the 'x' button
+    closePopupButton.addEventListener('click', () => {
+        cartPopup.style.display = 'none';
+    });
+
+    // Function to reinitialize "Add to Cart" button event listeners
+    function setupAddToCartButtons() {
+        console.log("setupAddToCartButtons called ");
+        document.querySelectorAll(".add-to-cart-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                console.log("addEventListener called ");
+                event.preventDefault(); // Prevent default scrolling behavior
+                const productId = this.getAttribute("data-product-id");
+                console.log("productId  "+productId);
+
+                // Perform the AJAX request to add the product to the cart
+                addToCart(productId);
+            });
+        });
+    }
+
+    // Function to handle adding items to the cart
+    function addToCart(productId) {
+        const url = `/cart/add/${productId}`;
+        console.log("url "+productId);
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to add to cart');
+                }
+                return response.json();
+            })
+            .then(data => {
+                showPopup(data.message);  // Show success message in popup
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showPopup('Failed to add product to cart.', 'danger');  // Show error message
+            });
+    }
+    setupAddToCartButtons();
 
 });
     
