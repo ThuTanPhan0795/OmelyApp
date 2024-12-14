@@ -68,7 +68,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault(); // Prevent default link behavior
 
                 const page = this.getAttribute("data-page");
-                sortingdropdown(page);
+                const tagBox = document.querySelector(".tag-box");
+                console.log("tagBox", tagBox);
+                let query = null;
+                if (tagBox) {
+                    query = tagBox.getAttribute("data-query");
+                    console.log("Query from tag-box:", query);
+                }
+                sortingdropdown(page , query);
             });
         });
     }
