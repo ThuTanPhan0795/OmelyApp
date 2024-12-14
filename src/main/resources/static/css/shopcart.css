@@ -234,8 +234,9 @@
     gap: 10px; /* Space between icon and text */
     z-index: 1000; /* Keep it above all elements */
     display: none; /* Initially hidden */
-    max-width: 400px; /* Optional: limit width */
+    max-width: 90%; /* Limit width for smaller screens */
     text-align: center;
+    word-wrap: break-word; /* Prevent text breaking issues */
 }
 
 /* Popup checkmark icon */
@@ -245,7 +246,7 @@
 
 /* Fade-in and fade-out animation */
 .popup.show {
-    display: flex;
+    display: flex; /* Show popup */
     animation: fadeIn 0.5s ease-in-out, fadeOut 0.5s ease-in-out 2.5s;
 }
 
@@ -271,3 +272,17 @@
     }
 }
 
+/* Responsive styling for mobile devices */
+@media (max-width: 480px) {
+    .popup {
+        font-size: 0.9rem; /* Slightly smaller text */
+        padding: 10px 20px; /* Adjust padding */
+        max-width: 90%; /* Ensure it stays within screen width */
+        border-radius: 4px; /* Softer corners */
+        gap: 6px; /* Smaller gap */
+    }
+
+    .popup-icon {
+        font-size: 1.2rem; /* Adjust icon size */
+    }
+}
