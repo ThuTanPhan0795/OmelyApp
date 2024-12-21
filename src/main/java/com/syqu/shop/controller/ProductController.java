@@ -128,6 +128,11 @@ public class ProductController {
         return "products";
     }
 
+    @GetMapping("/quickview")
+    public String quickview(@PageableDefault(size = 12) Pageable pageable, Model model) {
+        return "quickview";
+    }
+
     @GetMapping("/searchByCategory/{categoryId}")
     public String searchByCategory(@PathVariable("categoryId") long categoryId, @PageableDefault(size = 12) Pageable pageable, Model model) {
         Page<Product> productPage = productService.findAllByCategoryId(categoryId, pageable);

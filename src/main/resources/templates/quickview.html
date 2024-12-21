@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Áo Thun Nam Chạy Bộ Graphic Dot</title>
+    <style>
+        :root {
+            --primary-color: #e60000;
+            --hover-color: #b30000;
+            --background-color: #f7f7f7;
+            --text-color: #333;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* Product Gallery */
+        .gallery {
+            flex: 1;
+            max-width: 50%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-image img {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .main-image img:hover {
+            transform: scale(1.02);
+        }
+
+        .thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .thumbnails img {
+            width: 70px;
+            height: 70px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .thumbnails img:hover, .thumbnails img.selected {
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        /* Product Details */
+        .product-details {
+            flex: 1;
+            max-width: 50%;
+            padding: 20px;
+        }
+
+        .product-details h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .rating {
+            color: #f4b400;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 26px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .options span {
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .options .colors,
+        .options .sizes {
+            display: flex;
+            gap: 10px;
+        }
+
+        .colors div,
+        .sizes div {
+            width: 35px;
+            height: 35px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .colors div:hover,
+        .sizes div:hover,
+        .colors div.selected,
+        .sizes div.selected {
+            border-color: var(--primary-color);
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .colors div {
+            background-color: var(--color);
+        }
+
+        .quantity {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            color: var(--text-color);
+            font-weight: bold;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background-color: var(--hover-color);
+        }
+
+        #quantity {
+            width: 50px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            color: var(--text-color);
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .features h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .features ul {
+            list-style: disc;
+            padding-left: 20px;
+        }
+
+        .features ul li {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .gallery,
+            .product-details {
+                max-width: 100%;
+            }
+
+            .price {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .thumbnails img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .colors div,
+            .sizes div {
+                width: 30px;
+                height: 30px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+    <script>
+        const colorImageMap = {
+            red: {
+                main: 'image1.png',
+                thumbnails: ['image1.png', 'image2.png', 'image3.png', 'image4.png']
+            },
+            blue: {
+                main: 'image5.png',
+                thumbnails: ['image6.png', 'image7.png', 'image8.png']
+            },
+            green: {
+                main: 'image9.png',
+                thumbnails: ['image10.png', 'image11.png', 'image12.png']
+            }
+        };
+
+        function changeColor(color, element) {
+            document.querySelectorAll('.colors div').forEach(div => div.classList.remove('selected'));
+            element.classList.add('selected');
+
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = colorImageMap[color].main;
+
+            const thumbnailsContainer = document.querySelector('.thumbnails');
+            thumbnailsContainer.innerHTML = '';
+
+            colorImageMap[color].thumbnails.forEach((src, index) => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `Thumbnail ${index + 1}`;
+                img.onclick = () => changeImage(src, img);
+                if (index === 0) img.classList.add('selected');
+                thumbnailsContainer.appendChild(img);
+            });
+        }
+
+        function changeImage(imageSrc, thumbnail) {
+            document.getElementById('mainImage').src = imageSrc;
+            document.querySelectorAll('.thumbnails img').forEach(img => img.classList.remove('selected'));
+            thumbnail.classList.add('selected');
+        }
+
+        function selectSize(element) {
+            document.querySelectorAll('.size-option').forEach(div => div.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function updateQuantity(change) {
+            const quantityInput = document.getElementById('quantity');
+            let currentValue = parseInt(quantityInput.value) || 1;
+            currentValue += change;
+
+            if (currentValue < 1) {
+                alert("Số lượng không thể nhỏ hơn 1!");
+                currentValue = 1;
+            }
+            quantityInput.value = currentValue;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <section class="gallery">
+            <div class="main-image">
+                <img id="mainImage" src="img/quickview/image1.png" alt="Main Product Image">
+            </div>
+            <div class="thumbnails">
+                <img src="img/quickview/image1.png" alt="Thumbnail 1" onclick="changeImage('image1.png', this)" class="selected">
+                <img src="img/quickview/image2.png" alt="Thumbnail 2" onclick="changeImage('image2.png', this)">
+                <img src="img/quickview/image3.png" alt="Thumbnail 3" onclick="changeImage('image3.png', this)">
+                <img src="img/quickview/image4.png" alt="Thumbnail 4" onclick="changeImage('image4.png', this)">
+            </div>
+        </section>
+        <section class="product-details">
+            <h1>Áo Thun Nam Chạy Bộ Graphic Dot</h1>
+            <div class="rating" aria-label="Rating: 5 out of 5">★★★★★ (5)</div>
+            <div class="price">199.000đ</div>
+            <div class="options">
+                <span>Màu sắc:</span>
+                <div class="colors">
+                    <div style="--color: red;" class="selected" onclick="changeColor('red', this)"></div>
+                    <div style="--color: blue;" onclick="changeColor('blue', this)"></div>
+                    <div style="--color: green;" onclick="changeColor('green', this)"></div>
+                </div>
+            </div>
+            <div class="options">
+                <span>Kích thước:</span>
+                <div class="sizes">
+                    <div class="size-option" onclick="selectSize(this)">S</div>
+                    <div class="size-option" onclick="selectSize(this)">M</div>
+                    <div class="size-option" onclick="selectSize(this)">L</div>
+                    <div class="size-option selected" onclick="selectSize(this)">XL</div>
+                    <div class="size-option" onclick="selectSize(this)">2XL</div>
+                </div>
+            </div>
+            <div class="quantity">
+                <span>Số lượng:</span>
+                <div class="quantity-control">
+                    <button class="quantity-btn" onclick="updateQuantity(-1)">-</button>
+                    <input type="number" id="quantity" value="1" min="1" readonly>
+                    <button class="quantity-btn" onclick="updateQuantity(1)">+</button>
+                </div>
+            </div>
+            <button>Mua ngay</button>
+            <div class="features">
+                <h3>Đặc điểm nổi bật</h3>
+                <ul>
+                    <li>Chất liệu 100% Polyester</li>
+                    <li>Kiểu dáng ôm sát hỗ trợ vận động</li>
+                    <li>Thoáng khí và co giãn tốt</li>
+                    <li>Phù hợp với các hoạt động thể thao</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
